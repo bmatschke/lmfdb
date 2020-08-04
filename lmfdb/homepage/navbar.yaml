@@ -1,8 +1,8 @@
 1intro:
    type: simple
    heading:
-      title: Introduction and more
-      url_for: "introduction"
+      title: Home
+      url_for: "index"
    parts:
     - title: Introduction
       url_for: "introduction"
@@ -292,11 +292,14 @@
       colspan: onecolumn
 
 9Know:
-   type: single
+   type: simple
    heading:
        title: Knowledge
        url_for: "knowledge.index"
        type: knowl
+   parts:
+    - title: LMFDB universe
+      url_for: "universe"
 
 9Inv:
    type: single

@@ -35,8 +35,7 @@ $(function() {
     {% for cat, cat_cnt in (categories.items()|sort) -%}
      <a
       {% if cur_cat == cat -%}class='curcat'{%- endif %}
-      href="{{ url_for('.index', qualities=qualities, filtered = filtermode, category=cat,) }}">{{cat}}({{cat_cnt}})</a>
-       {# {% if not loop.last -%} &middot; {%- endif %} #}
+      href="{{ url_for('.index', qualities=qualities, filtered = filtermode, category=cat,) }}">{{cat}}({{cat_cnt}})</a>{% if not loop.last -%}&nbsp;&middot;&#32; {%- endif %} 
     {%- endfor %}
     {% if categorymode -%}
     </td></tr>

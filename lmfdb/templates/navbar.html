@@ -1,8 +1,28 @@
-{%- for key, heading, value in sidebar.data -%}
+<div class="navbar">
+<div class="horizontal-container">
+
+    <div id="logo"><a href="/">
+{% if BETA %}
+    <img src="{{ url_for('static', filename='images/lmfdb-logo-beta.png') }}" />
+{% else %}
+    <img src="{{ url_for('static', filename='images/lmfdb-logo.png') }}" />
+{% endif %}
+    </a></div>
+
+
+{%- for key, heading, value in navbar.data -%}
 {%- if BETA or not value.status -%}{# an entire section may be omitted e.g. Motives #}
 
 {% if user_is_authenticated or BETA or key != '9Inv' %}
-{{heading | safe}}
+
+  <div class="dropdown">
+    <button class="dropbtn">
+      {{heading | safe}}
+      <i class="fa fa-caret-down"></i>
+    </button>
+
+    <div class="dropdown-content">
+
 
 {% if value.type == 'L' %}
   <div class="L">
@@ -214,7 +234,19 @@
 {# nothing needs doing as only the header appears, e.g. Knowledge #}
 
 {% endif %} {# if value.type == ... #}
+
+
+</div> {# ??? This is included because it seems to be missing somewhere above #}
+
+
+    </div> {# end dropdown }
+  </div> {# end dropdown-content #}
+
 {%- endif -%} {# user_is_authenticated or not Knowledge #}
 {%- endif -%} {# if BETA or not value.status #}
-{%- endfor -%} {# for key, heading, value in sidebar.data #}
+{%- endfor -%} {# for key, heading, value in navbar.data #}
+
+
+</div> {# end horizontal-container #}
+</div> {# end navbar #}
 

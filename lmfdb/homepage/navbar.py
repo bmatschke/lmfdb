@@ -9,11 +9,13 @@ def linked_name(item, level=""):
     title wrapped in an appropriate href link.
     """
     if level == "heading":
-        if 'url_for' in item:
-            url = url_for(item['url_for'],**item.get('url_args',dict()))
-            return ''.join(['<h2 class="link"><a href="',url,'">',item['title'],'</a></h2>\n'])
-        else:
-            return ''.join(['<h2>',item['title'],'</h2>\n'])
+        return item['title']
+
+        #if 'url_for' in item:
+        #    url = url_for(item['url_for'],**item.get('url_args',dict()))
+        #    return ''.join(['<h2 class="link"><a href="',url,'">',item['title'],'</a></h2>\n'])
+        #else:
+        #    return ''.join(['<h2>',item['title'],'</h2>\n'])
 
     else:
         if 'url_for' in item and not ('status' in item and item['status'] == 'future'):
@@ -29,27 +31,27 @@ def linked_name(item, level=""):
             this_entry = ''.join(['<div class="beta">',this_entry,'</div>'])
     return this_entry
 
-# The unique instance of the class SideBar:
+# The unique instance of the class NavBar:
 
-the_sidebar = None
+the_navbar = None
 
-# Function to create the unique SideBar instance if necessary, and return it:
+# Function to create the unique NavBar instance if necessary, and return it:
 
-def get_sidebar():
-    global the_sidebar
-    if the_sidebar is None:
-        the_sidebar = SideBar()
-    return the_sidebar
+def get_navbar():
+    global the_navbar
+    if the_navbar is None:
+        the_navbar = NavBar()
+    return the_navbar
 
-# The SideBar class, created by reading the file sidebar.yaml
+# The NavBar class, created by parsing the file navbar.yaml
 
-class SideBar(object):
+class NavBar(object):
     """
-    Class for holding the sidebar content.
+    Class for holding the navbar content.
     """
     def __init__(self):
         _curdir = os.path.dirname(os.path.abspath(__file__))
-        self.toc_dic = yaml.load(open(os.path.join(_curdir, "sidebar.yaml")), Loader=yaml.FullLoader)
+        self.toc_dic = yaml.load(open(os.path.join(_curdir, "navbar.yaml")), Loader=yaml.FullLoader)
         self.main_headings = list(self.toc_dic)
         self.main_headings.sort()
         heading = lambda k: linked_name(self.toc_dic[k]['heading'],'heading')

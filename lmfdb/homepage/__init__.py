@@ -5,7 +5,7 @@ import os
 import yaml
 
 from .boxes import load_boxes
-from .sidebar import get_sidebar
+from .navbar import get_navbar
 
 # reading and sorting list of contributors once at startup
 _curdir = os.path.dirname(os.path.abspath(__file__))
@@ -13,4 +13,4 @@ with open(os.path.join(_curdir, "..", "..", "CONTRIBUTORS.yaml")) as contrib_fil
     contribs = yaml.load_all(contrib_file, Loader=yaml.FullLoader)
     contribs = sorted(contribs, key = lambda x : x['name'].split()[-1])
 
-__all__ = ['load_boxes', 'contribs', 'get_sidebar']
+__all__ = ['load_boxes', 'contribs', 'get_navbar']

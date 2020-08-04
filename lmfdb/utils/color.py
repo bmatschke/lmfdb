@@ -118,9 +118,10 @@ class ColorScheme(object):
         'contrib_text_notes': c.dark_grey_1,
 
         # footer colors
-        'footer_background': 'col_main_ld',
+        'footer_background': '#444', #'col_main_ld',
         'footer_border': 'col_main_lg',
-        'footer_text': 'col_main_dl',
+        'footer_text': '#fff', #'col_main_dl',
+        'footer_link': '#bbb', #'col_main_dl',
 
         # a colors
         'a_text': 'col_body_text', # This occurs in for some hyperlinks, and sidebar header text.
@@ -151,13 +152,13 @@ class ColorScheme(object):
 
 
         # Header colors
-        'header_background': 'col_main_ld', #Color of the banner at the top
+        'header_background': 'white', #'col_main_ld', #Color of the banner at the top
         'header_shadow': 'col_main_lg',
         'header_text_title': 'col_main_d',
         'header_text_topright': 'col_main_dl',
         # Header navi colors
         'header_navi_text': 'col_main_dl',
-        'bread_links': 'col_main_dl',
+        'bread_links': '#777', #'col_main_dl',
 
         # flashes
         'flashes_border': c.col_light_red_1,
@@ -211,9 +212,9 @@ class ColorScheme(object):
         'table_ntdata_border_bottom': c.grey,
 
         #index-boxes todo
-        'box_background': c.white,
-        'box_background_img': 'col_main_ll',
-        'box_background_title': 'col_main_l',
+        'box_background': '#fafafa',
+        'box_background_img': '#fafafa', #c.white, #'col_main_ll',
+        'box_background_title': '#fafafa', #c.white, #'col_main_l',
 
         #Maass nav and show
         'maas_table_bkg': c.white,
@@ -246,6 +247,7 @@ class ColorScheme(object):
         'lf_an_button_brd': 'col_main_lg',
         'lf_ar_button_bkg': c.light_grey_1,
         'lf_ar_button_brd': c.col_light_red_1,
+        
     }
     def dict(self):
         def get(key):

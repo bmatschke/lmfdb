@@ -23,14 +23,18 @@
 {% endmacro %}
 
 {% block body -%}
-<div id="header">
+
+
+<div id="header" hidden=True>
     <div id="logo"><a href="/">
 {% if BETA %}
     <img src="{{ url_for('static', filename='images/lmfdb-logo-beta.png') }}" />
 {% else %}
     <img src="{{ url_for('static', filename='images/lmfdb-logo.png') }}" />
 {% endif %}
-</a></div>
+    </a></div>
+
+
     <div class="right">
       <div class="upper">
         <div class="bread">
@@ -113,20 +117,43 @@
     </div>
 </div>
 
+
+
 {% block sidebar -%}
 {% if g.show_menu %}
-<div id="sidebar">
-{%- include "sidebar.html" -%}
-</div>
-{% else %}
-<div id="sidebar" style="display: none; witdh=0">
-{%- include "sidebar.html" -%}
-</div>
-<style type="text/css">
-#main { margin-left: 0; }
-</style>
+{%- include "navbar.html" -%}
 {% endif %} {# of g.show_menu #}
 {%- endblock sidebar %}
+
+
+<div id="header">
+
+<div class="horizontal-container">
+
+        <div class="bread">
+          {% if bread %}
+            <a href="/">&#8962;</a>
+{# there's a house symbol &#x1f3e0; but it does not work on all browsers#}
+            {% for b in bread -%}
+              &rarr; <a href="{{ b[1] }}"> {{ b[0]|striptags }}</a>
+            {% endfor %}
+           {% else %}
+            <a href="/">&#8962;</a>
+           {% endif %}
+        </div>
+
+
+        {% if title_arithmetic -%}
+        <div id="title" class="arithmetic">{{ title_arithmetic|safe }}</div>
+        <div id="title" class="analytic nodisplay">{{ title_analytic|safe }}</div>
+        {% else %}
+        <div id="title">{{ title|safe }}</div>
+        {% endif %}
+</div> {# horizontal-container #}
+</div> {# header #}
+
+
+<div class="horizontal-container">
 
  {% macro rightnavig(title, entries) -%}
    {% if entries %}
@@ -267,37 +294,51 @@ The function which was called for this page is: {{calling_function}}
 </div>
 {% endif %}
 
-<div id="footer">
-    {% if credit -%}
-      Data computed by {{ credit|safe }}.<br />
-    {%- endif %}
+   
+   
+   <div id="footer-data-credit">
+     {% if credit -%}
+       <hr id="footer-data-credit-hr">
+       Data computed by {{ credit|safe }}.<br />
+     {%- endif %}
+   </div> 
 
-    {% if support -%}
-      {{ support|safe }}<br/>
-    {%- else -%}
-        <h4>{{shortthanks|safe}}</h4>
-<br />
-    {%- endif %}
-    <div>
-      <a href="{{ url_for('contact') }}">Contact</a>
-      &middot;
-      <a href="{{ url_for('citation') }}">Citation</a>
-      &middot;
+</div> {# end horizontal container #}
+
+<div id="footer">
+  <div class="horizontal-container">
+
+    <div class="box-text">
+      {% if support -%}
+        {{ support|safe }}
+      {%- else -%}
+        {{ shortthanks|safe }}
+      {%- endif %}
+    </div>
+    
+    
+    <div class="box-links">
+      <a href="{{ url_for('contact') }}">Contact + feedback</a>
+      <br>
+      <a href="{{ url_for('citation') }}">How to cite</a>
+      <br>
       <a href="{{ url_for('acknowledgment') }}">Acknowledgments</a>
-      &middot;
+      <br>
       <a href="{{ url_for('editorial_board') }}">Editorial Board</a>
       {# <a href="{{ 'about' }}">About</a> #}
-      &middot;
+    </div>
+    
+    <div class="box-links">
       {{ current_source|safe }}
-      &middot;
-      {{ latest_changeset|safe }}
-      &middot;
-      {{ sage_version|safe }}
-      &middot;
+      <br>
+      {{ latest_changeset|safe }} {# TODO: This is a very ugly link description, can we give it a better name? #}
+      <br>
+      <a href="https://sagemath.org/">{{ sage_version|safe }}</a>
+      <br>
       {{ version|safe }}
     </div>
+  </div>
 </div>
-
 
 
 {%- endblock body %}

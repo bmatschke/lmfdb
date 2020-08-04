@@ -122,15 +122,15 @@ def ctx_proc_userdata():
 
 # Harald suggested the following but it does not work
 #
-# create the sidebar from its yaml file and inject it into the jinja environment
-#from lmfdb.homepage import get_sidebar
-#app.jinja_env.globals['sidebar'] = get_sidebar()
+# create the navbar from its yaml file and inject it into the jinja environment
+#from lmfdb.homepage import get_navbar
+#app.jinja_env.globals['navbar'] = get_navbar()
 #
-# so instead we do this to ensure that the sidebar content is available to every page:
+# so instead we do this to ensure that the navbar content is available to every page:
 @app.context_processor
-def inject_sidebar():
-    from .homepage import get_sidebar
-    return dict(sidebar=get_sidebar())
+def inject_navbar():
+    from .homepage import get_navbar
+    return dict(navbar=get_navbar())
 
 ##############################
 # Bottom link to google code #
@@ -270,7 +270,7 @@ def not_found_503(error):
 @app.before_request
 def get_menu_cookie():
     """
-    sets cookie for show/hide sidebar
+    sets cookie for show/hide navbar
     """
     g.show_menu = str(request.cookies.get('showmenu')) != "False"
 
