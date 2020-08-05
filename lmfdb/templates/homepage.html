@@ -25,63 +25,20 @@
 {% block body -%}
 
 
-<div id="header" hidden=True>
-    <div id="logo"><a href="/">
-{% if BETA %}
-    <img src="{{ url_for('static', filename='images/lmfdb-logo-beta.png') }}" />
-{% else %}
-    <img src="{{ url_for('static', filename='images/lmfdb-logo.png') }}" />
-{% endif %}
-    </a></div>
+{### Previous parts of the old header: (kept for easier comparison) ###}
 
-
-    <div class="right">
-      <div class="upper">
-        <div class="bread">
-          {% if bread %}
-            <a href="/">&#8962;</a>
-{# there's a house symbol &#x1f3e0; but it does not work on all browsers#}
-            {% for b in bread -%}
-              &rarr; <a href="{{ b[1] }}"> {{ b[0]|striptags }}</a>
-            {% endfor %}
-           {% else %}
-            <a href="/">&#8962;</a>
-           {% endif %}
-        </div>
-        <div class="topright">
 {# search box does not work (see Issue #2389)
           <form method="GET" action="{{ url_for('search') }}" id="search-topright">
             <input type="text" placeholder="search ..." name="q" size="13" />
           </form>
 #}
-            {% if user_is_admin -%}
-              &middot;
-              <a href="{{ url_for('users.register') }}">Registration Tokens</a>
-            {% endif %}
-            {% if user_is_authenticated -%}
-              &middot;
-              <a href="{{ url_for('users.info') }}">{{ username }}</a>
-              &middot;
-              <a href="{{ url_for('users.logout') }}">Logout</a>
-              <br/>
-            {%- else -%}
-              {# <a href="{{ url_for('users.register_new') }}">Register</a>
-              &middot; #}
-              {% if BETA %}
-              &middot;
-              <a href="{{ url_for('users.info') }}">Login</a>
-              <br/>
-              {% endif %}
-            {%- endif %}
-<!--
+{#
             <span id="communication-wrapper">
               <img id="communication-img" src="{{ url_for('static', filename='images/progress-green.gif') }}" />
               <span id="communication"></span>
             </span>
--->
-          <div class="undertopright">
-            <a href="{{ url_for('contact') }}" target="_blank">Feedback</a>
-              &middot;
+#}
+{# 
             <a href="#" id="menutoggle">
             {%- if g.show_menu -%}
                Hide Menu
@@ -89,8 +46,7 @@
                Show Menu
             {% endif %}
             </a>
-          </div>
-        </div>
+#}
 {# deleting the confusing prev/next character links,
    but leaving the code in case it is useful later
         {% if navi is defined -%}
@@ -104,20 +60,9 @@
           <div id="navi">{{ navi_raw|safe }}</div>
         {%- endif %}
 #}
-      {# this span inside a div thing is necessary to align it at the bottom, see css #}
-
-        </div>
-        {% if title_arithmetic -%}
-        <div id="title" class="arithmetic">{{ title_arithmetic|safe }}</div>
-        <div id="title" class="analytic nodisplay">{{ title_analytic|safe }}</div>
-        {% else %}
-        <div id="title">{{ title|safe }}</div>
-        {% endif %}
-
-    </div>
-</div>
 
 
+{### Navbar (menu on top): ###}
 
 {% block sidebar -%}
 {% if g.show_menu %}
@@ -125,18 +70,20 @@
 {% endif %} {# of g.show_menu #}
 {%- endblock sidebar %}
 
+{### Header: (not including navbar) ###}
 
 <div id="header">
-
-<div class="horizontal-container">
-
-
+  <div class="horizontal-container">
     <table><tr>
+      
+      {# Bread crumbs: #}
+      
       <td width="100%">
         <div class="bread">
           {% if bread %}
             <a href="/">&#8962;</a>
-{# there's a house symbol &#x1f3e0; but it does not work on all browsers#}
+                {# there's a house symbol &#x1f3e0; 
+                   but it does not work on all browsers #}
             {% for b in bread -%}
               &rarr; <a href="{{ b[1] }}"> {{ b[0]|striptags }}</a>
             {% endfor %}
@@ -145,6 +92,9 @@
            {% endif %}
         </div>
       </td>
+      
+      {# User navigation: (login, profile, ...) #}
+      
       <td>
         <div class="nav-user">
             {% if user_is_admin -%}
@@ -166,18 +116,22 @@
          </div>     
       </td>
     </tr></table>
+    
+    {# Title: #}
 
-        {% if title_arithmetic -%}
-        <div id="title" class="arithmetic">{{ title_arithmetic|safe }}</div>
-        <div id="title" class="analytic nodisplay">{{ title_analytic|safe }}</div>
-        {% else %}
-        <div id="title">{{ title|safe }}</div>
-        {% endif %}
-</div> {# horizontal-container #}
+    {% if title_arithmetic -%}
+      <div id="title" class="arithmetic">{{ title_arithmetic|safe }}</div>
+      <div id="title" class="analytic nodisplay">{{ title_analytic|safe }}</div>
+    {% else %}
+      <div id="title">{{ title|safe }}</div>
+    {% endif %}
+  </div> {# horizontal-container #}
 </div> {# header #}
 
 
 <div class="horizontal-container">
+
+{### Property boxes on the right hand side: ###}
 
  {% macro rightnavig(title, entries) -%}
    {% if entries %}
@@ -250,6 +204,8 @@
     </div>
     {%- endif %}
 
+{### Main content ###}
+
 <div id="main">
   <div id="content">
     {% with msgs = get_flashed_messages(with_categories=true) -%}
@@ -318,16 +274,20 @@ The function which was called for this page is: {{calling_function}}
 </div>
 {% endif %}
 
+
+{# Footer for crediting data: #}   
    
-   
-   <div id="footer-data-credit">
-     {% if credit -%}
-       <hr id="footer-data-credit-hr">
-       Data computed by {{ credit|safe }}.<br />
-     {%- endif %}
-   </div> 
+<div id="footer-data-credit">
+  {% if credit -%}
+    <hr id="footer-data-credit-hr">
+    Data computed by {{ credit|safe }}.<br />
+  {%- endif %}
+</div> 
 
 </div> {# end horizontal container #}
+
+
+{### Footer with static content (dark background): ###}   
 
 <div id="footer">
   <div class="horizontal-container">

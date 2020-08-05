@@ -39,7 +39,7 @@ class NavBar(object):
         #self.data = [(k,heading(k),self.toc_dic[k]) for k in self.main_headings]
 
         
-        def add_helpers_to_dropdown_dict(item,parent_status=""):
+        def add_helpers_to_dropdown_dict(item,parent_status="",family_css=""):
             # Add some (redundant) entries into the dropdown dictionary `item` (or one of its items),
             # which make it easier to read by the template.
             
@@ -53,17 +53,31 @@ class NavBar(object):
                 item['url'] = url_for(item['url_for'],**item.get('url_args',dict()))
             item['is_link_bar'] = 'type' in item and item['type'] == 'link_bar'
             
+            
             #Inherit status, if none prescribed:
             if 'status' not in item:
                 item['status'] = parent_status
             
+            #CSS-classes:
+            if 'css_classes' not in item:
+                item['css_classes'] = ""
+            item['css_classes'] += " " + item['status']
+            item['css_classes'] += " " + family_css
+            #clean the css string:
+            print("item['css_classes']:",item['css_classes'])
+            print(item['css_classes'].split(' '))
+            print(set(item['css_classes'].split(' ')))
+            print(set(item['css_classes'].split(' ')).difference([' ']))
+            item['css_classes'] = " ".join(set(item['css_classes'].split(' ')).difference([' ']))
+                
             recurse_keys = ['groups','parts','entries']
             for key in recurse_keys:
                 if key in item:
                     for part in item[key]:
-                        add_helpers_to_dropdown_dict(part,item['status'])
+                        css = part['css_classes'] if 'css_classes' in part else ''
+                        add_helpers_to_dropdown_dict(part, item['status'], css)
             if 'heading' in item:
-                add_helpers_to_dropdown_dict(item['heading'],item['status'])
+                add_helpers_to_dropdown_dict(item['heading'], item['status'])
             
             return        
 

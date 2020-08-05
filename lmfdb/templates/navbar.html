@@ -19,21 +19,21 @@
 
 <div class="dropdown">
 
-  <button class="dropbtn {{dropdown.heading.status | safe}}">
+  <button class="dropbtn {{dropdown.heading.css_classes | safe}}">
     {% if dropdown.heading.is_link %}
-      <a class="heading {{dropdown.heading.status | safe}}" href="{{dropdown.heading.url | safe}}">{{dropdown.heading.title | safe}}</a>
+      <a class="heading {{dropdown.heading.css_classes | safe}}" href="{{dropdown.heading.url | safe}}">{{dropdown.heading.title | safe}}</a>
     {% else %}
-      <div class="heading {{dropdown.heading.status | safe}}">{{dropdown.heading.title | safe}}</div>
+      <div class="heading {{dropdown.heading.css_classes | safe}}">{{dropdown.heading.title | safe}}</div>
     {% endif %}
     <i class="fa fa-caret-down"></i>
   </button>
 
-  <div class="dropdown-content">
+  <div class="dropdown-content {{dropdown.heading.css_classes | safe}}">
   {%- for group in dropdown.groups -%}
     {% if group.is_link %}
-      <a class="group-title {{group.status | safe}}" href="{{group.url | safe}}">{{group.title | safe}}</a>
+      <a class="group-title {{group.css_classes | safe}}" href="{{group.url | safe}}">{{group.title | safe}}</a>
     {% else %}
-      <div class="group-title {{group.status | safe}}">{{group.title | safe}}</div>
+      <div class="group-title {{group.css_classes | safe}}">{{group.title | safe}}</div>
     {% endif %}
     
     
@@ -42,18 +42,18 @@
       {%- if part.is_link_bar -%}
             
         {% if part.is_link %}
-          <a class="link-bar-title {{part.status | safe}}" href="{{part.url | safe}}">{{part.title | safe}}</a>
+          <a class="link-bar-title {{part.css_classes | safe}}" href="{{part.url | safe}}">{{part.title | safe}}</a>
         {% else %}
-          <div class="link-bar-title {{part.status | safe}}">{{part.title | safe}}</div>
+          <div class="link-bar-title {{part.css_classes | safe}}">{{part.title | safe}}</div>
         {% endif %}
 
-        <table class="link-bar"><tr>
+        <table class="link-bar {{part.css_classes | safe}}"><tr>
         {%- for entry in part.entries -%}
           <td width="auto" align="center">
           {% if entry.is_link %}
-            <a class="entry {{entry.status | safe}}" href="{{entry.url | safe}}">{{entry.title | safe}}</a>
+            <a class="entry {{entry.css_classes | safe}}" href="{{entry.url | safe}}">{{entry.title | safe}}</a>
           {% else %}
-            <div class="entry {{entry.status | safe}}">{{entry.title | safe}}</div>
+            <div class="entry {{entry.css_classes | safe}}">{{entry.title | safe}}</div>
           {% endif %}
           </td>
         {%- endfor -%} {# for entry in entries #}
@@ -62,9 +62,9 @@
       {%- else -%} {# if part.is_link_bar #}
         
         {% if part.is_link %}
-          <a class="part {{part.status | safe}}" href="{{part.url | safe}}">{{part.title | safe}}</a>
+          <a class="part {{part.css_classes | safe}}" href="{{part.url | safe}}">{{part.title | safe}}</a>
         {% else %}
-          <div class="part {{part.status | safe}}">{{part.title | safe}}</div>
+          <div class="part {{part.css_classes | safe}}">{{part.title | safe}}</div>
         {% endif %}
     
       {%- endif -%} {# if part.is_link_bar #}

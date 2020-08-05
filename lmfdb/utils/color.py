@@ -195,7 +195,7 @@ class ColorScheme(object):
         'button_background': 'col_main_b',
         'select_background': 'col_main_ll',
         'button_border': 'col_main_lg',
-        'button_background_hover': 'col_main_l',
+        'button_background_hover': '#8c9', #'col_main_l',
         'button_border_hover': 'col_main_lg',
         'button_background_inactive': 'light_grey_1',
         'button_border_inactive': 'col_light_red_1',

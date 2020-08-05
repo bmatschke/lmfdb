@@ -9,6 +9,7 @@
 #     - a "link-bar", which consists of
 #       - a title, which can be a link, and
 #       - a list of entries, each of which are text or links.
+#
 # 2. (Compare with 3-Modular-forms below)
 #   Here, menu item consists of
 #   - a heading (as in (1))
@@ -19,13 +20,16 @@
 # In the end, (1) is a just special case of (2),
 # if one wraps the parts into one group with title "".
 #
+#
 # Essentially everything (menu-items, headings, groups, parts, entries)
 # can have the following attributes:
+#
 # - status, with values:
 #   - beta 
 #   - future
 #   This changes the css-layout and can also hide elements.
 #   Children inherit the status attribute unless they overwrite the status.
+#
 # - requires, with values:
 #   - beta
 #   - not_beta
@@ -35,6 +39,11 @@
 #   - not-auth
 #   An element and it children will be only shown 
 #   if the required condition is met.
+#
+# - css_classes (strings separated by " ")
+#   They will be added to the html-tags in the "classes" attribute.
+#   The status is automatically added to the css_classes.
+#   
 # Currently, if status is beta or future, we automatically require beta
 # for the menu-entry to be shown.
 
@@ -60,6 +69,7 @@
    parts:
     - type: "link_bar"
       title: "L-functions by degree:"
+      css_classes: tall-entries
       entries:
         - title: 1
           url_for: "l_functions.l_function_degree_page"
@@ -139,11 +149,11 @@
    groups:
      - title: Curves
        parts:
-         - title: Elliptic curves $/\Q$
+         - title: Elliptic curves over $\Q$
            url_for: "ec.rational_elliptic_curves"
-         - title: Elliptic curves /NumberFields
+         - title: Elliptic curves over number fields
            url_for: "ecnf.index"
-         - title: Genus 2 curves $/\Q$
+         - title: Genus 2 curves over $\Q$
            url_for: "g2c.index_Q"
          - title: Belyi maps
            status: beta
@@ -152,7 +162,7 @@
            url_for:  "higher_genus_w_automorphisms.index"
      - title: general
        parts:
-         - title: Abelian varieties $/\F_{q}$
+         - title: Abelian varieties over $\F_{q}$
            url_for: "abvarfq.abelian_varieties"
 
 4-Varieties-beta:
