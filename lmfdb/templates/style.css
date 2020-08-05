@@ -7,7 +7,7 @@ t{# template defs #}
 {# end defs #}
 
 :root {
-  --main-font-family: Georgia, 'Bitstream Charter', serif;;
+  --main-font-family: Georgia, 'Bitstream Charter', serif;
 }
 
 * { zoom: 0; }
@@ -1092,6 +1092,7 @@ div.limit-height {
 .knowl-footer {
   position: relative;
   bottom: -10px;
+  font-family: sans-serif;
   font-size: x-small;
   line-height: 100%;
   background: {{ color.knowl_border }};
@@ -1103,6 +1104,7 @@ div.limit-height {
   position: relative;
   top: -10px;
   font-size: x-small;
+  font-family: sans-serif;
   line-height: 100%;
   background: {{ color.knowl_border }};
   color: {{color.grey}};
@@ -2049,14 +2051,15 @@ body.knowl #header {
 
 #header #logo {
     /*display: inline-block;*/
-    margin: 0px;
-    margin-right: 100px;
+    /*margin: 0px;
+    margin-right: 100px;*/
     /*padding-top: 8px;
     padding-left: 40px;*/
 }
 #navbar #logo img {
     max-height: 30px;
-    padding-top: 5px;
+    /*padding-top: 5px;*/
+    margin: 15px 10px 10px 0px;
 }
 #header .right {
     margin-top: 0px;
@@ -2174,7 +2177,10 @@ body.knowl #header {
 }
 #navbar #logo a {
   float: left;
-  padding: 5px 15px 5px 0px;
+  padding: 0; /*5px 0px 5px 0px;*/
+  margin: 0px 15px 0px 0px;
+  vertical-align: center;
+  height: 100%;
   text-decoration: none;
 }
 
@@ -2188,6 +2194,7 @@ body.knowl #header {
 .dropdown .dropbtn {
   font-size: 100%;
   border: none;
+  border-radius: 0px;
   outline: none;
   color: #555;
   padding: 15px 10px 15px 10px;
@@ -2266,13 +2273,27 @@ body.knowl #header {
   font-size: 85%;
   color: #555;
   text-align: center;
-  padding-right: 2px;
+  padding: 3px 0px 0px 0px;
+  /*padding-right: 2px;*/
   /*color: #fff;
   background-color: #777; 
   text-align: center;*/
   border-bottom: 1px solid #ddd;
 }
 
+
+#navbar .future {
+  color: #aaa;
+}
+
+#navbar button.dropbtn.beta {
+  border-top: 5px solid #a84;
+  padding-top: 10px;
+  /*background-color: #dcb;*/
+}
+#navbar .dropdown-content .beta {
+  border-right: 5px solid #a84;
+}
 
 /**** Fix navbar on top: ****/
 #navbar {

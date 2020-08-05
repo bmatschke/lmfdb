@@ -1,3 +1,44 @@
+# This file defines the content of the navbar.
+# There are two ways to define a menu-item:
+#
+# 1. (Compare with 2-L-functions below)
+#   Here, a menu item consists of
+#   - a heading, which in turn contains a title, which can be a link, and
+#   - a list of parts of the dropdown menu, where each part is either
+#     - a text or link, or 
+#     - a "link-bar", which consists of
+#       - a title, which can be a link, and
+#       - a list of entries, each of which are text or links.
+# 2. (Compare with 3-Modular-forms below)
+#   Here, menu item consists of
+#   - a heading (as in (1))
+#   - a list of groups, each of which consists of 
+#     - a title (which can be a link), and
+#     - a list of parts (as in (1))
+#
+# In the end, (1) is a just special case of (2),
+# if one wraps the parts into one group with title "".
+#
+# Essentially everything (menu-items, headings, groups, parts, entries)
+# can have the following attributes:
+# - status, with values:
+#   - beta 
+#   - future
+#   This changes the css-layout and can also hide elements.
+#   Children inherit the status attribute unless they overwrite the status.
+# - requires, with values:
+#   - beta
+#   - not_beta
+#   - auth_or_beta
+#   - auth_and_beta
+#   - auth
+#   - not-auth
+#   An element and it children will be only shown 
+#   if the required condition is met.
+# Currently, if status is beta or future, we automatically require beta
+# for the menu-entry to be shown.
+
+
 1-Introduction:
    heading:
       title: Home
@@ -18,25 +59,25 @@
       url_for: "l_functions"
    parts:
     - type: "link_bar"
-      title: "Browse L-functions by degree:"
+      title: "L-functions by degree:"
       entries:
-        - title: "1"
+        - title: 1
           url_for: "l_functions.l_function_degree_page"
           url_args:
             degree: 'degree1'
-        - title: "2"
+        - title: 2
           url_for: "l_functions.l_function_degree_page"
           url_args:
             degree: 'degree2'
-        - title: "3"
+        - title: 3
           url_for: "l_functions.l_function_degree_page"
           url_args:
             degree: 'degree3'
-        - title: "4"
+        - title: 4
           url_for: "l_functions.l_function_degree_page"
           url_args:
             degree: 'degree4'
-        - title: "5+"
+        - title: 5+
           status: future
     - title: "First zeros of L-functions"
       url_for: "first L-function zeros.firstzeros"
@@ -54,52 +95,73 @@
       title: Modular forms
       url_for: "modular_forms"
    groups:
-     - title: GL(2) type
-       style: rotate
+     - title: $\GL(2)$ type
        parts:
          - title: Classical modular forms
            url_for: "cmf.index"
-         - title: Maass modular forms
-           url_for: "maass.index"
          - title: Hilbert modular forms
            url_for: "hmf.hilbert_modular_form_render_webpage"
+         - title: Maass forms
+           url_for: "maass.index"
          - title: Bianchi modular forms
            url_for: "bmf.index"
          - title: Half-integral modular forms
            status: future
          - title: Noncongruence
            status: future
-         - title: mod &#8467; 
+         - title: Mod &#8467 modular forms
            url_for: "modlmf.modlmf_render_webpage"
            status: future
-         - title: Hecke algebra 
+         - title: Hecke algebras
            url_for: "hecke_algebras.hecke_algebras_render_webpage"
            status: future
-     - title: GL(3) type
-       style: rotate
-       status: future_rotated
+     - title: $\GL(3)$ type
+       status: future
        parts:
-         - title: Maass
+         - title: Maass forms for $\GL(3)$
            status: future
          - title: Cohomological
            status: future
      - title: Other types
-       style: rotate
-       status: future_rotated
+       status: future
        parts:
          - title: Siegel modular forms
            status: beta
            url_for: "smf.index"
-         - title: U(2,1)
+         - title: $U(2,1)$
            status: future
 
-4-Varieties:
+4-Varieties-alpha:
+   requires: not_beta
    heading:
       title: Varieties
       url_for: "varieties"
    groups:
      - title: Curves
-       style: rotate
+       parts:
+         - title: Elliptic curves $/\Q$
+           url_for: "ec.rational_elliptic_curves"
+         - title: Elliptic curves /NumberFields
+           url_for: "ecnf.index"
+         - title: Genus 2 curves $/\Q$
+           url_for: "g2c.index_Q"
+         - title: Belyi maps
+           status: beta
+           url_for: "belyi.index"
+         - title: "Higher genus curves in families"
+           url_for:  "higher_genus_w_automorphisms.index"
+     - title: general
+       parts:
+         - title: Abelian varieties $/\F_{q}$
+           url_for: "abvarfq.abelian_varieties"
+
+4-Varieties-beta:
+   requires: beta
+   heading:
+      title: Varieties
+      url_for: "varieties"
+   groups:
+     - title: Curves
        parts:
          - type: link_bar
            title: "Elliptic curves:"
@@ -136,24 +198,21 @@
            url_for: "belyi.index"
          - title: "Higher genus curves in families"
            url_for:  "higher_genus_w_automorphisms.index"
-     - title: 2-dim
-       style: rotate
-       status: future_rotated
+     - title: $2$-dim
+       status: future
        parts:
          - title: Abelian surfaces
            status: future
          - title: K3-surfaces
            status: future
      - title: $3^+$-dim
-       style: rotate
-       status: future_rotated
+       status: future
        parts:
          - title: Calabi-Yau manifolds
            status: future
          - title: Shimura varieties
            status: future
      - title: "general"
-       style: rotate
        parts:
          - title: Abelian varieties $/\F_{q}$
            url_for: "abvarfq.abelian_varieties"
@@ -182,7 +241,7 @@
       url_for: "artin_representations.index"
 
 6-Representations-beta:
-   status: beta
+   requires: beta
    heading:
       title: Representations
       url_for: "representations"
@@ -190,19 +249,19 @@
     - title: "Characters:"
       status: beta
       parts:
-         - title: Dirichlet
-           url_for:  "characters.render_Dirichletwebpage"
-           status: beta
-         - title: Hecke
-           url_for:  "characters.render_Heckewebpage"
-           status: future
+        - title: Dirichlet
+          url_for:  "characters.render_Dirichletwebpage"
+          status: beta
+        - title: Hecke
+          url_for:  "characters.render_Heckewebpage"
+          status: future
     - title: "Galois:"
       status: future
       parts:
-         - title: Artin
-           url_for: "artin_representations.index"
-         - title: mod &#8467;
-           status: future
+        - title: Artin
+          url_for: "artin_representations.index"
+        - title: mod &#8467;
+          status: future
     - title: Weil-Deligne
       status: future
     - title: Automorphic
@@ -218,11 +277,11 @@
       title: "Hypergeometric motives:"
       status: beta
       entries:
-         - title: $/\Q$
-           status:  beta
-           url_for:  "hypergm.index"
-         - title: $/\Q(\sqrt{d})$
-           status: future
+        - title: $/\Q$
+          status:  beta
+          url_for:  "hypergm.index"
+        - title: $/\Q(\sqrt{d})$
+          status: future
     - title: Jacobi
       status: future
     - title: $G_2$
@@ -245,27 +304,27 @@
     - type: link_bar
       title: Finite subgroups of
       entries:
-         - title: $\GL(n,\F_q)$
-           status:  future
-         - title: $\GL(n,\Z)$
-           status: future
-         - title: $\GL(n,\C)$
-           status:  future
+        - title: $\GL(n,\F_q)$
+          status:  future
+        - title: $\GL(n,\Z)$
+          status: future
+        - title: $\GL(n,\C)$
+          status:  future
       status: future
 
 9-Knowledge:
    heading:
-       title: Knowledge
-       url_for: "knowledge.index"
-       type: knowl
+      title: Knowledge
+      url_for: "knowledge.index"
+      type: knowl
    parts:
     - title: LMFDB universe
       url_for: "universe"
 
 9-Inventory:
    heading:
-       title: Inventory
-       url_for: "inventory_app.show_edit_root"
-       type: knowl
+      title: Inventory
+      url_for: "inventory_app.show_edit_root"
+      type: knowl
    requires: auth_or_beta
-...
+

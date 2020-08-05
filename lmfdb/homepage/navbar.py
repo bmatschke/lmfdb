@@ -4,24 +4,27 @@ import os
 import yaml
 from flask import url_for
 from copy import deepcopy
+from sage.all import cached_function
 
-# The unique instance of the class NavBar:
+# The unique global instance of the class NavBar:
 
 the_navbar = None
 
-# Function to create the unique NavBar instance if necessary, and return it:
 
 def get_navbar():
+    """
+    Function to create the unique NavBar instance if necessary, and return it:
+    """
     global the_navbar
     if the_navbar is None:
         the_navbar = NavBar()
     return the_navbar
 
-# The NavBar class, created by parsing the file navbar.yaml
 
 class NavBar(object):
     """
     Class for holding the navbar content.
+    Created by parsing the file navbar.yaml.
     """
     def __init__(self):
         _curdir = os.path.dirname(os.path.abspath(__file__))
@@ -36,7 +39,7 @@ class NavBar(object):
         #self.data = [(k,heading(k),self.toc_dic[k]) for k in self.main_headings]
 
         
-        def add_helpers_to_dropdown_dict(item):
+        def add_helpers_to_dropdown_dict(item,parent_status=""):
             # Add some (redundant) entries into the dropdown dictionary `item` (or one of its items),
             # which make it easier to read by the template.
             
@@ -50,13 +53,17 @@ class NavBar(object):
                 item['url'] = url_for(item['url_for'],**item.get('url_args',dict()))
             item['is_link_bar'] = 'type' in item and item['type'] == 'link_bar'
             
+            #Inherit status, if none prescribed:
+            if 'status' not in item:
+                item['status'] = parent_status
+            
             recurse_keys = ['groups','parts','entries']
             for key in recurse_keys:
                 if key in item:
                     for part in item[key]:
-                        add_helpers_to_dropdown_dict(part)
+                        add_helpers_to_dropdown_dict(part,item['status'])
             if 'heading' in item:
-                add_helpers_to_dropdown_dict(item['heading'])
+                add_helpers_to_dropdown_dict(item['heading'],item['status'])
             
             return        
 
@@ -83,5 +90,51 @@ class NavBar(object):
             
             print("main_heading:",main_heading)
             print("dropdown:",dropdown)
+
+        def item_is_constaint(item,is_beta,is_auth):
             
+            if 'status' in item:
+                if item['status'] == 'beta' and not is_beta:
+                    return True
+                if item['status'] == 'future' and not is_beta:
+                    return True
             
+            if 'requires' in item:
+                if item['requires'] == 'auth' and not is_auth:
+                    return True
+                if item['requires'] == 'not_auth' and is_auth:
+                    return True
+                if item['requires'] == 'beta' and not is_beta:
+                    return True
+                if item['requires'] == 'not_beta' and is_beta:
+                    return True
+                if item['requires'] == 'auth_or_beta' and not (is_auth or is_beta):
+                    return True
+                if item['requires'] == 'auth_and_beta' and not (is_auth and is_beta):
+                    return True
+                    
+            return False        
+                
+            
+        def get_constraint_dropdowns(item,is_beta,is_auth):    
+            
+            if isinstance(item,list):
+                constaint_elements = [get_constraint_dropdowns(element,is_beta,is_auth) for element in item]
+                result = [element for element in constaint_elements if element != None]
+                return result
+            
+            elif isinstance(item,dict):
+                if item_is_constaint(item,is_beta,is_auth):
+                    return None
+                result = {item: get_constraint_dropdowns(value,is_beta,is_auth) for item,value in item.items()}
+                return result
+            else:
+                return item
+    
+        self.dropdowns_constraint = {}
+        for is_beta in [True,False]:
+            for is_auth in [True,False]:
+                self.dropdowns_constraint[is_beta,is_auth] = get_constraint_dropdowns(self.dropdowns,is_beta,is_auth)
+                print("is_beta,is_auth:",is_beta,is_auth)
+                print("dropdowns_constraint[is_beta,is_auth]:",self.dropdowns_constraint[is_beta,is_auth])
+ 

@@ -10,18 +10,20 @@
     </a></div>
 
 
-{%- for dropdown in navbar.dropdowns -%}
-{%- if BETA or not dropdown.only_in_beta -%}{# an entire section may be omitted e.g. Motives #}
-{% if user_is_authenticated or BETA or not dropdown.requires_auth_or_beta %}
-{%- if not (BETA and dropdown_requires_not_beta) -%}
+{%- for dropdown in navbar.dropdowns_constraint[BETA, user_is_authenticated] -%}
+{# TODO: use user_is_authenticated and BETA when catching the dropdowns#}
+
+{#- if BETA or not dropdown.only_in_beta -#}{# an entire section may be omitted e.g. Motives #}
+{# if user_is_authenticated or BETA or not dropdown.requires_auth_or_beta #}
+{#- if not (BETA and dropdown_requires_not_beta) -#}
 
 <div class="dropdown">
 
-  <button class="dropbtn">
+  <button class="dropbtn {{dropdown.heading.status | safe}}">
     {% if dropdown.heading.is_link %}
-      <a class="heading" href="{{dropdown.heading.url | safe}}">{{dropdown.heading.title | safe}}</a>
+      <a class="heading {{dropdown.heading.status | safe}}" href="{{dropdown.heading.url | safe}}">{{dropdown.heading.title | safe}}</a>
     {% else %}
-      <div class="heading">{{dropdown.heading.title | safe}}</div>
+      <div class="heading {{dropdown.heading.status | safe}}">{{dropdown.heading.title | safe}}</div>
     {% endif %}
     <i class="fa fa-caret-down"></i>
   </button>
@@ -29,9 +31,9 @@
   <div class="dropdown-content">
   {%- for group in dropdown.groups -%}
     {% if group.is_link %}
-      <a class="group-title" href="{{group.url | safe}}">{{group.title | safe}}</a>
+      <a class="group-title {{group.status | safe}}" href="{{group.url | safe}}">{{group.title | safe}}</a>
     {% else %}
-      <div class="group-title">{{group.title | safe}}</div>
+      <div class="group-title {{group.status | safe}}">{{group.title | safe}}</div>
     {% endif %}
     
     
@@ -40,19 +42,18 @@
       {%- if part.is_link_bar -%}
             
         {% if part.is_link %}
-          <a class="link-bar-title" href="{{part.url | safe}}">{{part.title | safe}}</a>
+          <a class="link-bar-title {{part.status | safe}}" href="{{part.url | safe}}">{{part.title | safe}}</a>
         {% else %}
-          <div class="link-bar-title">{{part.title | safe}}</div>
+          <div class="link-bar-title {{part.status | safe}}">{{part.title | safe}}</div>
         {% endif %}
 
-        
         <table class="link-bar"><tr>
         {%- for entry in part.entries -%}
           <td width="auto" align="center">
           {% if entry.is_link %}
-            <a class="entry" href="{{entry.url | safe}}">{{entry.title | safe}}</a>
+            <a class="entry {{entry.status | safe}}" href="{{entry.url | safe}}">{{entry.title | safe}}</a>
           {% else %}
-            <div class="entry">{{entry.title | safe}}</div>
+            <div class="entry {{entry.status | safe}}">{{entry.title | safe}}</div>
           {% endif %}
           </td>
         {%- endfor -%} {# for entry in entries #}
@@ -61,9 +62,9 @@
       {%- else -%} {# if part.is_link_bar #}
         
         {% if part.is_link %}
-          <a class="part" href="{{part.url | safe}}">{{part.title | safe}}</a>
+          <a class="part {{part.status | safe}}" href="{{part.url | safe}}">{{part.title | safe}}</a>
         {% else %}
-          <div class="part">{{part.title | safe}}</div>
+          <div class="part {{part.status | safe}}">{{part.title | safe}}</div>
         {% endif %}
     
       {%- endif -%} {# if part.is_link_bar #}
@@ -74,9 +75,10 @@
   </div> {# end dropdown-content #}
 </div> {# end dropdown #}
 
-{%- endif -%} {# if not (BETA and dropdown_requires_not_beta) #}
-{%- endif -%} {# if user_is_authenticated or BETA or not dropdown.requires_auth_or_beta #}
-{%- endif -%} {# if BETA or not dropdown.only_in_beta #}
+{#- endif -#} {# if not (BETA and dropdown_requires_not_beta) #}
+{#- endif -#} {# if user_is_authenticated or BETA or not dropdown.requires_auth_or_beta #}
+{#- endif -#} {# if BETA or not dropdown.only_in_beta #}
+
 {%- endfor -%} {# for key, heading, value in navbar.data #}
 
 
