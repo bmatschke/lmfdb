@@ -130,6 +130,9 @@
 
 <div class="horizontal-container">
 
+
+    <table><tr>
+      <td width="100%">
         <div class="bread">
           {% if bread %}
             <a href="/">&#8962;</a>
@@ -141,7 +144,28 @@
             <a href="/">&#8962;</a>
            {% endif %}
         </div>
-
+      </td>
+      <td>
+        <div class="nav-user">
+            {% if user_is_admin -%}
+              <a href="{{ url_for('users.register') }}">Registration Tokens</a>
+              &middot;
+            {% endif %}
+            {% if user_is_authenticated -%}
+              <a href="{{ url_for('users.info') }}">{{ username }}</a>
+              &middot;
+              <a href="{{ url_for('users.logout') }}">Logout</a>
+            {%- else -%}
+              {# <a href="{{ url_for('users.register_new') }}">Register</a>
+              &middot; #}
+              {% if BETA %}
+              <a href="{{ url_for('users.info') }}">Login</a>
+              <br/>
+              {% endif %}
+            {%- endif %}
+         </div>     
+      </td>
+    </tr></table>
 
         {% if title_arithmetic -%}
         <div id="title" class="arithmetic">{{ title_arithmetic|safe }}</div>

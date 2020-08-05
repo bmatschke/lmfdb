@@ -31,6 +31,14 @@ h2.link > a {
     font-size: 1em !important;
 }
 
+/* Bound the width of the page content */
+.horizontal-container {
+    max-width: 1100px; 
+    /*max-width: 1280px;*/
+    margin: auto; /* means center */
+    padding: 0px 10px; /* needed for small screens */
+}
+
 /********************* content (in homepage.html) *********************/
 
 #content > h1
@@ -225,7 +233,8 @@ body > .debug {
 }
 
 
-/* These are the right hand side properties. */
+/********** Property boxes (on right hand side) ***********************/
+
 #properties {
     z-index: 99;
     font-size: 85%;
@@ -640,6 +649,7 @@ div.where {
   font-weight: bold;
 }
 
+/******************** Knnowls *****************************************/
 
 /** page wide defs for knowls, the *[knowl] is a selector for
  *  all elements, that have a knowl attribute set to any value */
@@ -1062,7 +1072,7 @@ div.limit-height {
   font-family: KaTeX_Math;
 }
 
-/*** Tables for the Siegel corner ***/
+/**************** Tables for the Siegel corner ************************/
 
 /** TODO these definitions are too broad. please make siegel a
  * blueprint (name is e.g. "siegel") and prefix all siegel
@@ -1809,17 +1819,18 @@ body.knowl #header {
     font-weight: normal !important;
 }
 
-#header .bread {
-    font-family: var(--main-font-family);
+#header .bread, #header .nav-user {
+    font-family: sans-serif;
+    /*font-family: var(--main-font-family);*/
     font-size: 80%;
     display: inline-block;
 }
 
 #header .bread a:first-child {
-    font-size: 130%;
+    font-size: 150%;
 }
 
-#header .bread a {
+#header .bread a, #header .nav-user a {
     color: {{color.bread_links}};
 }
 
@@ -1871,15 +1882,6 @@ body.knowl #header {
 
 
 
-
-
-/* Bound the width of the page content */
-.horizontal-container {
-    max-width: 1100px; 
-    /*max-width: 1280px;*/
-    margin: auto; /* center */
-    padding: 0px 10px;
-}
 
 /********************* navbar (menu at top) ***************************/
 
