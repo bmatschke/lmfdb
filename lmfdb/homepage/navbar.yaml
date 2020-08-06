@@ -158,7 +158,7 @@
          - title: Belyi maps
            status: beta
            url_for: "belyi.index"
-         - title: "Higher genus curves in families"
+         - title: Higher genus curves in families over $\C$
            url_for:  "higher_genus_w_automorphisms.index"
      - title: general
        parts:
