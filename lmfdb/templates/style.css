@@ -24,6 +24,7 @@ t{# template defs #}
 }
 
 :root {
+  font-size: 15px;
 }
 
 
@@ -353,15 +354,15 @@ body > .debug {
 #properties-collapser {
   cursor: pointer;
   color: {{ color.properties_collapser }};
-  font-size: 1.5em;
+  font-size: 1.2em;
   font-weight: bold;
   text-align: center;
   border: 1px solid ;
   width: 1.5em;
   height: 1.5em;
   position: absolute;
-  top:   0.8em;
-  right: 0.2em;
+  top:   1em;
+  right: 0.8em;
   {{ BORDER_RADIUS(20) }}
 }
 
@@ -424,7 +425,9 @@ input, textarea {
 
 /* TODO: above? */
 
-button, select {
+button, 
+select {
+  font-size: 1em;
   padding: 3px 6px;
   border-radius: 4px;
   cursor: pointer;
@@ -1932,7 +1935,14 @@ body.knowl #header {
   margin: 0px 0px 0.7rem 0px;
   box-shadow: 0px 0px 1rem 0px rgba(0,0,0,0.2);
   z-index: 1000000;
+}
 
+#navbar .flex-container {
+  display: inline-flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  max-width: 100%;
 }
 
 #navbar a,
