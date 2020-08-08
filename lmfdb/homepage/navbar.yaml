@@ -326,8 +326,10 @@
    heading:
       title: Knowledge
       url_for: "knowledge.index"
-      type: knowl
    parts:
+    - css_classes: no-hover-available
+      title: Knowledge
+      url_for: "knowledge.index"
     - title: LMFDB universe
       url_for: "universe"
 
@@ -335,6 +337,9 @@
    heading:
       title: Inventory
       url_for: "inventory_app.show_edit_root"
-      type: knowl
    requires: auth_or_beta
-
+   parts:
+    - css_classes: no-hover-available
+      title: Inventory
+      url_for: "inventory_app.show_edit_root"
+    

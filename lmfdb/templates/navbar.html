@@ -1,7 +1,8 @@
 <div id="navbar">
 <div class="horizontal-container">
 
-    <div id="logo"><a href="/">
+
+    <div class="logo"><a href="/">
 {% if BETA %}
     <img src="{{ url_for('static', filename='images/lmfdb-logo-beta.png') }}" />
 {% else %}
@@ -19,14 +20,17 @@
 
 <div class="dropdown">
 
-  <button class="dropbtn {{dropdown.heading.css_classes | safe}}">
+  <button class="hover-available dropbtn {{dropdown.heading.css_classes | safe}}">
     {% if dropdown.heading.is_link %}
       <a class="heading {{dropdown.heading.css_classes | safe}}" href="{{dropdown.heading.url | safe}}">{{dropdown.heading.title | safe}}</a>
     {% else %}
       <div class="heading {{dropdown.heading.css_classes | safe}}">{{dropdown.heading.title | safe}}</div>
     {% endif %}
-    <i class="fa fa-caret-down"></i>
   </button>
+  <button class="no-hover-available dropbtn {{dropdown.heading.css_classes | safe}}" onclick="toggleDropdown(this)">
+      <a class="heading {{dropdown.heading.css_classes | safe}}">{{dropdown.heading.title | safe}}</a>
+  </button>
+
 
   <div class="dropdown-content {{dropdown.heading.css_classes | safe}}">
   {%- for group in dropdown.groups -%}
@@ -84,4 +88,85 @@
 
 </div> {# end horizontal-container #}
 </div> {# end navbar #}
+
+
+
+<script>
+
+var firstDropdownToggle = true;
+
+function adjustLocationOfDropdownContent(content) {
+  // Determine the location of the edges of the dropdown content:
+  var left = 0;
+  var node = content;
+  while (node){
+    left += node.offsetLeft;
+    node = node.offsetParent;
+  }
+  right = left + content.offsetWidth;
+  
+  var dropdown = content; //content.parentElement;
+
+  // move the submenu to the right of the item if needed:
+  if (left < 0) {
+    dropdown.classList.remove("dropdownRightToLeft");
+    dropdown.classList.add("dropdownLeftToRight");
+  }
+  // move the submenu to the left of the item if needed:
+  else if (right > document.body.clientWidth) {
+    dropdown.classList.remove("dropdownLeftToRight");
+    dropdown.classList.add("dropdownRightToLeft");
+  }
+}
+
+function toggleDropdown(button) {
+  if (firstDropdownToggle) {
+    firstDropdownToggle = false;
+    // We arrive here only there is no hovering available.
+    // Close the dropdown automatically if the user clicks outside of it:
+    //window.onclick = function(event) {
+    window.addEventListener("click", function(event) {
+      console.log(event.target)
+      if (!event.target.matches('.dropbtn') && 
+          !event.target.matches('.heading')) {
+        closeAllDropdowns();
+      }
+    });
+  }
+  console.log(button);
+  content = button.parentElement.lastElementChild
+  console.log(content)
+  currentlyClosed = content.style.display != "block";
+  closeAllDropdowns();
+  if (currentlyClosed)
+    content.style.display = "block";
+    adjustLocationOfDropdownContent(content);  
+}
+
+function closeAllDropdowns() {
+  // We should arrive here only if we don't use hovering in the menu,
+  // as the following fill break the hovering functionality of the dropdowns.
+  var contents = document.getElementsByClassName("dropdown-content");
+  var i;
+  for (i = 0; i < contents.length; i++)
+    contents[i].style.display = "none";
+}
+
+function adjustDropdownsHorizontally() {
+  var contents = document.getElementsByClassName("dropdown-content");
+  console.log(contents);
+  var i;
+  for (i = 0; i < contents.length; i++) {
+    var rect = contents[i].getBoundingClientRect();
+    console.log(rect.top, rect.right, rect.bottom, rect.left);
+    //console.log(contents[i]);
+    //contents[i].style.display = "none";
+    if (contents[i].style.left < 0)
+      contents[i].style.left = 0;
+  }
+}
+
+window.addEventListener("resize",adjustDropdownsHorizontally);
+window.addEventListener("load",adjustDropdownsHorizontally);
+</script>
 

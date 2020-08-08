@@ -30,7 +30,7 @@ class NavBar(object):
         _curdir = os.path.dirname(os.path.abspath(__file__))
         self.toc_dic = yaml.load(open(os.path.join(_curdir, "navbar.yaml")), Loader=yaml.FullLoader)
         
-        print("self.toc_dic:",self.toc_dic)
+        #print("self.toc_dic:",self.toc_dic)
         
         self.main_headings = list(self.toc_dic)
         self.main_headings.sort()
@@ -64,10 +64,6 @@ class NavBar(object):
             item['css_classes'] += " " + item['status']
             item['css_classes'] += " " + family_css
             #clean the css string:
-            print("item['css_classes']:",item['css_classes'])
-            print(item['css_classes'].split(' '))
-            print(set(item['css_classes'].split(' ')))
-            print(set(item['css_classes'].split(' ')).difference([' ']))
             item['css_classes'] = " ".join(set(item['css_classes'].split(' ')).difference([' ']))
                 
             recurse_keys = ['groups','parts','entries']
@@ -149,6 +145,6 @@ class NavBar(object):
         for is_beta in [True,False]:
             for is_auth in [True,False]:
                 self.dropdowns_constraint[is_beta,is_auth] = get_constraint_dropdowns(self.dropdowns,is_beta,is_auth)
-                print("is_beta,is_auth:",is_beta,is_auth)
-                print("dropdowns_constraint[is_beta,is_auth]:",self.dropdowns_constraint[is_beta,is_auth])
+                #print("is_beta,is_auth:",is_beta,is_auth)
+                #print("dropdowns_constraint[is_beta,is_auth]:",self.dropdowns_constraint[is_beta,is_auth])
  
