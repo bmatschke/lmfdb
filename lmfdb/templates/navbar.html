@@ -8,7 +8,11 @@
 {% else %}
     <img src="{{ url_for('static', filename='images/lmfdb-logo.png') }}" />
 {% endif %}
-    </a></div>
+    </a></div><!-- {# These comments prevent white space between the buttons of the menu.
+                      Alternatively we could set font-size: 0 in #navbar, however
+                      this doesn't seem like a clean solution, especially with respect
+                      to how the unit em behaves.
+                    #}
 
 
 {%- for dropdown in navbar.dropdowns_constraint[BETA, user_is_authenticated] -%}
@@ -18,7 +22,7 @@
 {# if user_is_authenticated or BETA or not dropdown.requires_auth_or_beta #}
 {#- if not (BETA and dropdown_requires_not_beta) -#}
 
-<div class="dropdown">
+--><div class="dropdown">
 
   <button class="hover-available dropbtn {{dropdown.heading.css_classes | safe}}">
     {% if dropdown.heading.is_link %}
@@ -77,7 +81,7 @@
     
   {%- endfor -%} {# groups in dropdown.groups #}
   </div> {# end dropdown-content #}
-</div> {# end dropdown #}
+</div><!-- {# end dropdown #}
 
 {#- endif -#} {# if not (BETA and dropdown_requires_not_beta) #}
 {#- endif -#} {# if user_is_authenticated or BETA or not dropdown.requires_auth_or_beta #}
@@ -86,7 +90,7 @@
 {%- endfor -%} {# for key, heading, value in navbar.data #}
 
 
-</div> {# end horizontal-container #}
+--></div> {# end horizontal-container #}
 </div> {# end navbar #}
 
 
@@ -97,27 +101,65 @@ var firstDropdownToggle = true;
 
 function adjustLocationOfDropdownContent(content) {
   // Determine the location of the edges of the dropdown content:
+  var prefer_left_to_right = false; //true doesn't work yet, perhaps because css doesn't update during this function?
+
+  if (prefer_left_to_right) {
+    dropdown.classList.remove("dropdown-content-right-to-left");
+    dropdown.classList.add("dropdown-content-left-to-right");
+  }
+  
+  console.log("handle resize");
   var left = 0;
   var node = content;
-  while (node){
+  while (node) {
+    console.log(node);
+    console.log(node.offsetLeft);
     left += node.offsetLeft;
     node = node.offsetParent;
   }
   right = left + content.offsetWidth;
-  
+  console.log(left);
+  console.log(right);
   var dropdown = content; //content.parentElement;
 
-  // move the submenu to the right of the item if needed:
-  if (left < 0) {
-    dropdown.classList.remove("dropdownRightToLeft");
-    dropdown.classList.add("dropdownLeftToRight");
+  if (prefer_left_to_right) {
+    if (right > document.body.clientWidth) {
+      dropdown.classList.remove("dropdown-content-left-to-right");
+      dropdown.classList.add("dropdown-content-right-to-left");
+    }
+  } else {
+    //Only switch sides of dropdown-content if necessary:
+    if (left < 0) {
+      dropdown.classList.remove("dropdown-content-right-to-left");
+      dropdown.classList.add("dropdown-content-left-to-right");
+    }
+    else if (right > document.body.clientWidth) {
+      dropdown.classList.remove("dropdown-content-left-to-right");
+      dropdown.classList.add("dropdown-content-right-to-left");
+    }
   }
-  // move the submenu to the left of the item if needed:
-  else if (right > document.body.clientWidth) {
-    dropdown.classList.remove("dropdownLeftToRight");
-    dropdown.classList.add("dropdownRightToLeft");
-  }
+
 }
+
+function onDropButtonHover(event) {
+    console.log(event);
+    var content = event.target.parentElement.lastElementChild;
+    adjustLocationOfDropdownContent(content);
+}
+
+
+function init_navbar() {
+  console.log("loaded");
+  var buttons = document.getElementsByClassName("dropbtn");
+  var i;
+  for (i = 0; i < buttons.length; i++) {
+    console.log(buttons[i]);
+    buttons[i].addEventListener("mouseenter",onDropButtonHover);    
+  }  
+}
+
+window.addEventListener("load",init_navbar);
+
 
 function toggleDropdown(button) {
   if (firstDropdownToggle) {
@@ -166,7 +208,18 @@ function adjustDropdownsHorizontally() {
   }
 }
 
-window.addEventListener("resize",adjustDropdownsHorizontally);
-window.addEventListener("load",adjustDropdownsHorizontally);
+/*
+function adjustLocationOfAllDropdownContents() {
+  var contents = document.getElementsByClassName("dropdown-content");
+  console.log(contents);
+  var i;
+  for (i = 0; i < contents.length; i++) {
+    adjustLocationOfDropdownContent(contents[i]);
+  }
+}
+
+window.addEventListener("resize",adjustLocationOfAllDropdownContents);
+window.addEventListener("load",adjustLocationOfAllDropdownContents);
+*/
 </script>
 

@@ -1910,7 +1910,7 @@ body.knowl #header {
 
 /* Navbar container */
 #navbar {
-  font-size: 0px;
+  /*font-size: 0px;*/
   font-family: Arial;
   
   /*width: 100%;*/
@@ -1959,36 +1959,25 @@ body.knowl .logo a:hover {
   text-decoration: none;
 }
 #navbar .logo img {
-    max-height: 1.8rem;
-    /*padding-top: 5px;*/
-    padding: 0.6rem 0.7rem 0.6rem 0rem;
-    margin: 0;
-    /*margin: 15px 10px 10px 0px;*/
+  max-height: 1.8rem;
+  /*padding-top: 5px;*/
+  padding: 0.6rem 0.7rem 0.6rem 0rem;
+  margin: 0;
+  /*margin: 15px 10px 10px 0px;*/
 }
 
 /* The dropdown container */
 #navbar .dropdown {
-  float: none;
   display: inline-block;
-  margin: 0px;
+  position: relative;
+  /*margin: 0px;*/
   padding: 0px;
-  border: 1px solid black; /*debug*/
-  outline: none;
-  text-align: right;
+  /*border: 1px solid black;*/ /*debug*/
+  /*outline: none;*/
 /*  display: inline; 
   float: left;
   overflow: hidden;
 */}
-
-#navbar div.dropdownRightToLeft{
-  margin-left:auto; 
-  margin-right:0;
-  float: right;
-}
-#navbar div.dropdownLeftToRight{
-  margin-right: auto; 
-  margin-left:0;
-}
 
 /* Dropdown button */
 #navbar .dropbtn {
@@ -2017,9 +2006,20 @@ body.knowl .logo a:hover {
   display: none;
   position: absolute;
   background-color: #f9f9f9;
-  min-width: 160px;
+  /*min-width: 160px;*/
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1000;
+  /*top      : 100%;*/
+  white-space: nowrap;
+}
+
+#navbar div.dropdown-content-right-to-left {
+  left: auto;
+  right: 0;
+}
+#navbar div.dropdown-content-left-to-right {
+  left: 0;
+  right: auto;
 }
 
 /* Links inside the dropdown */
