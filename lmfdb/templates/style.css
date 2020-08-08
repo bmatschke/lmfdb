@@ -9,19 +9,22 @@ t{# template defs #}
 /********************** Fonts *****************************************/
 
 /*JV's preference*/
-/*
 :root {
+/*
   --main-font-family: sans-serif;
-}
 */
+}
 
 /*BM's preference:*/
 
 :root {
-  --main-font-family: serif; 
-  --control-font-family: "Arial";
+  --main-font-family: Georgia, 'Bitstream Charter', serif; 
+  /*--main-font-family: 'Times New Roman', 'Times', serif; */
+  --control-font-family: Arial, sans-serif;
 }
 
+:root {
+}
 
 
 * { zoom: 0; }
@@ -117,7 +120,7 @@ td.table_h2 {
 }
 
 #content ul {
-  padding-left: 24px;
+  padding-left: 1.7em;
 }
 
 #content  h2.inline,
@@ -237,7 +240,7 @@ a:hover {
   margin:  0px 0px 0px 0px;
   /*padding: 0px 0px 0px 10px;*/
   padding: 0px;
-  min-height: 700px;
+  min-height: 45em;
 }
 
 .debug {
@@ -350,15 +353,15 @@ body > .debug {
 #properties-collapser {
   cursor: pointer;
   color: {{ color.properties_collapser }};
-  font-size: 19px;
+  font-size: 1.5em;
   font-weight: bold;
   text-align: center;
   border: 1px solid ;
-  width: 20px;
-  height: 17px;
+  width: 1.5em;
+  height: 1.5em;
   position: absolute;
-  top:   12px;
-  right: 3px;
+  top:   0.8em;
+  right: 0.2em;
   {{ BORDER_RADIUS(20) }}
 }
 
@@ -524,10 +527,10 @@ table td.top {
 }
 table.ntdata td {
   white-space: nowrap;
-  padding-top: 3px;
-  padding-bottom: 3px;
-  padding-right: 7px;
-  padding-left: 7px;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  padding-right: 0.5em;
+  padding-left: 0.5em;
 }
 
 table a:hover {
@@ -543,10 +546,10 @@ table td.spacing {
 
 table.ntdata {
   width: auto;
-  border: 3px;
-  margin-left: 7px;
-  margin-top: 15px;
-  margin-bottom: 15px;
+  border: 0.2em;
+  margin-left: 0.5em;
+  margin-top: 1em;
+  margin-bottom: 1em;
 }
 table.ntdata thead th {
   background: {{ color.table_ntdata_background }};
@@ -560,8 +563,8 @@ table.ntdata > thead > tr.bottomlined {
 
 table.ntdata th {
   text-align: left;
-  padding-right: 7px;
-  padding-left: 7px;
+  padding-right: 0.5em;
+  padding-left: 0.5em;
 }
 
 table.ntdata > tr.odd,
@@ -671,7 +674,7 @@ div.where {
   font-weight: bold;
 }
 
-/******************** Knnowls *****************************************/
+/******************** Knowls ******************************************/
 
 /** page wide defs for knowls, the *[knowl] is a selector for
  *  all elements, that have a knowl attribute set to any value */
@@ -1033,10 +1036,9 @@ div.limit-height {
 .knowl-footer {
   position: relative;
   bottom: -10px;
-  font-family: var(--control-font-family);
-  font-size: x-small;
   line-height: 100%;
   background: {{ color.knowl_border }};
+  font-size: x-small;
   color: {{ color.knowl_border_text }};
   padding: 1px 0 1px 10px;
   margin:  0 0 0 0;
@@ -1044,17 +1046,17 @@ div.limit-height {
 .knowl-header {
   position: relative;
   top: -10px;
-  font-size: x-small;
-  font-family: var(--control-font-family);
   line-height: 100%;
   background: {{ color.knowl_border }};
+  font-size: x-small;
   color: {{color.grey}};
   padding: 1px 0 1px 10px;
   margin:  0 0 0 0;
 }
 .knowl-header a,
 .knowl-footer a {
-    color: {{ color.knowl_border_links }};
+  font-family: var(--control-font-family);
+  color: {{ color.knowl_border_links }};
 }
 .knowl-header a:hover,
 .knowl-footer a:hover {
@@ -1110,7 +1112,7 @@ div.limit-height {
 }
 
 .small{
-    font-size: 12px;
+    font-size: 0.8em;
 }
 
 .error {
@@ -1151,7 +1153,7 @@ a.navlink {
   color: {{color.a_nav_text}};
   background-color: {{color.a_nav_background}};
   font-weight: bold;
-  font-size: 11px;
+  font-size: 0.75em;
   text-align: center;
   padding: 5px;
   padding-top: 3px;
@@ -1185,7 +1187,7 @@ table.tablesorter {
     font-family:arial;
     background-color: {{color.light_grey_2}};
     margin:10px 0pt 15px;
-    font-size: 8pt;
+    font-size: 0.55em;
     width: 100%;
     text-align: left;
 }
@@ -1193,7 +1195,7 @@ table.tablesorter thead tr th,
 table.tablesorter tfoot tr th {
   background-color: {{color.col_main_ll}};/*TODO: or really light grey?*/
   border: 1px solid {{color.white}};
-    font-size: 8pt;
+    font-size: 0.55em;
     padding: 4px;
 }
 table.tablesorter thead tr .header {
@@ -1241,7 +1243,7 @@ table.tablesorter thead tr .headerSortUp {
     border: 1px solid {{color.light_grey_3}};
     text-align: center;
     color: {{color.grey}};
-    font-size: 14px;
+    font-size: 1em;
     background-color: {{color.white}};
 }
 
@@ -1527,37 +1529,39 @@ div.maassformplot img {
 
 table.boxes {
   table-layout: fixed;
-  width: 100%; padding: 10;
+  width: 100%; padding: 0.7em;
   margin: 0px;
-  margin-left: 15px;
-  font-size:1em;
-  display:table;
+  margin-left: 1em;
+  font-size: 1em;
+  display: table;
   }
 table.boxes > tbody > tr > td {
-  padding: 0px 50px 50px 0px;
+  padding: 0 3m 3em 0;
   overflow: hidden;
   vertical-align: top
   }
 table.box {
   background: {{color.box_background}};
   width: 100%; height: 100%;
-  padding: 10;
+  padding: 0.7em;
   border-radius: 0px;
-  font-size:1em;
+  font-size: 1em;
   }
 table.box td.img {
   background: {{color.box_background_img}};
-  width: 150px;
-  height: 150px;
-  border: 15;
-  padding-left: 5px;
-  padding-bottom: 0px;
-  padding-top: 5px;
-  padding-right: 5px;
+  /*width: 10em;
+  height: auto;*/
+  border: 1em;
+  padding-left: 0.3em;
+  padding-bottom: 0em;
+  padding-top: 0.3em;
+  padding-right: 0.3em;
   }
 table.box img {
-  border: 15;
-  padding: 5;
+  width: 10em;
+  height: auto;
+  border: 1em;
+  padding: 0.3em;
   }
 table td.title {
   /*font-weight: bold;*/
@@ -1565,15 +1569,15 @@ table td.title {
   text-align: center;
   background: {{color.box_background_title}};
   height: 2em;
-  padding: 5;
-  padding-left: 10px;
-  border-top-right-radius: 10px;
+  padding: 0.3em;
+  padding-left: 0.7em;
+  border-top-right-radius: 0.7em;
   }
 table td.content {
   background: {{color.box_background_img}};
   font-size: 90%;
-  padding-left: 15px;
-  padding-bottom: 5px;
+  padding-left: 1em;
+  padding-bottom: 0.3em;
   vertical-align: top;
   }
 div.user {
@@ -1584,17 +1588,24 @@ div.user ul li {
   line-height: 80%;
   }
 table.box td.content ul.list {
-  margin: 0px;
-  padding-left: 15px; padding-bottom: 5px;
+  margin: 0;
+  padding-left: 1em; padding-bottom: 0.3em;
   list-style-type: none;
   list-style-position: inside;
   line-height: 135%;
 }
 
+@media only screen and (max-width: 1000px) {
+  table.box img {
+    max-width: 15vw;
+    height: auto;
+  }
+}
+
 /*End table boxes front page*/
 
 p.short {
-  margin: 0px;
+  margin: 0;
 }
 
 .table-scroll-wrapper {
@@ -1911,8 +1922,7 @@ body.knowl #header {
 /* Navbar container */
 #navbar {
   /*font-size: 0px;*/
-  font-family: Arial;
-  
+  font-size: 90%;
   /*width: 100%;*/
   /*position: fixed;
   width = 100%;*/
@@ -1925,12 +1935,17 @@ body.knowl #header {
 
 }
 
+#navbar a,
+#navbar div {
+  font-family: var(--control-font-family);
+}
+
 /* Links in header of navbar */
 #navbar a.heading {
-  font-size: inherit;
+  font-size: 1em;
   color: #333;
   text-align: center;
-  padding: 5px 5px;
+  /*padding: 5px 5px;*/
   text-decoration: none;
 }
 .logo a, 
@@ -1939,7 +1954,6 @@ body.knowl .logo a:hover {
   background: none;
 }
 #navbar .logo {
-  font-size: 0;
   float: left;
   display: inline-block;
   /*display: none;*/
@@ -1950,6 +1964,7 @@ body.knowl .logo a:hover {
 #navbar .logo a {
   /*float: left;*/
   /*float: none;*/
+  font-size: 1em;
   display: inline-block;
   padding: 0;
   margin: 0;
@@ -1959,15 +1974,16 @@ body.knowl .logo a:hover {
   text-decoration: none;
 }
 #navbar .logo img {
-  max-height: 1.8rem;
+  max-height: 1.8em;
   /*padding-top: 5px;*/
-  padding: 0.6rem 0.7rem 0.6rem 0rem;
+  padding: 0.6em 0.7em 0.6em 0em;
   margin: 0;
   /*margin: 15px 10px 10px 0px;*/
 }
 
 /* The dropdown container */
 #navbar .dropdown {
+  /*font-size: 1em;*/
   display: inline-block;
   position: relative;
   /*margin: 0px;*/
@@ -1981,16 +1997,21 @@ body.knowl .logo a:hover {
 
 /* Dropdown button */
 #navbar .dropbtn {
-  font-size: 1rem;
+  font-size: 1em;
   /*float: left;*/
   border: none;
-  border-radius: 0px;
+  border-radius: 0;
   outline: none;
   color: #555;
-  padding: 1rem 0.7rem 1rem 0.7rem;
+  padding: 1em 0.7em 1em 0.7em;
   background-color: inherit;
   font-family: inherit; /* Important for vertical align on mobile phones */
   /*margin: 0;  Important for vertical align on mobile phones */
+}
+
+#navbar a.heading,
+#navbar div.heading {
+  /*font-size: 1em;*/
 }
 
 /* Add a background color to navbar links on hover */
@@ -2002,12 +2023,12 @@ body.knowl .logo a:hover {
 
 /* Dropdown content (hidden by default) */
 #navbar .dropdown-content {
-  font-size: 1rem;
+  font-size: {% if BETA %} 0.9em; {% else %} 1em; {% endif %} /* will scale the whole dropdown-content */
   display: none;
   position: absolute;
   background-color: #f9f9f9;
   /*min-width: 160px;*/
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  box-shadow: 0 0.5em 1em 0 rgba(0,0,0,0.2);
   z-index: 1000;
   /*top      : 100%;*/
   white-space: nowrap;
@@ -2026,7 +2047,7 @@ body.knowl .logo a:hover {
 #navbar .dropdown-content .part {
   float: none;
   color: black;
-  padding: 12px 16px;
+  padding: 0.8em 1.2em;
   text-decoration: none;
   display: block;
   text-align: left;
@@ -2035,7 +2056,7 @@ body.knowl .logo a:hover {
 #navbar .dropdown-content .entry {
   float: none;
   color: black;
-  padding: 12px 16px;
+  padding: 0.8em 1.2em;
   text-decoration: none;
   display: block;
   text-align: center;
@@ -2043,6 +2064,8 @@ body.knowl .logo a:hover {
 
 
 #navbar .dropdown-content table.link-bar {
+  margin-left: auto;
+  margin-right: auto;
   width: 100%;
 } 
 
@@ -2056,7 +2079,7 @@ body.knowl .logo a:hover {
   font-size: 70%;
   color: #777;
   text-align: right;
-  padding-right: 5px;
+  padding-right: 0.4em;
   /*color: #fff;
   background-color: #777; 
   text-align: center;*/
@@ -2064,11 +2087,10 @@ body.knowl .logo a:hover {
 }
 
 #navbar .dropdown-content .link-bar-title {
-  float: right;
   font-size: 85%;
   color: #555;
   text-align: center;
-  padding: 3px 0px 0px 0px;
+  padding: 0.2em 1em 0em 1em;
   /*padding-right: 2px;*/
   /*color: #fff;
   background-color: #777; 
@@ -2078,6 +2100,7 @@ body.knowl .logo a:hover {
 
 
 #navbar .future {
+  /*display: none !important;*/ /* toggle this to show/hide the future */
   color: #aaa !important;
 }
 
@@ -2125,22 +2148,30 @@ body.knowl .logo a:hover {
   }
 }
 
+/*
 @media only screen and (max-width: 800px) {
   :root,
   body {
     font-size: 2vw;
   }
 }
+*/
 
+@media only screen and (max-width: 600px) {
+  :root,
+  body {
+    font-size: 3vw;
+  }
+}
 
 /********************* footer *****************************************/
 
 #footer {
     clear: both;
-    margin-top: 00px;
+    margin-top: 0;
     background-color: {{color.footer_background}};
     /*border-top: 2px solid {{ color.footer_border }}; */
-    padding: 25px 10px;
+    padding: 1.7em 0.7em;
     text-align: center;
     font-size: 75%;
     font-family: var(--control-font-family);
@@ -2148,19 +2179,24 @@ body.knowl .logo a:hover {
     color: #bbb; /*{{color.footer_text}};*/
 }
 
+#footer a,
+#footer div {
+    font-family: var(--control-font-family);
+}
+
 #footer-data-credit {
     width: 100%;
     font-size: 75%;
     text-align: center;
-    margin-top: 50px;
-    margin-bottom: 30px; 
+    margin-top: 3.3em;
+    margin-bottom: 2em; 
 }
 
 #footer .box-text {
     display: inline-block;
     background-color: inherit;
-    width: 300px;
-    margin: 20px 50px 20px 20px;
+    width: 25em;
+    margin: 1.3em 3.3em 1.3em 1.3em;
     border-style: none;
     text-align: left;
     overflow: hidden;
@@ -2169,8 +2205,8 @@ body.knowl .logo a:hover {
 #footer .box-links {
     display: inline-block;
     background-color: inherit;
-    width: 150px;
-    margin: 20px 50px 20px 50px;
+    width: 10em;
+    margin: 1.3em 3.3em 1.3em 3.3em;
     border-style: none;
     text-align: center;
     overflow: hidden;
@@ -2187,8 +2223,76 @@ body.knowl .logo a:hover {
 }
 
 #footer-data-credit-hr {
-    width: 100px;
+    width: 7em;
     border-top: 1px solid #888;
-    margin: 0 auto 20px auto;
+    margin: 0 auto 1.3em auto;
 }
+
+
+/********** Mobile friendly content ***********************************/
+
+/* Automatic horizontal scrollbars if content is too long for outer container */
+.horizontal-scroller {
+  white-space: normal;
+  /*display: block;*/
+  max-width: 100%;
+  overflow: auto;
+  overflow-y: hidden;
+  -ms-overflow-y: hidden; /* for IE8 */
+  margin: 0;
+  padding: 0;
+}
+
+/* Automatic horizontal scrollbar, no white space wrapping allowed for content */
+.horizontal-scroller-nowrap {
+  white-space: nowrap;
+  /*display: block;*/
+  max-width: 100%;
+  overflow: auto;
+  overflow-y: hidden;
+  -ms-overflow-y: hidden; /* for IE8 */
+  margin: 0;
+  padding: 0;
+}
+
+
+#content p.no-wrap {
+  white-space: nowrap !important;
+  display: block;
+  max-width: 100%;
+  overflow: auto;
+  overflow-y: hidden;
+  -ms-overflow-y: hidden; /* for IE8 */
+}
+
+
+@media only screen and (max-width: 600px) {
+  #content > p,
+  #content > table.ntdata,
+  #content > table.number_table,
+  #content .embed-container,
+  #content .katex-display {
+    display: block;
+    max-width: 100%;
+    overflow: auto !important;
+    overflow-y: hidden;
+    -ms-overflow-y: hidden; /* for IE8 */
+  }
+
+  #properties {
+    z-index: 0;
+    font-size: 85%;
+    font-family: var(--main-font-family);
+    float: none;
+    display: block;
+    margin: 0.3em 0px 0.3em 1em;
+    position: relative;
+    border: 1px solid {{color.properties_border}};
+    border: 0;
+    padding: 0;
+  }
+
+}
+
+
 
