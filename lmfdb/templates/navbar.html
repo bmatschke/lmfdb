@@ -110,18 +110,18 @@ function adjustLocationOfDropdownContent(content) {
     dropdown.classList.add("dropdown-content-left-to-right");
   }
   
-  console.log("handle resize");
+  //console.log("handle resize");
   var left = 0;
   var node = content;
   while (node) {
-    console.log(node);
-    console.log(node.offsetLeft);
+    //console.log(node);
+    //console.log(node.offsetLeft);
     left += node.offsetLeft;
     node = node.offsetParent;
   }
   right = left + content.offsetWidth;
-  console.log(left);
-  console.log(right);
+  //console.log(left);
+  //console.log(right);
   var dropdown = content; //content.parentElement;
 
   if (prefer_left_to_right) {
@@ -144,24 +144,22 @@ function adjustLocationOfDropdownContent(content) {
 }
 
 function onDropButtonHover(event) {
-    console.log(event);
+    //console.log(event);
     var content = event.target.parentElement.lastElementChild;
     adjustLocationOfDropdownContent(content);
 }
 
-
 function init_navbar() {
-  console.log("loaded");
+  //console.log("loaded");
   var buttons = document.getElementsByClassName("dropbtn");
   var i;
   for (i = 0; i < buttons.length; i++) {
-    console.log(buttons[i]);
+    //console.log(buttons[i]);
     buttons[i].addEventListener("mouseenter",onDropButtonHover);    
   }  
 }
 
 window.addEventListener("load",init_navbar);
-
 
 function toggleDropdown(button) {
   if (firstDropdownToggle) {
@@ -170,16 +168,16 @@ function toggleDropdown(button) {
     // Close the dropdown automatically if the user clicks outside of it:
     //window.onclick = function(event) {
     window.addEventListener("click", function(event) {
-      console.log(event.target)
+      //console.log(event.target)
       if (!event.target.matches('.dropbtn') && 
           !event.target.matches('.heading')) {
         closeAllDropdowns();
       }
     });
   }
-  console.log(button);
+  //console.log(button);
   content = button.parentElement.lastElementChild
-  console.log(content)
+  //console.log(content)
   currentlyClosed = content.style.display != "block";
   closeAllDropdowns();
   if (currentlyClosed)
@@ -198,11 +196,11 @@ function closeAllDropdowns() {
 
 function adjustDropdownsHorizontally() {
   var contents = document.getElementsByClassName("dropdown-content");
-  console.log(contents);
+  //console.log(contents);
   var i;
   for (i = 0; i < contents.length; i++) {
     var rect = contents[i].getBoundingClientRect();
-    console.log(rect.top, rect.right, rect.bottom, rect.left);
+    //console.log(rect.top, rect.right, rect.bottom, rect.left);
     //console.log(contents[i]);
     //contents[i].style.display = "none";
     if (contents[i].style.left < 0)

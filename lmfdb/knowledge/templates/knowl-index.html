@@ -105,12 +105,14 @@ $(function() {
    <tr>
     <td>{{ c }}</td>
     <td>
+      <div class="knowl-flex">
       {% for k in ks %}
-        <div title="{{k.title|striptags}} [{{k.id}}]" kid="{{k.id}}">
+        <div class="knowl-flex-entry" title="{{k.title|striptags}} [{{k.id}}]" kid="{{k.id}}">
           <span>{{ k.id }}</span>
           <a href="{{ url_for('.show', ID=k.id) }}" >{{ k.title|safe }}</a>
         </div>
       {% endfor %}
+      </div>
      </td>
    </tr>
   {%- endfor %}

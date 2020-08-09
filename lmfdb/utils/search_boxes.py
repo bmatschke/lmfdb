@@ -1,6 +1,6 @@
 from .utilities import display_knowl
 from sage.structure.unique_representation import UniqueRepresentation
-
+from sage.rings.real_mpfr import RR
 
 class TdElt(object):
     _wrap_type = 'td'
@@ -25,6 +25,12 @@ class TdElt(object):
         if colspan is not None:
             kwds['colspan'] = colspan
         return self._wrap("td", **kwds)
+        
+    def px_to_em(self, length_in_px):
+        '''
+        Assume that the parent font-size 1em equals 15px for the conversion.
+        '''
+        return (RR(length_in_px)/15.0).str(digits=3) 
 
 class Spacer(TdElt):
     def __init__(self, colspan=None, advanced=False):
@@ -50,7 +56,7 @@ class RowSpacer(Spacer):
 
     def tr(self, rowspan=0, **kwds): # used for row spacers
         if rowspan is not None:
-            kwds['style'] = "height:%spx" % rowspan
+            kwds['style'] = "height:%sem" % self.px_to_em(rowspan)
         return self._wrap("tr", **kwds)
 
     def html(self, info=None):
@@ -226,10 +232,10 @@ class TextBox(SearchBox):
                 keys.append('placeholder="%s"' % self.example)
         if info is None:
             if self.width is not None:
-                keys.append('style="width: %spx"' % self.width)
+                keys.append('style="width: %sem"' % self.px_to_em(self.width))
         else:
             if self.short_width is not None:
-                keys.append('style="width: %spx"' % self.short_width)
+                keys.append('style="width: %sem"' % self.px_to_em(self.short_width))
             if self.name in info:
                 keys.append('value="%s"' % info[self.name])
         return '<input type="text" ' + " ".join(keys) + "/>"
@@ -303,10 +309,10 @@ class SelectBox(SearchBox):
             keys.append('class="advanced"')
         if info is None:
             if self.width is not None:
-                keys.append('style="width: %spx"' % self.width)
+                keys.append('style="width: %sem"' % self.px_to_em(self.width))
         else:
             if self.short_width is not None:
-                keys.append('style="width: %spx"' % self.short_width)
+                keys.append('style="width: %sem"' % self.px_to_em(self.short_width))
         opts = []
         for value, display in self.options:
             if (
@@ -379,7 +385,7 @@ class TextBoxWithSelect(TextBox):
             self.td(colspan)
             + '<div style="display: flex; justify-content: space-between;">'
             + self._label(info)
-            + '<span style="margin-left: 5px;"></span>'
+            + '<span style="margin-left: 0.3em;"></span>'
             + self.select_box._input(info)
             + "</div>"
             + "</td>"
@@ -473,9 +479,9 @@ class SearchButton(SearchBox):
             onclick = ""
         else:
             onclick = " onclick='resetStart()'"
-        btext = "<button type='submit' name='search_type' value='{val}' style='width: {width}px;'{onclick}>{desc}</button>"
+        btext = "<button type='submit' name='search_type' value='{val}' style='width: {width}em;'{onclick}>{desc}</button>"
         return btext.format(
-            width=self.width,
+            width=self.px_to_em(self.width),
             val=self.value,
             desc=self.description,
             onclick=onclick,
@@ -492,7 +498,7 @@ class SearchButtonWithSelect(SearchButton):
             self.td(colspan)
             + '<div style="display: flex; justify-content: space-between;">'
             + self._label(info)
-            + '<span style="margin-left: 5px;"></span>'
+            + '<span style="margin-left: 0.3em;"></span>'
             + self.select_box._input(info)
             + "</div>"
             + "</td>"
@@ -688,6 +694,6 @@ class SearchArray(UniqueRepresentation):
         jump_width = info.get("jump_width", getattr(self, "jump_width", 320))
         jump_egspan = info.get("jump_egspan", getattr(self, "jump_egspan", ""))
         # We don't use SearchBoxes since we want the example to be below, and the button directly to the right of the input (regardless of how big the example is)
-        return """<p><input type='text' name='jump' placeholder='%s' style='width:%spx;' value='%s'>
+        return """<p><input type='text' name='jump' placeholder='%s' style='width:%sem;' value='%s'>
 <button type='submit'>Find</button>
-<br><span class='formexample'>%s</span></p>""" % (jump_example, jump_width, info.get("jump", ""), jump_egspan)
+<br><span class='formexample'>%s</span></p>""" % (jump_example, TdElt().px_to_em(jump_width), info.get("jump", ""), jump_egspan)
