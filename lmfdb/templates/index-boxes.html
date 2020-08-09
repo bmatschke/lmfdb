@@ -5,12 +5,12 @@
 {{ KNOWL_INC('users.' + userid|lower + '.note') }}
 </div>
 
-<div class="boxes">
+<div class="grid12 boxes">
   {% for box in boxes %}
-  <table class="box">
+  <table class="box col-6">
     <tr vertical-align="top">
       <td class="img" rowspan="3" vertical-align="top">
-        <img height="150px" width="150px" src="{{ box.img }}">
+        <img src="{{ box.img }}">
       </td>
       <td class="title">
         {{ box.title }}

@@ -1185,6 +1185,34 @@ body.knowl hr {
 
 /********************* tables *****************************************/
 
+
+table td.title {
+  /*font-weight: bold;*/
+  font-size: 130%;
+  text-align: center;
+  background: {{color.box_background_title}};
+  height: 2em;
+  padding: 0.3em;
+  padding-left: 0.7em;
+  border-top-right-radius: 0.7em;
+}
+table td.content {
+  background: {{color.box_background_img}};
+  font-size: 90%;
+  padding-left: 1em;
+  padding-bottom: 0.3em;
+  vertical-align: top;
+}
+div.user {
+  font-size: 90%;
+  padding: 0px;
+}
+div.user ul li {
+  line-height: 80%;
+}
+
+
+
 /* TODO: where? do colors get used?*/
 table.tablesorter {
     font-family:arial;
@@ -1531,14 +1559,7 @@ div.maassformplot img {
 /*TODO: rather floating divs for mobile support*/
 
 #content div.boxes {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  align-items: flex-start;
-  width: 100%; 
-  padding: 0.7em;
-  margin: 0px;
-  margin-left: 1em;
+  padding: 1em;
   font-size: 1em;
 }
 #content div.boxes table.box {
@@ -1547,7 +1568,7 @@ div.maassformplot img {
   padding: 0.7em;
   border-radius: 0px;
   font-size: 1em;
-  margin-bottom: 2em;
+  margin: 1em;
 }
 #content div.boxes table.box td.img {
   background: {{color.box_background_img}};
@@ -1564,31 +1585,6 @@ div.maassformplot img {
   height: auto;
   border: 1em;
   padding: 0.3em;
-}
-  
-table td.title {
-  /*font-weight: bold;*/
-  font-size: 130%;
-  text-align: center;
-  background: {{color.box_background_title}};
-  height: 2em;
-  padding: 0.3em;
-  padding-left: 0.7em;
-  border-top-right-radius: 0.7em;
-}
-table td.content {
-  background: {{color.box_background_img}};
-  font-size: 90%;
-  padding-left: 1em;
-  padding-bottom: 0.3em;
-  vertical-align: top;
-}
-div.user {
-  font-size: 90%;
-  padding: 0px;
-}
-div.user ul li {
-  line-height: 80%;
 }
   
 #content div.boxes table.box td.content ul.list {
@@ -1609,6 +1605,14 @@ div.user ul li {
 */
 
 /*End table boxes front page*/
+
+
+
+
+
+
+
+
 
 p.short {
   margin: 0;
@@ -2310,55 +2314,61 @@ body.knowl .logo a:hover {
 
 /************** Grid layout with 12 columns ***************************/
 
- /* For mobile phones: */
+ /* For small phones: */
 [class*="col-"] {
-  width: 100%;
+  grid-column: auto / span 12;
 }
 
 @media only screen and (min-width: 600px) {
-  /* For tablets: */
-  .col-s-1 {width: 8.33%;}
-  .col-s-2 {width: 16.66%;}
-  .col-s-3 {width: 25%;}
-  .col-s-4 {width: 33.33%;}
-  .col-s-5 {width: 41.66%;}
-  .col-s-6 {width: 50%;}
-  .col-s-7 {width: 58.33%;}
-  .col-s-8 {width: 66.66%;}
-  .col-s-9 {width: 75%;}
-  .col-s-10 {width: 83.33%;}
-  .col-s-11 {width: 91.66%;}
-  .col-s-12 {width: 100%;}
+  /* For tablets, large phones: */
+  .col-s-1 { grid-column: auto / span 1; }
+  .col-s-2 { grid-column: auto / span 2; }
+  .col-s-3 { grid-column: auto / span 3; }
+  .col-s-4 { grid-column: auto / span 4; }
+  .col-s-5 { grid-column: auto / span 5; }
+  .col-s-6 { grid-column: auto / span 6; }
+  .col-s-7 { grid-column: auto / span 7; }
+  .col-s-8 { grid-column: auto / span 8; }
+  .col-s-9 { grid-column: auto / span 9; }
+  .col-s-10 { grid-column: auto / span 10; }
+  .col-s-11 { grid-column: auto / span 11; }
+  .col-s-12 { grid-column: auto / span 12; }
 }
 
 @media only screen and (min-width: 768px) {
-  /* For desktop: */
-  .col-1 {width: 8.33%;}
-  .col-2 {width: 16.66%;}
-  .col-3 {width: 25%;}
-  .col-4 {width: 33.33%;}
-  .col-5 {width: 41.66%;}
-  .col-6 {width: 50%;}
-  .col-7 {width: 58.33%;}
-  .col-8 {width: 66.66%;}
-  .col-9 {width: 75%;}
-  .col-10 {width: 83.33%;}
-  .col-11 {width: 91.66%;}
-  .col-12 {width: 100%;}
+  /* For large tablet, small laptop: */
+  .col-1 { grid-column: auto / span 1; }
+  .col-2 { grid-column: auto / span 2; }
+  .col-3 { grid-column: auto / span 3; }
+  .col-4 { grid-column: auto / span 4; }
+  .col-5 { grid-column: auto / span 5; }
+  .col-6 { grid-column: auto / span 6; }
+  .col-7 { grid-column: auto / span 7; }
+  .col-8 { grid-column: auto / span 8; }
+  .col-9 { grid-column: auto / span 9; }
+  .col-10 { grid-column: auto / span 10; }
+  .col-11 { grid-column: auto / span 11; }
+  .col-12 { grid-column: auto / span 12; }
 } 
 
 @media only screen and (min-width: 1024px) {
   /* For large desktop: */
-  .col-l-1 {width: 8.33%;}
-  .col-l-2 {width: 16.66%;}
-  .col-l-3 {width: 25%;}
-  .col-l-4 {width: 33.33%;}
-  .col-l-5 {width: 41.66%;}
-  .col-l-6 {width: 50%;}
-  .col-l-7 {width: 58.33%;}
-  .col-l-8 {width: 66.66%;}
-  .col-l-9 {width: 75%;}
-  .col-l-10 {width: 83.33%;}
-  .col-l-11 {width: 91.66%;}
-  .col-l-12 {width: 100%;}
+  .col-l-1 { grid-column: auto / span 1; }
+  .col-l-2 { grid-column: auto / span 2; }
+  .col-l-3 { grid-column: auto / span 3; }
+  .col-l-4 { grid-column: auto / span 4; }
+  .col-l-5 { grid-column: auto / span 5; }
+  .col-l-6 { grid-column: auto / span 6; }
+  .col-l-7 { grid-column: auto / span 7; }
+  .col-l-8 { grid-column: auto / span 8; }
+  .col-l-9 { grid-column: auto / span 9; }
+  .col-l-10 { grid-column: auto / span 10; }
+  .col-l-11 { grid-column: auto / span 11; }
+  .col-l-12 { grid-column: auto / span 12; }
 } 
+
+.grid12 {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-flow: row;
+}
