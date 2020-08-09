@@ -1530,42 +1530,42 @@ div.maassformplot img {
 
 /*TODO: rather floating divs for mobile support*/
 
-table.boxes {
-  table-layout: fixed;
-  width: 100%; padding: 0.7em;
+#content div.boxes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: flex-start;
+  width: 100%; 
+  padding: 0.7em;
   margin: 0px;
   margin-left: 1em;
   font-size: 1em;
-  display: table;
-  }
-table.boxes > tbody > tr > td {
-  padding: 0 3m 3em 0;
-  overflow: hidden;
-  vertical-align: top
-  }
-table.box {
+}
+#content div.boxes table.box {
   background: {{color.box_background}};
-  width: 100%; height: 100%;
+  max-width: 35em;
   padding: 0.7em;
   border-radius: 0px;
   font-size: 1em;
-  }
-table.box td.img {
+  margin-bottom: 2em;
+}
+#content div.boxes table.box td.img {
   background: {{color.box_background_img}};
-  /*width: 10em;
-  height: auto;*/
+  width: 10em;
+  height: auto;
   border: 1em;
   padding-left: 0.3em;
   padding-bottom: 0em;
   padding-top: 0.3em;
   padding-right: 0.3em;
-  }
-table.box img {
-  width: 10em;
+}
+#content div.boxes table.box img {
+  width: 100%;
   height: auto;
   border: 1em;
   padding: 0.3em;
-  }
+}
+  
 table td.title {
   /*font-weight: bold;*/
   font-size: 130%;
@@ -1575,22 +1575,23 @@ table td.title {
   padding: 0.3em;
   padding-left: 0.7em;
   border-top-right-radius: 0.7em;
-  }
+}
 table td.content {
   background: {{color.box_background_img}};
   font-size: 90%;
   padding-left: 1em;
   padding-bottom: 0.3em;
   vertical-align: top;
-  }
+}
 div.user {
   font-size: 90%;
   padding: 0px;
-  }
+}
 div.user ul li {
   line-height: 80%;
-  }
-table.box td.content ul.list {
+}
+  
+#content div.boxes table.box td.content ul.list {
   margin: 0;
   padding-left: 1em; padding-bottom: 0.3em;
   list-style-type: none;
@@ -1598,12 +1599,14 @@ table.box td.content ul.list {
   line-height: 135%;
 }
 
+/* OLD:
 @media only screen and (max-width: 1000px) {
   table.box img {
     max-width: 15vw;
     height: auto;
   }
 }
+*/
 
 /*End table boxes front page*/
 
@@ -2305,4 +2308,57 @@ body.knowl .logo a:hover {
 }
 
 
+/************** Grid layout with 12 columns ***************************/
 
+ /* For mobile phones: */
+[class*="col-"] {
+  width: 100%;
+}
+
+@media only screen and (min-width: 600px) {
+  /* For tablets: */
+  .col-s-1 {width: 8.33%;}
+  .col-s-2 {width: 16.66%;}
+  .col-s-3 {width: 25%;}
+  .col-s-4 {width: 33.33%;}
+  .col-s-5 {width: 41.66%;}
+  .col-s-6 {width: 50%;}
+  .col-s-7 {width: 58.33%;}
+  .col-s-8 {width: 66.66%;}
+  .col-s-9 {width: 75%;}
+  .col-s-10 {width: 83.33%;}
+  .col-s-11 {width: 91.66%;}
+  .col-s-12 {width: 100%;}
+}
+
+@media only screen and (min-width: 768px) {
+  /* For desktop: */
+  .col-1 {width: 8.33%;}
+  .col-2 {width: 16.66%;}
+  .col-3 {width: 25%;}
+  .col-4 {width: 33.33%;}
+  .col-5 {width: 41.66%;}
+  .col-6 {width: 50%;}
+  .col-7 {width: 58.33%;}
+  .col-8 {width: 66.66%;}
+  .col-9 {width: 75%;}
+  .col-10 {width: 83.33%;}
+  .col-11 {width: 91.66%;}
+  .col-12 {width: 100%;}
+} 
+
+@media only screen and (min-width: 1024px) {
+  /* For large desktop: */
+  .col-l-1 {width: 8.33%;}
+  .col-l-2 {width: 16.66%;}
+  .col-l-3 {width: 25%;}
+  .col-l-4 {width: 33.33%;}
+  .col-l-5 {width: 41.66%;}
+  .col-l-6 {width: 50%;}
+  .col-l-7 {width: 58.33%;}
+  .col-l-8 {width: 66.66%;}
+  .col-l-9 {width: 75%;}
+  .col-l-10 {width: 83.33%;}
+  .col-l-11 {width: 91.66%;}
+  .col-l-12 {width: 100%;}
+} 
