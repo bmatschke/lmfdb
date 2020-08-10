@@ -5,14 +5,7 @@ from sage.structure.unique_representation import UniqueRepresentation
 Update: 
   - td -> div
   - colspan and rowspan should be replaced in the future
-  - instead use css_classes such as the ones generated in 
-    SearchBox.gridspan_css_classes().
-    It would be convenient if these css classes are given in the form data
-    rather than rowspan, colspan.
-    For example in the first table of the motives/Q search,
-    it would make sense to use the css class 
-    "col-s-4" or perhaps even "col-xs-4", which make the grid having
-    3 columns (unless in the "col-s-4" case when the screen is very small).
+  - instead use css_classes as the parameter css_grid.
 '''
 
 class DivElt(object):
@@ -51,8 +44,9 @@ class EmptySpacer(DivElt):
     We should use this one for empty space in the grid, via css classes.
     '''
     
-    def __init__(self, css_grid=None, advanced=False):
-        self.css_grid = get_css_grid_classes()["default"] if css_grid is None else css_grid;
+    def __init__(self, css_grid=None, advanced=False, css_class=None):
+        self.css_grid = get_css_grid_classes()["default"] if css_grid is None else css_grid
+        self.css_class = "" if css_class is None else css_class
         self.advanced = advanced;
     
     def input_html(self, info=None):
@@ -61,11 +55,24 @@ class EmptySpacer(DivElt):
     def label_html(self, info=None):
         return ""
 
-    def label_html(self, info=None):
+    def example_html(self, info=None):
         return ""
         
     def html(self, info=None):
-        return self.wrap(classes=[self.css_grid])    
+        label = self.label_html(info)
+        input_ = self.input_html(info)
+        example = self.example_html(info)
+        inner_html = ""
+        if label != None:
+            inner_html += label
+        if input_ != None:
+            inner_html += input_
+        if example != None:
+            inner_html += example
+            
+        result = self.wrap(classes=[self.css_class,self.css_grid],
+                           inner_html=inner_html)
+        return result
         
 #we keep this for legacy, colspan is not used anymore
 class Spacer(EmptySpacer):
@@ -93,7 +100,8 @@ class BasicSpacer(Spacer):
         self.msg = msg
 
     def input_html(self, info=None):
-        return self.wrap(self.colspan,inner_html=self.msg,classes=["spacer-msg"])
+        return self.msg 
+        #return self.wrap(self.colspan,inner_html=self.msg,classes=["spacer-msg"])
 
 #legacy:
 class CheckboxSpacer(Spacer):
@@ -131,7 +139,6 @@ class SearchBox(EmptySpacer):
         css_class=None,
         css_grid=None
     ):
-        super().__init__(css_grid=css_grid,advanced=advanced)
         self.name = name
         self.id = id
         self.label = label
@@ -153,6 +160,7 @@ class SearchBox(EmptySpacer):
         self.width = width
         self.short_width = self.width if short_width is None else short_width
         self.css_class = "search-box" if css_class is None else css_class
+        super().__init__(css_grid=css_grid,advanced=advanced,css_class=self.css_class)
 
     def _label(self, info):
         label = self.label if info is None else self.short_label
@@ -273,7 +281,7 @@ class TextBox(SearchBox):
         #if info is None:
         #    if self.width is not None:
         #        keys.append('style="width: %sem"' % px_to_em(self.width))
-        else:
+        if info is not None:
             #if self.short_width is not None:
             #    keys.append('style="width: %sem"' % px_to_em(self.short_width))
             if self.name in info:
@@ -596,12 +604,14 @@ class SearchArray(UniqueRepresentation):
         else:
             return self.refine_array
 
-    def _print_table(self, grid, info, layout_type):
+    def _print_grid(self, grid, info, layout_type):
         if not grid:
             return ""
             
-        print("grid:",grid)
+        #print("grid:",grid)
+        print("--- info:",info)
         
+        #In the new grid layout, we basically flatten the list of lists grid:
         inner_html = ""
         for row in grid:
             print("row:",row)
@@ -613,53 +623,6 @@ class SearchArray(UniqueRepresentation):
                 inner_html += element.html(info)
         result = '<div class="grid12">' + inner_html + "</div>"
         return result
-        
-        #OLD:
-        '''
-        lines = []
-        for row in grid:
-            if isinstance(row, Spacer):
-                lines.append("\n      " + row.html())
-            elif layout_type == 'vertical':
-                if any(box.has_label(info) for box in row):
-                    labels = [box.label_html(info) for box in row]
-                    lines.append("".join("\n      " + label for label in labels))
-                inputs = [box.input_html(info) for box in row]
-                lines.append("".join("\n      " + inp for inp in inputs))
-            elif layout_type == 'horizontal':
-                cols = []
-                for box in row:
-                    cols.append(box.label_html(info))
-                    cols.append(box.input_html(info))
-                    ex = box.example_html(info)
-                    if ex:
-                        cols.append(ex)
-                lines.append("".join("\n      " + col for col in cols))
-            elif layout_type == 'box':
-                top_cols = []
-                bot_cols = []
-                for box in row:
-                    top_cols.append(box.label_html(info))
-                    bot_cols.append(box.input_html(info))
-                    ex = box.example_html(info)
-                    if ex:
-                        #top_cols.append('<td width="%s"></td>' % self._ex_col_width)
-                        top_cols.append('<span width="%s"></span>' % self._ex_col_width)
-                        bot_cols.append(ex)
-                lines.append("".join("\n      " + col for col in top_cols))
-                lines.append("".join("\n      " + col for col in bot_cols))
-        #return (
-        #    '  <table border="0">'
-        #    + "".join("\n    <tr>" + line + "\n    </tr>" for line in lines)
-        #    + "\n  </table>"
-        #)
-        
-        return (
-               ' <div class="grid12">'
-             + "".join("\n     " + line + "\n" for line in lines)
-             + '\n  </div>'
-        )
-        '''
         
     def _st(self, info):
         if info is not None:
@@ -715,10 +678,10 @@ class SearchArray(UniqueRepresentation):
 
     def main_table(self, info=None):
         layout_type = "horizontal" if info is None else "vertical"
-        s = self._print_table(self.main_array(info), info, layout_type=layout_type)
+        s = self._print_grid(self.main_array(info), info, layout_type=layout_type)
         dstats = self.dynstats_array(info)
         if dstats:
-            s += "\n" + self._print_table(dstats, info, layout_type=layout_type)
+            s += "\n" + self._print_grid(dstats, info, layout_type=layout_type)
         return s
 
     def has_advanced_inputs(self, info=None):
@@ -731,13 +694,14 @@ class SearchArray(UniqueRepresentation):
         return False
 
     def buttons(self, info=None):
+        caption = None
         st = self._st(info)
         buttons = []
         if st == "DynStats":
             buttons.append(SearchButton("DynStats", "Generate statistics"))
         else:
             if st is None:
-                buttons.append(BasicSpacer("Display:"))
+                caption = "Display:"
             for but in self.search_types(info):
                 if isinstance(but, DivElt):
                     buttons.append(but)
@@ -753,7 +717,18 @@ class SearchArray(UniqueRepresentation):
                         options=sort,
                         width=170)
                     buttons.append(sort_box)
-        return self._print_table([RowSpacer(22), buttons], info, layout_type="vertical")
+        #OLD:
+        #return self._print_grid([RowSpacer(22), buttons], info, layout_type="vertical")
+
+        button_container = '<div class="button-container">' + \
+                           " ".join(but.html() for but in buttons) + \
+                           '</div>'          
+        if caption is None:
+            result = button_container
+        else:
+            result = '<table width="100%"><tr><td width="10%">' + caption + '</td>' + \
+                    '<td>' + button_container + '</td></tr></table>'
+        return '<p>' + result + '</p>'
 
     def html(self, info=None):
         return "\n".join([self.hidden_inputs(info), self.main_table(info), self.buttons(info)])

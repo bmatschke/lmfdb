@@ -6,16 +6,37 @@ t{# template defs #}
 
 {# end defs #}
 
-/********************** Fonts *****************************************/
+/* About the layout of this CSS file
+ * ---------------------------------
+ * 
+ * It is ordered by CSS-specificity;
+ * starting with low specific attributes first.
+ * 
+ * 1. Variables 
+ * 2. Generic element attributes:
+ *    This is the generic styling of the content's elements,
+ *    allowing further elements to inherit parts of their styling.
+ *    (No classes and IDs here!)
+ * 3. Generic classes
+ * 4. IDs 
+ * 
+ */
 
-/*JV's preference*/
-:root {
-/*
-  --main-font-family: sans-serif;
-*/
-}
+/* TODOs:
+ * 
+ * - Should the lengths in media queries be in rem? 
+ *   (for consistency with remainder) 
+ * 
+ * 
+ */
 
-/*BM's preference:*/
+/**********************************************************************/
+/**********************************************************************/
+/**********************************************************************/
+/* 1. ------------------------------------------------------------------
+ *                            Variables
+ *
+ */
 
 :root {
   --main-font-family: Georgia, 'Bitstream Charter', serif; 
@@ -24,13 +45,47 @@ t{# template defs #}
 }
 
 :root {
-  font-size: 1em;
+  font-size: 1em; /* yes, it's in some sense a variable: the parent for rem, the root of em. */
+}
+
+/*
+@media only screen and (max-width: 800px) {
+  :root,
+  body {
+    font-size: 2vw;
+  }
+}
+*/
+
+@media only screen and (max-width: 600px) {
+  :root,
+  body {
+    font-size: 3vw;
+  }
 }
 
 
-* { zoom: 0; }
 
-img { border: 0; }
+/**********************************************************************/
+/**********************************************************************/
+/**********************************************************************/
+/* 2. ------------------------------------------------------------------
+ *                           Generic elements
+ *
+ * 
+ * Put here all generic definitions for elements and pseudo-elements
+ * for the main content of the page. 
+ *
+ */
+
+
+* { 
+  /* zoom: 0; */ /* Not recommended for production use; better is the viewport meta tag that we have by now */ 
+}
+
+img {
+  border: 0;
+}
 
 body {
     margin: 0em;
@@ -39,15 +94,197 @@ body {
     color: {{color.body_text}};
     background-color: {{color.body_background}};
 }
-td.title {
-    color: {{color.box_tab_text}};
+
+a {
+    color: {{color.col_link}};
+    text-decoration: none;
+    font-family: var(--main-font-family);
 }
-h2.link > a {
-    color: {{color.box_tab_text}};
+
+a:visited { color: {{color.a_text_visited}}; }
+a:hover {
+    color: {{color.a_text_hover}};
+    background: {{color.a_background_hover}};
 }
+
+input, 
+textarea {
+  padding: 0.2em;
+  border-radius: 0.3em;
+}
+
+input, 
+textarea, 
+button, 
+select {
+  border: 1px solid #ddd; /*{{color.input_border}};*/
+  font-size: 1rem;
+}
+
+button, 
+select {
+  /*font-size: 1rem;*/ /* use rem here, as some buttons are used within some <h2> */
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.25em;
+  cursor: pointer;
+  min-width: 5em;
+}
+
+button {
+  /* background: {{color.button_background}}; */
+}
+
+select {
+   /*background: {{color.select_background}};*/
+   background: #fff;
+}
+
+
+form button:hover,
+form select:hover {
+    background:    {{color.button_background_hover}};
+    border: 1px solid #aaa; /*{{color.button_border_hover}};*/
+}
+
+table {
+    border: 0;
+    border-collapse:collapse;
+}
+
+table th {
+  color: {{color.a_text}};
+  padding-bottom: 0.3em;
+  font-weight: normal;
+  font-size: 120%;
+  line-height: 130%;
+}
+
+table th,
+table td {
+  padding-left:  0.7em;
+  padding-right: 0.7em;
+}
+
+table a:hover {
+    background: {{color.table_background_hover}};
+}
+
+
+
+/**********************************************************************/
+/**********************************************************************/
+/**********************************************************************/
+/* 2. ------------------------------------------------------------------
+ *                 Generic classes (and pseudo-classes)
+ *
+ * 
+ * Put here all generic definitions for elements and pseudo-elements
+ * for the main content of the page. 
+ *
+ */
+
+
 .katex {
     font-size: 1em !important;
 }
+
+@media (hover: hover) {
+  .no-hover-available {
+    display: none !important;
+  }
+}
+@media not (hover: hover) {
+  .hover-available {
+    display: none !important;
+  }
+}
+
+/************** Grid layout with 12 columns ***************************/
+
+.grid12 {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-flow: row;
+}
+
+/* For small phones: */
+[class*="col-"],
+col-all {
+  grid-column: auto / span 12;
+}
+
+.col-xs-1 { grid-column: auto / span 1; }
+.col-xs-2 { grid-column: auto / span 2; }
+.col-xs-3 { grid-column: auto / span 3; }
+.col-xs-4 { grid-column: auto / span 4; }
+.col-xs-5 { grid-column: auto / span 5; }
+.col-xs-6 { grid-column: auto / span 6; }
+.col-xs-7 { grid-column: auto / span 7; }
+.col-xs-8 { grid-column: auto / span 8; }
+.col-xs-9 { grid-column: auto / span 9; }
+.col-xs-10 { grid-column: auto / span 10; }
+.col-xs-11 { grid-column: auto / span 11; }
+.col-xs-12 { grid-column: auto / span 12; }
+
+/* For tablets, large phones: */
+@media only screen and (min-width: 600px) {
+  .col-s-1 { grid-column: auto / span 1; }
+  .col-s-2 { grid-column: auto / span 2; }
+  .col-s-3 { grid-column: auto / span 3; }
+  .col-s-4 { grid-column: auto / span 4; }
+  .col-s-5 { grid-column: auto / span 5; }
+  .col-s-6 { grid-column: auto / span 6; }
+  .col-s-7 { grid-column: auto / span 7; }
+  .col-s-8 { grid-column: auto / span 8; }
+  .col-s-9 { grid-column: auto / span 9; }
+  .col-s-10 { grid-column: auto / span 10; }
+  .col-s-11 { grid-column: auto / span 11; }
+  .col-s-12 { grid-column: auto / span 12; }
+}
+
+/* For large tablet, small laptop: */
+@media only screen and (min-width: 768px) {
+  .col-1 { grid-column: auto / span 1; }
+  .col-2 { grid-column: auto / span 2; }
+  .col-3 { grid-column: auto / span 3; }
+  .col-4 { grid-column: auto / span 4; }
+  .col-5 { grid-column: auto / span 5; }
+  .col-6 { grid-column: auto / span 6; }
+  .col-7 { grid-column: auto / span 7; }
+  .col-8 { grid-column: auto / span 8; }
+  .col-9 { grid-column: auto / span 9; }
+  .col-10 { grid-column: auto / span 10; }
+  .col-11 { grid-column: auto / span 11; }
+  .col-12 { grid-column: auto / span 12; }
+} 
+
+/* For large desktop: */
+@media only screen and (min-width: 1024px) {
+  .col-l-1 { grid-column: auto / span 1; }
+  .col-l-2 { grid-column: auto / span 2; }
+  .col-l-3 { grid-column: auto / span 3; }
+  .col-l-4 { grid-column: auto / span 4; }
+  .col-l-5 { grid-column: auto / span 5; }
+  .col-l-6 { grid-column: auto / span 6; }
+  .col-l-7 { grid-column: auto / span 7; }
+  .col-l-8 { grid-column: auto / span 8; }
+  .col-l-9 { grid-column: auto / span 9; }
+  .col-l-10 { grid-column: auto / span 10; }
+  .col-l-11 { grid-column: auto / span 11; }
+  .col-l-12 { grid-column: auto / span 12; }
+} 
+
+.row-span-2 {
+  grid-row: auto / span 2;
+}
+.row-span-3 {
+  grid-row: auto / span 3;
+}
+.row-span-4 {
+  grid-row: auto / span 4;
+}
+
+/********************* less generic ones ******************************/
 
 /* Bound the width of the page content */
 .horizontal-container {
@@ -59,94 +296,8 @@ h2.link > a {
     padding: 0 0.7em; /* needed for small screens */
 }
 
-/********************* content (in homepage.html) *********************/
-
-#content  h1
-{
-    /*font-size: 130%;
-    font-weight: bold;*/
-    font-size: 170%;
-    font-weight: normal;
-    color: {{ color.content_text }};
-    font-family: var(--main-font-family);
-    text-decoration: none;
-    margin: 1.3em 0 1em 0;
-}
-#content > h1:first-child,
-#content > h2:first-child {
-    margin-top: 0;
-}
-
-#content  h2
-{
-    font-family: var(--main-font-family);
-    text-decoration: none;
-    font-size: 150%;
-    text-align: left;
-    font-weight: normal;
-    color: {{color.a_text}};
-    padding: 0.3em 0 0.3em 0;
-    margin: 1.3em 0 0.7em 0;
-}
-#content  h3, 
-td.table_h2 {
-    font-family: var(--main-font-family);
-    text-decoration: none;
-    font-size: 130%;
-    text-align: left;
-    font-weight: normal;
-    padding: 0.3em 0 0.3em 0;
-    color: {{color.a_text}};
-    margin: 1em 0 0.3em 0;
-}
-
-#content  h4 {
-    font-family: var(--main-font-family);
-    text-decoration: none;
-    font-size: 110%;
-    text-align: left;
-    font-weight: normal;
-    padding: 0.3em 0 0.3em 0;
-    color: {{color.a_text}};
-    margin: 1em 0 0.3em 0;
-}
-
-#content > h2 a[knowl], 
-#content > h3 a[knowl], 
-#content > h4 a[knowl] {
-    color: {{color.col_main}};
-}
-
-#content p {
-  padding-left: 1ch;
-}
-
-#content ul {
-  padding-left: 1.7em;
-}
-
-#content  h2.inline,
-#content  h3.inline,
-#content  h4.inline {
-    font-weight: normal;
-    display: inline;
-    padding-right: 0.7em;
-    margin: 0.3em 0 0.7em 0;
-}
-
-#content > ul {
-    margin-top: 0.7em;
-    margin-bottom: 0.7em;
-}
-
-
-/* Body links, sidebar links, and sidebar header text. */
-a {
-    color: {{color.col_link}};
-    text-decoration: none;
-    font-family: var(--main-font-family);
-}
-
+/* TODO: It would be better/safer if all knowl hyperlinks 
+ * (that open the knowl within the page) get a class name. */
 a[knowl] {
     color: {{color.col_a_knowl}};
 }
@@ -157,6 +308,14 @@ a.inactive {
 
 a.inactive:hover {
     background: inherit;
+}
+
+h2.link > a {
+    color: {{color.box_tab_text}};
+}
+
+td.title {
+    color: {{color.box_tab_text}};
 }
 
 table tbody tr.trivial {
@@ -171,80 +330,6 @@ table tbody tr.trivial a:hover {
     background: inherit;
 }
 
-#content a {
-}
-#content .announce {
-  font-size: 1.2em;
-  padding: 0.7em 1.3em;
-  margin: 1.3em 0em;
-  border-left: 0.2em solid {{ color.content_border }};
-  background: {{ color.content_background }};
-  line-height: 1.5em;
-}
-#content .announce.red {
-    border-left: 0.2em solid {{color.content_border_red}};
-    background: {{color.content_background_red}};
-}
-
-/*
-#search-topright {
-  display: inline;
-}
-#search-topright input {
-  font-size: 75%;
-  border: 1px solid {{ color.search_border }};
-  padding: 1px;
-  background: {{color.search_background}} ;
-  position: relative;
-  top: -1px;
-}
-*/
-
-/* icon in front of external links */
-#content a[target="_blank"]:before {
-  content: url("static/images/url-ext.gif");
-  padding-right: 0.13em;
-}
-
-body.checklist {
- font-size: 70%;
-}
-
-span.disable-links {
-  pointer-events: none;
-}
-
-a:visited { color: {{color.a_text_visited}}; }
-a:hover {
-    color: {{color.a_text_hover}};
-    background: {{color.a_background_hover}};
-}
-
-
-
-
-/* TODO: what? */
-#flashes p {
-  border-left: 1em solid {{color.knowl_border}};
-  padding: 0.3em;
-  background: {{color.knowl_background}};
-}
-
-#flashes p.error {
-  margin: 1em 0;
-  font-size: 95%;
-  border: 0;
-  border-left: 1em solid {{color.flashes_border}};
-  background: {{color.flashes_background}};
-}
-
-#main {
-  margin:  0em 0em 0em 0em;
-  /*padding: 0em 0em 0em 0.7em;*/
-  padding: 0em;
-  min-height: 45em;
-}
-
 .debug {
     background: #FF9;
     font-style: italic;
@@ -256,152 +341,14 @@ body > .debug {
 }
 
 
-/********** Property boxes (on right hand side) ***********************/
-
-#properties {
-    z-index: 99;
-    font-size: 85%;
-    font-family: var(--main-font-family);
-    float: right;
-    clear: right;
-    margin: 0.7em 0em 1.3em 1.3em;
-    position: relative;
-    border: 1px solid {{color.properties_border}};
-    border: 0;
-    padding: 0em;
-    min-width: 14.5em;
-}
-.properties-body div, 
-.properties-body p {
-  padding: 0.3em;
-}
-.properties-body h1, 
-.properties-body h2 {
-    color: {{ color.properties_header_text }};
-    padding: 0.3em;
-    margin: 0;
-    margin-bottom: 0;
-    background: {{ color.properties_text_h1h2 }};
-}
-.properties-body h1 {
-    font-size: 120%;
-}
-.properties-body h2 {
-    font-size: 110%;
-    margin-top: 0.7em;
-}
-.properties-body h2:first-child { 
-  margin-top: 0em; 
-}
-.properties-body table th,
-.properties-body table td {
-  padding: 0.13em 0.7em;
-}
-.properties-body table tr:last-child td {
-  padding-bottom: 0.5em;
-}
-.properties-body table tr:first-child td {
-  padding-top: 0.5em;
-}
-.properties-body .label {
-  /*font-weight: bold;*/
-}
-.properties-body ul {
-  margin: 0em;
-  padding: 0em;
+body.checklist {
+ font-size: 70%;
 }
 
-.properties-body ul:last-child li:last-child a {
-  border-bottom-left-radius: 0.7em;
-}
-.properties-body li {
-  display: block;
-  padding: 0.3em 0 0 0.5em;
-  margin: 0;
-}
-.properties-body li:first-child {
-  padding-top: 0.5em;
-}
-.properties-body li:last-child {
-  padding-bottom: 0.3em;
-}
-.properties-body li a {
- display: block;
-/*
- padding: 0.3em;
-*/
+span.disable-links {
+  pointer-events: none;
 }
 
-.properties-body {
-  margin: 0em;
-  padding: 0em;
-  background: {{color.properties_body_background}};
-  min-width: 13em;
-  border-bottom-left-radius: 0.7em;
-  max-height: 29; /* 21 items with padding: 22 + 21*19 + 9 */
-  overflow-y: auto; /* scrollbar if we overflow */
-}
-.properties-header {
-  border-top-left-radius: 0.7em;
-  margin: 0;
-  margin-top: 0.7em;
-  padding: 0.4em 1em;
-  color: {{ color.properties_header_text }};
-  background: {{ color.properties_header_background }};
-  font-size: 120%;
-  font-weight: normal;
-  cursor: pointer;
-  padding-right: 2em;
-}
-#properties-collapser {
-  cursor: pointer;
-  color: {{ color.properties_collapser }};
-  font-size: 1.2em;
-  font-weight: bold;
-  text-align: center;
-  border: 1px solid ;
-  width: 1.5em;
-  height: 1.5em;
-  position: absolute;
-  top:   0.95em;
-  right: 0.8em;
-  {{ BORDER_RADIUS(1.3) }}
-}
-
-@media only screen and (max-width: 600px) {
-  #properties {
-    z-index: 0;
-    font-size: 85%;
-    font-family: var(--main-font-family);
-    float: none;
-    display: block;
-    margin: 0.3em 0em 0.3em 0em;
-    padding: 0.1em;
-    position: relative;
-    border: 1px solid {{color.properties_border}};
-    border: 0;
-    padding: 0;
-  }
-  #properties-collapser {
-    top: 0.25em;
-  }
-  .properties-header {
-    border-top-right-radius: 0.7em;
-  }
-}
-
-
-
-#content {
-  margin-top: 1.3em;
-  font-size: 95%;
-  line-height: 135%;
-  padding-right: 0.7em;
-}
-
-#content blockquote
-{
-}
 
 .visible {
     visibility: visible;
@@ -422,126 +369,13 @@ body > .debug {
     display: None;
 }
 
-
-/************************** Forms *************************************/
-
-/*TODO: where do the following show up? -> in the forms*/
-.formexample {
-   font-size: 80%;
-   font-style: italic;
-   color: #555; /*{{color.grey}};*/
-   text-align: right;
-   font-family: var(--control-font-family);
-}
-
-.search-box {
-  padding: 0.4em 1.5em 0.1em 1.5em;
-  border: 0.5em solid #fff;
-  background: #fafafa;
-}
-.search-box td {
-  padding: 0;
-}
-.search-box select {
-  width: 100%;
-}
-
-.form-inputs input {
-  width: calc(100% - 2 * 0.3em);
-  /*padding-right: 0 !important;*/
-}
-/*
-.TextBoxWithSelect .form-inputs {
-  display: block;
-  white-space: no-wrap;
-  overflow: hidden;
-  width: 100%;
-}
-.TextBoxWithSelect input {
-  width: 100%;
-}
-*/
-.TextBoxWithSelect select {
-  width: auto;
-}
-.TextBoxWithSelect td:first-child {
-  padding-right: 1em;;
-}
-
-.DoubleSelectBox td:first-child {
-  padding-right: 0.5em;
-}
-.DoubleSelectBox td:last-child {
-  padding-left: 0.5em;
-}
-.DoubleSelectBox select {
-  width: 100%;
-}
-
-.CheckboxSpacer {
-  padding: 0.5em 1em 1em 1.5em;
-}
-.CheckboxSpacer input {
-  margin-top: 0.2em;
-}
-
 .errmsg {
    font-size: 80%;
    font-style: bold;
    color: {{color.red}};
 }
 
-td.forminfo {
-   font-size: 80%;
-   font-style: italic;
-   color: #333333;
-   vertical-align: top;
-}
 
-input, textarea {
-  border: 1px solid #aaa; /*{{color.input_border}};*/
-  font-size: 110%;
-  padding: 0.2em;
-  border-radius: 0.3em;
-}
-
-/* TODO: above? */
-
-button, 
-select {
-  font-size: 1rem; /* use rem here, as some buttons are used within some <h2> */
-  padding: 0.2rem 0.4rem;
-  border-radius: 0.25em;
-  cursor: pointer;
-  border: 1px solid #aaa; /*{{color.button_border}};*/
-  min-width: 5em;
-}
-
-button {
-   background: {{color.button_background}};
-}
-
-select {
-   /*background: {{color.select_background}};*/
-   background: #fff;
-}
-
-body.knowl form button,
-body.knowl form select {
-  border: 1px solid {{color.knowl_thin_border}};
-  background: {{color.knowl_border}};
-}
-body.knowl form textarea,
-body.knowl form input {
-    border: 1px solid {{color.knowl_thin_border}};
-}
-
-form button:hover,
-form select:hover, 
-#advancedtoggle:hover {
-    background:    {{color.button_background_hover}};
-    border: 1px solid {{color.button_border_hover}};
-}
 
 button.inactive {
     background: {{color.button_background_inactive}};
@@ -558,38 +392,68 @@ button.inactive:hover {
     background-color: {{color.col_main_ll}}; <!-- col_main_ll -->
 }
 
-body.knowl form button:hover,
-body.knowl form select:hover {
-    background:    {{color.knowl_hover}};
-    border: 1px solid {{color.knowl_thin_border}};
+div.center {
+    text-align: center;
 }
+
+/* TODO: where? */
+div.literature {
+    margin-top: 0.7em;
+    font-size: 90%;
+    color: {{color.black}};
+}
+
+div.where {
+    margin: 0.7em 0 0.7em 0;
+}
+
+.emph {
+    font-style: italic;
+}
+
+.redhighlight {
+    color: {{color.grey}};
+}
+
+.bluehighlight {
+  color: blue;
+}
+
+.positivezero {
+    color: {{color.black}};
+}
+
+.highlight {
+  /* text-decoration: underline; */
+  font-weight: bold;
+}
+
+
+/************* Generic table classes **********************************/
 
 form table td.button {
     padding-top: 0.5em
 }
 
-table {
-    border: 0;
-    border-collapse:collapse;
+table td.top {
+  vertical-align:top;
+}
+table td.spacing {
+  height: 1.3em;
 }
 
-table th {
-  color: {{color.a_text}};
-  padding-bottom: 0.3em;
-  font-weight: normal;
-  font-size: 120%;
-  line-height: 130%;
+td.forminfo {
+   font-size: 80%;
+   font-style: italic;
+   color: #333333;
+   vertical-align: top;
+}
+td.right {
+    text-align: right;
 }
 
-table th, table td {
-  padding-left:  0.7em;
-  padding-right: 0.7em;
-}
 
-table.newforms {
-/* to put a table after the properties box */
-    clear: right;
-}
+/************************ table.ntdata ********************************/
 
 table.ntdata .knowl-header a,
 table.ntdata .knowl-footer a,
@@ -605,13 +469,6 @@ table.ntdata a {
   display: block;
 }
 
-table.chardata a {
-  display: inline;
-}
-
-table td.top {
-  vertical-align:top;
-}
 table.ntdata td {
   white-space: nowrap;
   padding-top: 0.2em;
@@ -619,17 +476,6 @@ table.ntdata td {
   padding-right: 0.5em;
   padding-left: 0.5em;
 }
-
-table a:hover {
-    background: {{color.table_background_hover}};
-}
-
-
-
-table td.spacing {
-  height: 1.3em;
-}
-
 
 table.ntdata {
   width: auto;
@@ -693,213 +539,6 @@ table.ntdata tr.endsection {
     border-bottom: 1px solid {{color.table_ntdata_border}};
 }
 
-table.right_align_table td {
-  text-align: right;
-}
-
-
-
-
-table.number_table td {
-  text-align: right;
-  border: 0;
-  cellpadding: 0.2em;
-}
-
-
-table.number_table {border-collapse:collapse;}
-
-table.number_table tr:nth-child(even) {
-    background: {{color.table_ntdata_background_cn}};
-}
-
-table.number_table thead th {
-  border-bottom: 0.13em solid {{ color.table_ntdata_border }};
-}
-
-table.number_table thead th:first-child{
-border-right: 0.13em solid {{ color.table_ntdata_border }};
-}
-
-table.number_table tbody th  {
-  border-right: 0.13em solid {{ color.table_ntdata_border }};
-}
-
-
-/* TODO: where? */
-div.literature {
-    margin-top: 0.7em;
-    font-size: 90%;
-    color: {{color.black}};
-}
-
-div.where {
-    margin: 0.7em 0 0.7em 0;
-}
-
-.emph {
-    font-style: italic;
-}
-
-.redhighlight {
-    color: {{color.grey}};
-}
-
-.bluehighlight {
-  color: blue;
-}
-
-.positivezero {
-    color: {{color.black}};
-}
-
-
-.highlight {
-  /* text-decoration: underline; */
-  font-weight: bold;
-}
-
-/******************** Knowls ******************************************/
-
-/** page wide defs for knowls, the *[knowl] is a selector for
- *  all elements, that have a knowl attribute set to any value */
-table .knowl-link {
-  display: inline;
-  border-bottom: 1px dotted {{ color.knowl_hyper_text }};
-  border-radius: 0em;
-  padding: 1px;
-}
-.knowl-bar {
-  white-space: nowrap;
-  background: {{ color.knowl_background}};
-  padding: 0.3em 0.7em;
-  margin-bottom: 0.3em;
-  border-bottom: 1px solid {{ color.knowl_thin_border }};
-  border-top-left-radius: 0.7em;
-}
-.knowl-bar button,
-.knowl-bar input,
-.knowl-bar form {
-  font-size: small;
-  display: inline;
-  margin: 0em 0.13em;
-}
-#knowl-search input {
-  font-size: small;
-  background: {{ color.knowl_background }};
-}
-.knowl-bar a {
-  padding: 0.13em 0.3em;
-}
-.knowl-editmode-sep {
-  padding: 0.3em;
-  margin: 2em 0;
-  border-bottom: 1px solid {{ color.knowl_thin_border }};
-  background: {{ color.knowl_background}};
-  color: {{ color.knowl_hyper_text }};
-  font-weight: bold;
-}
-.knowl-inc-edit {
-  margin-bottom: 0.7em;
-  border-bottom: 0.13em solid {{ color.knowl_border}};
-  font-size: x-small;
-  text-align: right;
-  line-height: 100%;
-}
-.knowl-inc-edit a {
-  padding: 0.2em 0.3em 0em 0.3em;
-  background: {{ color.knowl_l_1 }};
-  border-top-left-radius: 0.3em;
-}
-.knowl {
-  padding: 0;
-}
-/* knowl-index is the big table on the main knowledge page */
-
-/*
-#knowl-index td div > a {
-  padding: 0em;
-  position: absolute;
-  top: 0.8em;
-  width: 11em;
-  height: 4.3em;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-#knowl-index td div > span {
-  font-size: xx-small;
-  color: {{color.grey}};
-  position: absolute;
-  top: 0.13em;
-  line-height: 1em;
-  width: 170px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-#knowl-index td div {
-  position: relative;
-  width: 11em;
-  height: 4.3em;
-  float: left;
-  min-height: 4em;
-  padding: 0.13em;
-  margin: 1px;
-  border-radius: 0.13em;
-}
-#knowl-index td div:hover {
-  background: {{ color.knowl_hover }};
-  cursor: pointer;
-}
-#knowl-index td {
-  padding: 0;
-}
-*/
-body.knowl table.ntdata thead tr {
-  background: {{ color.knowl_background }};
-  border-bottom: 0.13em solid {{ color.knowl_underline }};
-}
-body.knowl table.ntdata tr:nth-child(odd) {
- background: {{ color.knowl_background }};
-}
-body.knowl table.ntdata tr:nth-child(even) {
-    background: {{color.white}};
-}
-
-
-table.mfdata {
-  width: auto;
-  border: 0;
-  margin-top: 1em;
-  margin-bottom: 1em;
-}
-table.mfdata thead tr {
-  border-bottom: 0.13em solid {{ color.table_ntdata_border }};
-}
-
-table.mfdata td {
-    vertical-align: middle;
-}
-
-table.mfdata tr.oddrow {
-    background: {{color.table_ntdata_background_2}};
-}
-table.mfdata tr.evenrow {
-    background: {{color.white}};
-}
-
-table.dimgrid thead tr {
-    background: {{color.table_ntdata_background_2}};
-    border-bottom: 0.13em solid {{ color.table_ntdata_border }};
-}
-table.dimgrid thead tr th.blank {
-    background: {{color.white}};
-    border-bottom: 0.13em solid {{color.table_ntdata_background_2}} ;
-}
-table.dimgrid tbody tr th.left {
-    border-right: 0.13em solid {{ color.table_ntdata_border }};
-    background: {{color.table_ntdata_background_2}};
-}
-
 table.ntdata th.left {
     border-right: 0.13em solid {{color.table_ntdata_border}};
     background: {{color.table_ntdata_background_2}};
@@ -937,13 +576,7 @@ table.ntdata .border-bottom {
 table.ntdata .center {
     text-align: center;
 }
-div.center {
-    text-align: center;
-}
 table.ntdata .right {
-    text-align: right;
-}
-td.right {
     text-align: right;
 }
 table.ntdata .middle {
@@ -966,6 +599,91 @@ table.ntdata td.light {
     background: white;
 }
 
+/******************** table chardata **********************************/
+
+table.chardata a {
+  display: inline;
+}
+
+/******************** table right *************************************/
+
+table.right_align_table td {
+  text-align: right;
+}
+
+/******************** table number ************************************/
+
+table.number_table td {
+  text-align: right;
+  border: 0;
+  cellpadding: 0.2em;
+}
+
+table.number_table {border-collapse:collapse;}
+
+table.number_table tr:nth-child(even) {
+    background: {{color.table_ntdata_background_cn}};
+}
+
+table.number_table thead th {
+  border-bottom: 0.13em solid {{ color.table_ntdata_border }};
+}
+
+table.number_table thead th:first-child{
+border-right: 0.13em solid {{ color.table_ntdata_border }};
+}
+
+table.number_table tbody th  {
+  border-right: 0.13em solid {{ color.table_ntdata_border }};
+}
+
+/******************** table newforms **********************************/
+
+table.newforms {
+/* to put a table after the properties box */
+    clear: right;
+}
+
+/******************** table mfdata ************************************/
+
+table.mfdata {
+  width: auto;
+  border: 0;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+table.mfdata thead tr {
+  border-bottom: 0.13em solid {{ color.table_ntdata_border }};
+}
+
+table.mfdata td {
+    vertical-align: middle;
+}
+
+table.mfdata tr.oddrow {
+    background: {{color.table_ntdata_background_2}};
+}
+table.mfdata tr.evenrow {
+    background: {{color.white}};
+}
+
+/******************** table dimgrid ************************************/
+
+table.dimgrid thead tr {
+    background: {{color.table_ntdata_background_2}};
+    border-bottom: 0.13em solid {{ color.table_ntdata_border }};
+}
+table.dimgrid thead tr th.blank {
+    background: {{color.white}};
+    border-bottom: 0.13em solid {{color.table_ntdata_background_2}} ;
+}
+table.dimgrid tbody tr th.left {
+    border-right: 0.13em solid {{ color.table_ntdata_border }};
+    background: {{color.table_ntdata_background_2}};
+}
+
+/******************** table knowl_review ******************************/
+
 table.knowl_review tr:nth-child(odd) td {
     background: {{color.white}};
     padding-top: 2em;
@@ -981,9 +699,13 @@ table.euler {
     margin-right:auto;
 }
 
+/******************** table euler *************************************/
+
 table.euler tr .galois {
     text-align: center;
 }
+
+/******************** table statgrid **********************************/
 
 table.statgrid td {
     text-align: right;
@@ -1004,6 +726,273 @@ table.statgrid td.prop {
 
 table.statgrid td.cnt {
     border-right: 1px solid #ccc;
+}
+
+/**************** Tables for the Siegel corner ************************/
+
+/** TODO these definitions are too broad. please make siegel a
+ * blueprint (name is e.g. "siegel") and prefix all siegel
+ * related definitions with body.siegel
+ */
+.box1 {
+    margin: 1.3em 0.3em 1.3em 0.3em;
+    padding: 1px;
+    max-width: 53em;
+    overflow: auto;
+}
+
+.small{
+    font-size: 0.8em;
+}
+
+.error {
+    margin: 1.3em 0 1.3em 0;
+    padding: 0.7em;
+    border: 1px solid {{color.red}};
+    color: {{color.red}};
+    font-size: 120%;
+}
+
+/* TODO: where?*/
+.enternumber
+{
+    border: 1px solid {{color.black}};
+}
+
+/* FIXME: I think we no longer use this */
+.watermark {
+    color: {{color.grey}} !important;
+}
+
+
+.propertylist {
+  margin: 2em 0;
+  padding: 0;
+  border: 1px solid {{color.grey}};
+}
+
+.propertylist dt {
+  font-weight: bold;
+}
+
+.propertylist dd {
+  margin-bottom: 1em
+}
+
+a.navlink {
+  color: {{color.a_nav_text}};
+  background-color: {{color.a_nav_background}};
+  font-weight: bold;
+  font-size: 0.75em;
+  text-align: center;
+  padding: 0.3em;
+  padding-top: 0.2em;
+  padding-bottom: 0.25em;
+  border: 1px solid {{color.a_nav_border}};
+  outline: 1px solid {{color.a_nav_background}};
+  text-decoration: none;
+  margin-left: 1px;
+  margin-top: 0.7em;
+  vertical-align: top;
+}
+
+hr {
+  border: 1px solid {{ color.hr_border }};
+  margin: 1em 0;
+}
+/*TODO: above*/
+body.knowl hr {
+  border: 0.13em solid {{ color.knowl_border }};
+}
+
+/* jquery ui slider */
+.slider {
+  margin: 1em; 0.3em;
+}
+
+/********************** end table Siegel ******************************/
+
+/*********** Generated forms (generated by search_boxes.py) ***********/
+
+/*TODO: where do the following show up? -> in the forms*/
+.formexample {
+   font-size: 80%;
+   font-style: italic;
+   color: #555; /*{{color.grey}};*/
+   text-align: right;
+   font-family: var(--control-font-family);
+}
+
+.search-box {
+  padding: 0.4em 1.5em 0.1em 1.5em;
+  margin: 0.5em;
+  border: 1px solid #eee;
+  background: #fafafa;
+}
+.search-box td {
+  padding: 0;
+}
+.search-box select {
+  width: 100%;
+}
+
+.form-inputs input {
+  width: calc(100% - 2 * 0.3em);
+  /*padding-right: 0 !important;*/
+}
+/*
+.TextBoxWithSelect .form-inputs {
+  display: block;
+  white-space: no-wrap;
+  overflow: hidden;
+  width: 100%;
+}
+.TextBoxWithSelect input {
+  width: 100%;
+}
+*/
+.TextBoxWithSelect select {
+  width: auto;
+}
+.TextBoxWithSelect td:first-child {
+  padding-right: 1em;;
+}
+
+.DoubleSelectBox td:first-child {
+  padding-right: 0.5em;
+}
+.DoubleSelectBox td:last-child {
+  padding-left: 0.5em;
+}
+.DoubleSelectBox select {
+  width: 100%;
+}
+
+.CheckboxSpacer {
+  padding: 0.5em 1em 1em 1.5em;
+}
+.CheckboxSpacer input {
+  vertical-align: sub; /* the checkbox is too high otherwise */
+}
+
+.BasicSpacer {
+  text-align: center;
+  vertical-align: center;
+}
+
+/* For the list of buttons below a generated form: */
+.button-container {
+  display: block;
+  width: 100%;
+}
+.button-container .search-box {
+  background: none;
+  border: none;
+}
+.button-container .search-box {
+  display: inline-block;
+  padding: 0;
+  margin: 0.3em;
+}
+
+/****************** body.knowl ****************************************/
+/*TODO: shouldn't body rather have an ID instead of a class?*/
+
+body.knowl form button,
+body.knowl form select {
+  border: 1px solid {{color.knowl_thin_border}};
+  background: {{color.knowl_border}};
+}
+body.knowl form textarea,
+body.knowl form input {
+    border: 1px solid {{color.knowl_thin_border}};
+}
+
+body.knowl form button:hover,
+body.knowl form select:hover {
+    background:    {{color.knowl_hover}};
+    border: 1px solid {{color.knowl_thin_border}};
+}
+
+/* why ntdata in body.knowl? */
+
+body.knowl table.ntdata thead tr {
+  background: {{ color.knowl_background }};
+  border-bottom: 0.13em solid {{ color.knowl_underline }};
+}
+body.knowl table.ntdata tr:nth-child(odd) {
+ background: {{ color.knowl_background }};
+}
+body.knowl table.ntdata tr:nth-child(even) {
+    background: {{color.white}};
+}
+
+body.knowl #header {
+    /*background: {{color.knowl_header_background}};*/
+    background: {{color.header_background}};
+}
+body.knowl #header #title {
+    color: {{color.knowl_title_text}};
+}
+body.knowl #content h1,
+body.knowl #content h2,
+body.knowl #content a {
+  color: {{ color.knowl_hyper_text }};
+}
+body.knowl a:hover {
+  background: {{ color.knowl_hover }};
+}
+
+/******************** Knowls ******************************************/
+
+/** page wide defs for knowls, the *[knowl] is a selector for
+ *  all elements, that have a knowl attribute set to any value */
+table .knowl-link {
+  display: inline;
+  border-bottom: 1px dotted {{ color.knowl_hyper_text }};
+  border-radius: 0em;
+  padding: 1px;
+}
+.knowl-bar {
+  white-space: nowrap;
+  background: {{ color.knowl_background}};
+  padding: 0.3em 0.7em;
+  margin-bottom: 0.3em;
+  border-bottom: 1px solid {{ color.knowl_thin_border }};
+  border-top-left-radius: 0.7em;
+}
+.knowl-bar button,
+.knowl-bar input,
+.knowl-bar form {
+  font-size: small;
+  display: inline;
+  margin: 0em 0.13em;
+}
+.knowl-bar a {
+  padding: 0.13em 0.3em;
+}
+.knowl-editmode-sep {
+  padding: 0.3em;
+  margin: 2em 0;
+  border-bottom: 1px solid {{ color.knowl_thin_border }};
+  background: {{ color.knowl_background}};
+  color: {{ color.knowl_hyper_text }};
+  font-weight: bold;
+}
+.knowl-inc-edit {
+  margin-bottom: 0.7em;
+  border-bottom: 0.13em solid {{ color.knowl_border}};
+  font-size: x-small;
+  text-align: right;
+  line-height: 100%;
+}
+.knowl-inc-edit a {
+  padding: 0.2em 0.3em 0em 0.3em;
+  background: {{ color.knowl_l_1 }};
+  border-top-left-radius: 0.3em;
+}
+.knowl {
+  padding: 0;
 }
 
 .knowl-content {
@@ -1033,21 +1022,6 @@ table.statgrid td.cnt {
   border-top-right-radius: 0.2em;
 }
 
-body.knowl #header {
-    /*background: {{color.knowl_header_background}};*/
-    background: {{color.header_background}};
-}
-body.knowl #header #title {
-    color: {{color.knowl_title_text}};
-}
-body.knowl #content h1,
-body.knowl #content h2,
-body.knowl #content a {
-  color: {{ color.knowl_hyper_text }};
-}
-body.knowl a:hover {
-  background: {{ color.knowl_hover }};
-}
 
 div > *[knowl], 
 p > *[knowl] {
@@ -1140,7 +1114,8 @@ div.limit-height {
 
 /* end knowl */
 
-/*** Dirichlet series, displayed in HTML ***/
+
+/************ Dirichlet series, displayed in HTML *********************/
 
 .dirichletseries {
   font-family:"Times New Roman", Times, serif;
@@ -1172,87 +1147,936 @@ div.limit-height {
   font-family: KaTeX_Math;
 }
 
-/**************** Tables for the Siegel corner ************************/
 
-/** TODO these definitions are too broad. please make siegel a
- * blueprint (name is e.g. "siegel") and prefix all siegel
- * related definitions with body.siegel
+
+
+
+
+
+
+/**********************************************************************/
+/**********************************************************************/
+/**********************************************************************/
+/* 3. ------------------------------------------------------------------
+ *                         ID specific
+ *
+ * 
+ *
  */
-.box1 {
-    margin: 1.3em 0.3em 1.3em 0.3em;
-    padding: 1px;
-    max-width: 53em;
-    overflow: auto;
+
+/****************** #content (in homepage.html) ***********************/
+
+/* TODO: Should we really have #content-specific definitions?
+ * This gives these definitions automatically high specificity.
+ */
+
+#content  h1
+{
+    /*font-size: 130%;
+    font-weight: bold;*/
+    font-size: 170%;
+    font-weight: normal;
+    color: {{ color.content_text }};
+    font-family: var(--main-font-family);
+    text-decoration: none;
+    margin: 1.3em 0 1em 0;
+}
+#content > h1:first-child,
+#content > h2:first-child {
+    margin-top: 0;
 }
 
-.small{
-    font-size: 0.8em;
+#content  h2
+{
+    font-family: var(--main-font-family);
+    text-decoration: none;
+    font-size: 150%;
+    text-align: left;
+    font-weight: normal;
+    color: {{color.a_text}};
+    padding: 0.3em 0 0.3em 0;
+    margin: 1.3em 0 0.7em 0;
+}
+#content h3, 
+#content td.table_h2 {
+    font-family: var(--main-font-family);
+    text-decoration: none;
+    font-size: 130%;
+    text-align: left;
+    font-weight: normal;
+    padding: 0.3em 0 0.3em 0;
+    color: {{color.a_text}};
+    margin: 1em 0 0.3em 0;
 }
 
-.error {
-    margin: 1.3em 0 1.3em 0;
-    padding: 0.7em;
-    border: 1px solid {{color.red}};
-    color: {{color.red}};
+#content  h4 {
+    font-family: var(--main-font-family);
+    text-decoration: none;
+    font-size: 110%;
+    text-align: left;
+    font-weight: normal;
+    padding: 0.3em 0 0.3em 0;
+    color: {{color.a_text}};
+    margin: 1em 0 0.3em 0;
+}
+
+#content > h2 a[knowl], 
+#content > h3 a[knowl], 
+#content > h4 a[knowl] {
+    color: {{color.col_main}};
+}
+
+#content p {
+  padding-left: 1ch;
+}
+
+#content ul {
+  padding-left: 1.7em;
+}
+
+#content  h2.inline,
+#content  h3.inline,
+#content  h4.inline {
+    font-weight: normal;
+    display: inline;
+    padding-right: 0.7em;
+    margin: 0.3em 0 0.7em 0;
+}
+
+#content > ul {
+    margin-top: 0.7em;
+    margin-bottom: 0.7em;
+}
+
+#content .announce {
+  font-size: 1.2em;
+  padding: 0.7em 1.3em;
+  margin: 1.3em 0em;
+  border-left: 0.2em solid {{ color.content_border }};
+  background: {{ color.content_background }};
+  line-height: 1.5em;
+}
+#content .announce.red {
+    border-left: 0.2em solid {{color.content_border_red}};
+    background: {{color.content_background_red}};
+}
+
+/* icon in front of external links */
+#content a[target="_blank"]:before {
+  content: url("static/images/url-ext.gif");
+  padding-right: 0.13em;
+}
+
+/*** Horizontal delimiters/scrollers ***/
+
+#content p.no-wrap {
+  white-space: nowrap !important;
+  display: block;
+  max-width: 100%;
+  overflow: auto;
+  overflow-y: hidden;
+  -ms-overflow-y: hidden; /* for IE8 */
+}
+@media only screen and (max-width: 600px) {
+  #content > p,
+  #content > table.ntdata,
+  #content > div > table.ntdata,
+  #content > table.number_table,
+  #content .embed-container,
+  #content .katex-display {
+    display: block;
+    max-width: 100%;
+    overflow: auto !important;
+    overflow-y: hidden;
+    -ms-overflow-y: hidden; /* for IE8 */
+  }
+}
+
+#content {
+  margin-top: 1.3em;
+  font-size: 95%;
+  line-height: 135%;
+  padding-right: 0.7em;
+}
+
+/****************** #search-topright **********************************/
+
+/*
+#search-topright {
+  display: inline;
+}
+#search-topright input {
+  font-size: 75%;
+  border: 1px solid {{ color.search_border }};
+  padding: 1px;
+  background: {{color.search_background}} ;
+  position: relative;
+  top: -1px;
+}
+*/
+
+/******************** #flashes ****************************************/
+
+/* TODO: what? */
+#flashes p {
+  border-left: 1em solid {{color.knowl_border}};
+  padding: 0.3em;
+  background: {{color.knowl_background}};
+}
+
+#flashes p.error {
+  margin: 1em 0;
+  font-size: 95%;
+  border: 0;
+  border-left: 1em solid {{color.flashes_border}};
+  background: {{color.flashes_background}};
+}
+
+/********************** #main *****************************************/
+
+#main {
+  margin:  0em 0em 0em 0em;
+  /*padding: 0em 0em 0em 0.7em;*/
+  padding: 0em;
+  min-height: 45em;
+}
+
+/********** #properties (Property boxes on right hand side) ***********/
+
+#properties {
+    z-index: 99;
+    font-size: 85%;
+    font-family: var(--main-font-family);
+    float: right;
+    clear: right;
+    margin: 0.7em 0em 1.3em 1.3em;
+    position: relative;
+    border: 1px solid {{color.properties_border}};
+    border: 0;
+    padding: 0em;
+    min-width: 14.5em;
+}
+#properties .properties-body div, 
+#properties .properties-body p {
+  padding: 0.3em;
+}
+#properties .properties-body h1, 
+#properties .properties-body h2 {
+    color: {{ color.properties_header_text }};
+    padding: 0.3em;
+    margin: 0;
+    margin-bottom: 0;
+    background: {{ color.properties_text_h1h2 }};
+}
+#properties .properties-body h1 {
     font-size: 120%;
 }
-
-/* TODO: where?*/
-.enternumber
-{
-    border: 1px solid {{color.black}};
+#properties .properties-body h2 {
+    font-size: 110%;
+    margin-top: 0.7em;
+}
+#properties .properties-body h2:first-child { 
+  margin-top: 0em; 
+}
+#properties .properties-body table th,
+#properties .properties-body table td {
+  padding: 0.13em 0.7em;
+}
+#properties .properties-body table tr:last-child td {
+  padding-bottom: 0.5em;
+}
+#properties .properties-body table tr:first-child td {
+  padding-top: 0.5em;
+}
+#properties .properties-body .label {
+  /*font-weight: bold;*/
+}
+#properties .properties-body ul {
+  margin: 0em;
+  padding: 0em;
 }
 
-/* FIXME: I think we no longer use this */
-.watermark {
-    color: {{color.grey}} !important;
+#properties .properties-body ul:last-child li:last-child a {
+  border-bottom-left-radius: 0.7em;
+}
+#properties .properties-body li {
+  display: block;
+  padding: 0.3em 0 0 0.5em;
+  margin: 0;
+}
+#properties .properties-body li:first-child {
+  padding-top: 0.5em;
+}
+#properties .properties-body li:last-child {
+  padding-bottom: 0.3em;
+}
+#properties .properties-body li a {
+ display: block;
+/*
+ padding: 0.3em;
+*/
 }
 
-
-.propertylist {
-  margin: 2em 0;
-  padding: 0;
-  border: 1px solid {{color.grey}};
+#properties .properties-body {
+  margin: 0em;
+  padding: 0em;
+  background: {{color.properties_body_background}};
+  min-width: 13em;
+  border-bottom-left-radius: 0.7em;
+  max-height: 29; /* 21 items with padding: 22 + 21*19 + 9 */
+  overflow-y: auto; /* scrollbar if we overflow */
 }
-
-.propertylist dt {
-  font-weight: bold;
-}
-
-.propertylist dd {
-  margin-bottom: 1em
-}
-
-a.navlink {
-  color: {{color.a_nav_text}};
-  background-color: {{color.a_nav_background}};
-  font-weight: bold;
-  font-size: 0.75em;
-  text-align: center;
-  padding: 0.3em;
-  padding-top: 0.2em;
-  padding-bottom: 0.25em;
-  border: 1px solid {{color.a_nav_border}};
-  outline: 1px solid {{color.a_nav_background}};
-  text-decoration: none;
-  margin-left: 1px;
+#properties .properties-header {
+  border-top-left-radius: 0.7em;
+  margin: 0;
   margin-top: 0.7em;
+  padding: 0.4em 1em;
+  color: {{ color.properties_header_text }};
+  background: {{ color.properties_header_background }};
+  font-size: 120%;
+  font-weight: normal;
+  cursor: pointer;
+  padding-right: 2em;
+}
+#properties-collapser {
+  cursor: pointer;
+  color: {{ color.properties_collapser }};
+  font-size: 1.2em;
+  font-weight: bold;
+  text-align: center;
+  border: 1px solid ;
+  width: 1.5em;
+  height: 1.5em;
+  position: absolute;
+  top:   0.95em;
+  right: 0.8em;
+  {{ BORDER_RADIUS(1.3) }}
+}
+
+@media only screen and (max-width: 600px) {
+  #properties {
+    z-index: 0;
+    font-size: 85%;
+    font-family: var(--main-font-family);
+    float: none;
+    display: block;
+    margin: 0.3em 0em 0.3em 0em;
+    padding: 0.1em;
+    position: relative;
+    border: 1px solid {{color.properties_border}};
+    border: 0;
+    padding: 0;
+  }
+  #properties-collapser {
+    top: 0.25em;
+  }
+  #properties .properties-header {
+    border-top-right-radius: 0.7em;
+  }
+}
+
+/******************* #advancedtoggle **********************************/
+/* the button to show advanced search options */
+/* TODO: rather a class */
+
+#advancedtoggle {
+    margin-left: 1.3em;
+}
+#advancedtoggle:hover {
+    background:    {{color.button_background_hover}};
+    border: 1px solid #aaa; /*{{color.button_border_hover}};*/
+}
+
+/******************* #advancedtoggle **********************************/
+/* TODO: rather a class */
+
+#complex_embeddings {
+    padding-top: 0.7em;
+}
+
+/******************* #knowl-search ************************************/
+
+#knowl-search input {
+  font-size: small;
+  background: {{ color.knowl_background }};
+}
+
+/******************* #knowl-index *************************************/
+
+/* OLD: */
+/*
+#knowl-index td div > a {
+  padding: 0em;
+  position: absolute;
+  top: 0.8em;
+  width: 11em;
+  height: 4.3em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#knowl-index td div > span {
+  font-size: xx-small;
+  color: {{color.grey}};
+  position: absolute;
+  top: 0.13em;
+  line-height: 1em;
+  width: 170px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#knowl-index td div {
+  position: relative;
+  width: 11em;
+  height: 4.3em;
+  float: left;
+  min-height: 4em;
+  padding: 0.13em;
+  margin: 1px;
+  border-radius: 0.13em;
+}
+#knowl-index td div:hover {
+  background: {{ color.knowl_hover }};
+  cursor: pointer;
+}
+#knowl-index td {
+  padding: 0;
+}
+*/
+
+#knowl-index > tr > td{
+  padding: 0.5em;
+}
+
+#knowl-index .knowl-flex {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+#knowl-index .knowl-flex-entry {
+  display: inline-block;
+  margin: 0.1em 1em;
+  /*border: 1px solid #ddd;*/
+}
+
+
+#knowl-index .knowl-flex-entry > a {
+  padding: 0em;
+  position: relative;
+  /*max-width: 20em;*/
+  width: 15em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-height: 1.5em;
+}
+
+
+#knowl-index .knowl-flex-entry > span {
+  font-family: var(--control-font-family);
+  font-size: xx-small;
+  color: {{color.grey}};
+  position: relative;
+  line-height: 1em;
+  width: 20em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  
+}
+/*
+#knowl-index td div {
+  position: relative;
+  width: 11em;
+  height: 4.3em;
+  float: left;
+  min-height: 4em;
+  padding: 0.13em;
+  margin: 1px;
+  border-radius: 0.13em;
+}
+*/
+
+#knowl-index div.knowl-flex-entry:hover {
+  background: {{ color.knowl_hover }};
+  cursor: pointer;
+}
+
+/********************* header (except navbar) *************************/
+
+
+#header {
+  background: {{color.header_background}};
+  margin: 0em;
+  padding: 0em;
+  /%box-shadow: 0em 0.3em 0.3em {{color.header_shadow}};%/
+}
+
+body.knowl #header {
+  background: {{color.header_background}};
+  /*background: {{ color.knowl_l }};
+  box-shadow: 0em 0.3em 0.3em {{color.knowl_shadow}};
+  */
+}
+
+#header .right {
+    margin-top: 0em;
+    display: inline-block;
+    padding-left: 3.2em;
+    vertical-align: top;
+    width: calc(100% - 14em);
+}
+#header #title {
+    font-size: 220%;
+    font-weight: normal;
+    font-family: var(--main-font-family);
+    padding: 0.7em 2em 0.7em 2em;
+    color: {{color.header_text_title}};
+}
+
+#header #title .katex{
+    font-weight: normal !important;
+}
+
+#header .bread, 
+#header .nav-user {
+    font-family: var(--control-font-family);
+    /*font-family: var(--main-font-family);*/
+    font-size: 80%;
+    display: inline-block;
+}
+
+#header .bread a:first-child {
+    font-size: 150%;
+}
+
+#header .bread a, 
+#header .nav-user a {
+    color: {{color.bread_links}};
+}
+
+#header .topright {
+  text-align: right;
+  white-space:nowrap;
+  font-family: var(--main-font-family);
+  font-size: 90%;
+  padding-top: 0.5em;
+  padding-right: 0.3em;
+  display: inline-block;
+  float: right;
+  clear: both;
+  color: {{color.header_text_topright}};
+}
+#header .topright a {
+    color: {{color.header_text_topright}};
+}
+#header .topright #communication-wrapper {
+  display: none;
+  padding: 0.25em;
+}
+#header .undertopright {
+  text-align: right;
+  white-space:nowrap;
+  font-family: var(--main-font-family);
+  float: right;
+  color: {{color.header_text_topright}};
+}
+#header .undertopright a {
+    color: {{color.header_text_topright}};
+}
+#header .undertopright:first-child {
+    margin-top: 0;
+}
+
+#header #navi {
+  white-space: nowrap;
+  text-align: right;
+  color: {{color.header_navi_text}};
+  font-family: var(--main-font-family);
+  font-size: 90%;
+  padding: 0.1em 0.3em;
+  position: absolute;
+  bottom: 0em;
+  right: 0em;
+  z-index: 5;
+}
+
+
+
+/********************* #navbar (menu at top) **************************/
+
+/* Navbar container */
+#navbar {
+  font-size: 90%;
+  background: #fff;
+  padding: 0em;
+  margin: 0em 0em 0.7rem 0em;
+  box-shadow: 0em 0em 1rem 0em rgba(0,0,0,0.2);
+  z-index: 1000000;
+}
+
+#navbar .flex-container {
+  display: inline-flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  max-width: 100%;
+}
+
+#navbar a,
+#navbar div {
+  font-family: var(--control-font-family);
+}
+
+/* Links in header of navbar */
+#navbar a.heading {
+  font-size: 1em;
+  color: #333;
+  text-align: center;
+  /*padding: 0.3em 0.3em;*/
+  text-decoration: none;
+}
+.logo a, 
+.logo a:hover, 
+body.knowl .logo a:hover {
+  background: none;
+}
+#navbar .logo {
+  float: left;
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+  outline: none;
+}
+#navbar .logo a {
+  font-size: 1em;
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+  /*padding: 0.3em 0em 0.3em 0em;
+  margin: 0em 1em 0em 0em;*/
+  vertical-align: middle;
+  text-decoration: none;
+}
+#navbar .logo img {
+  max-height: 1.8em;
+  /*padding-top: 0.3em;*/
+  padding: 0.6em 0.7em 0.6em 0em;
+  margin: 0;
+  /*margin: 1em 0.7em 0.7em 0em;*/
+}
+
+/* The dropdown container */
+#navbar .dropdown {
+  /*font-size: 1em;*/
+  display: inline-block;
+  position: relative;
+  /*margin: 0em;*/
+  padding: 0em;
+}
+
+/* Dropdown button */
+#navbar .dropbtn {
+  font-size: 1em;
+  /*float: left;*/
+  border: none;
+  border-radius: 0;
+  outline: none;
+  color: #555;
+  padding: 1em 0.7em 1em 0.7em;
+  background-color: inherit;
+  font-family: inherit; /* Important for vertical align on mobile phones */
+  /*margin: 0;  Important for vertical align on mobile phones */
+}
+
+#navbar a.heading,
+#navbar div.heading {
+  /*font-size: 1em;*/
+}
+
+/* Add a background color to navbar links on hover */
+#navbar a.heading:hover,
+#navbar .dropbtn:hover,
+#navbar .dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+/* Dropdown content (hidden by default) */
+#navbar .dropdown-content {
+  font-size: {% if BETA %} 0.9em; {% else %} 1em; {% endif %} /* will scale the whole dropdown-content */
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  /*min-width: 10.7em;*/
+  box-shadow: 0 0.5em 1em 0 rgba(0,0,0,0.2);
+  z-index: 1000;
+  /*top      : 100%;*/
+  white-space: nowrap;
+}
+
+#navbar div.dropdown-content-right-to-left {
+  left: auto;
+  right: 0;
+}
+#navbar div.dropdown-content-left-to-right {
+  left: 0;
+  right: auto;
+}
+
+/* Links inside the dropdown */
+#navbar .dropdown-content .part {
+  float: none;
+  color: black;
+  padding: 0.8em 1.2em;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+#navbar .dropdown-content .entry {
+  float: none;
+  color: black;
+  padding: 0.8em 1.2em;
+  text-decoration: none;
+  display: block;
+  text-align: center;
+}
+
+
+#navbar .dropdown-content table.link-bar {
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+} 
+
+#navbar .dropdown-content .link-bar td {
+  padding: 0em;
+  width: auto;
+  align: center;
+}
+
+#navbar .dropdown-content .group-title {
+  font-size: 70%;
+  color: #777;
+  text-align: right;
+  padding-right: 0.4em;
+  /*color: #fff;
+  background-color: #777; 
+  text-align: center;*/
+  border-bottom: 1px solid #ddd;
+}
+
+#navbar .dropdown-content .link-bar-title {
+  font-size: 85%;
+  color: #555;
+  text-align: center;
+  padding: 0.2em 1em 0em 1em;
+  /*padding-right: 0.13em;*/
+  /*color: #fff;
+  background-color: #777; 
+  text-align: center;*/
+  border-bottom: 1px solid #ddd;
+}
+
+
+#navbar .future {
+  /*display: none !important;*/ /* toggle this to show/hide the future */
+  color: #aaa !important;
+}
+
+#navbar button.dropbtn.beta {
+  border-top: 0.3em solid #a84;
+  padding-top: 0.7em;
+  /*background-color: #dcb;*/
+}
+#navbar .dropdown-content .beta {
+  border-right: 0.3em solid #a84;
+}
+
+#navbar .tall-entries a, 
+#navbar .tall-entries div {
+  padding-top: 1.3em !important;
+  padding-bottom: 1.3em !important;
+}
+
+/* This must come after the #header and #navbar section */
+@media only screen and (min-width: 1100px) {
+  /**** Fix navbar on top: ****/
+  #navbar {
+    position: fixed; /* Set the navbar to fixed position */
+    top: 0; /* Position the navbar at the top of the page */
+     width: 100%;
+    z-index: 1000000;
+    overflow: visible; /* To make the dropdown menus visible */
+  }
+  #header {
+    margin-top: 3.85rem; /* space for navbar */
+  }
+}
+
+@media (hover: hover) {
+  #navbar .dropdown:hover .dropdown-content {
+    display: block;
+  } 
+}
+
+/********************* footer *****************************************/
+
+#footer {
+    clear: both;
+    margin-top: 0;
+    background-color: {{color.footer_background}};
+    /*border-top: 0.13em solid {{ color.footer_border }}; */
+    padding: 1.7em 0.7em;
+    text-align: center;
+    font-size: 75%;
+    font-family: var(--control-font-family);
+    line-height: 1.8;
+    color: #bbb; /*{{color.footer_text}};*/
+}
+
+#footer a,
+#footer div {
+    font-family: var(--control-font-family);
+}
+
+#footer-data-credit {
+    width: 100%;
+    font-size: 75%;
+    text-align: center;
+    margin-top: 3.3em;
+    margin-bottom: 2em; 
+}
+
+#footer .box-text {
+    display: inline-block;
+    background-color: inherit;
+    width: 25em;
+    margin: 1.3em 3.3em 1.3em 1.3em;
+    border-style: none;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+#footer .box-links {
+    display: inline-block;
+    background-color: inherit;
+    width: 15em;
+    margin: 1.3em 3.3em 1.3em 3.3em;
+    border-style: none;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#footer a {
+    color: #fff; /*{{color.footer_link}};*/
+}
+
+#footer a:hover {
+    color: #fff; /*{{color.footer_link}};*/
+    background-color: #666;
+}
+
+#footer-data-credit-hr {
+    width: 7em;
+    border-top: 1px solid #888;
+    margin: 0 auto 1.3em auto;
+}
+
+/******************* #index-boxes (for front page) ********************/
+
+#index-boxes {
+  padding: 1em;
+  font-size: 1em;
+}
+#index-boxes table.box {
+  background: {{color.box_background}};
+  max-width: 35em;
+  min-width: 25em;
+  padding: 0.7em;
+  border-radius: 0em;
+  font-size: 1em;
+  margin: 1em;
+}
+#index-boxes table.box td.img {
+  background: {{color.box_background_img}};
+  width: 10em;
+  /*height: auto;*/
+  border: 1em;
+  padding-left: 0.3em;
+  padding-bottom: 0em;
+  padding-top: 0.3em;
+  padding-right: 0.3em;
   vertical-align: top;
 }
+#index-boxes table.box img {
+  width: 100%;
+  height: auto;
+  border: 1em;
+  padding: 0.3em;
+  
+}
+  
+#index-boxes table.box td.content ul.list {
+  margin: 0;
+  padding-left: 1em; padding-bottom: 0.3em;
+  list-style-type: none;
+  list-style-position: inside;
+  line-height: 135%;
+}
 
-hr {
-  border: 1px solid {{ color.hr_border }};
-  margin: 1em 0;
+/* OLD:
+@media only screen and (max-width: 1000px) {
+  #index-boxes table.box img {
+    max-width: 15vw;
+    height: auto;
+  }
 }
-/*TODO: above*/
-body.knowl hr {
-  border: 0.13em solid {{ color.knowl_border }};
-}
+*/
 
-/* jquery ui slider */
-.slider {
-  margin: 1em; 0.3em;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /********************* tables *****************************************/
 
@@ -1625,59 +2449,6 @@ div.maassformplot img {
 /* End of styling of Maass form plot */
 
 
-/********************* table boxes (for front page) *******************/
-
-/*TODO: rather floating divs for mobile support*/
-
-#content div.boxes {
-  padding: 1em;
-  font-size: 1em;
-}
-#content div.boxes table.box {
-  background: {{color.box_background}};
-  max-width: 35em;
-  padding: 0.7em;
-  border-radius: 0em;
-  font-size: 1em;
-  margin: 1em;
-}
-#content div.boxes table.box td.img {
-  background: {{color.box_background_img}};
-  width: 10em;
-  height: auto;
-  border: 1em;
-  padding-left: 0.3em;
-  padding-bottom: 0em;
-  padding-top: 0.3em;
-  padding-right: 0.3em;
-}
-#content div.boxes table.box img {
-  width: 100%;
-  height: auto;
-  border: 1em;
-  padding: 0.3em;
-}
-  
-#content div.boxes table.box td.content ul.list {
-  margin: 0;
-  padding-left: 1em; padding-bottom: 0.3em;
-  list-style-type: none;
-  list-style-position: inside;
-  line-height: 135%;
-}
-
-/* OLD:
-@media only screen and (max-width: 1000px) {
-  table.box img {
-    max-width: 15vw;
-    height: auto;
-  }
-}
-*/
-
-/*End table boxes front page*/
-
-
 
 
 
@@ -1757,9 +2528,6 @@ table.ntdata td.nowrap a {
     float:left;
 }
 
-#complex_embeddings {
-    padding-top: 0.7em;
-}
 
 table.coeff_ring_basis {
     margin-left: 1em;
@@ -1882,10 +2650,7 @@ input.color_selecter {
     margin: 0.7em;
 }
 
-/* the button to show advanced search options */
-#advancedtoggle {
-    margin-left: 1.3em;
-}
+
 
 /* the advanced search options themselves, hidden by default */
 .advanced {
@@ -1896,630 +2661,48 @@ input.color_selecter {
 
 
 
-/********************* header (except navbar) *************************/
-
-
-#header {
-  background: {{color.header_background}};
-  margin: 0em;
-  padding: 0em;
-  /%box-shadow: 0em 0.3em 0.3em {{color.header_shadow}};%/
-}
-
-body.knowl #header {
-  background: {{color.header_background}};
-  /*background: {{ color.knowl_l }};
-  box-shadow: 0em 0.3em 0.3em {{color.knowl_shadow}};
-  */
-}
-
-#header .right {
-    margin-top: 0em;
-    display: inline-block;
-    padding-left: 3.2em;
-    vertical-align: top;
-    width: calc(100% - 14em);
-}
-#header #title {
-    font-size: 220%;
-    font-weight: normal;
-    font-family: var(--main-font-family);
-    padding: 0.7em 2em 0.7em 2em;
-    color: {{color.header_text_title}};
-}
-
-#header #title .katex{
-    font-weight: normal !important;
-}
-
-#header .bread, 
-#header .nav-user {
-    font-family: var(--control-font-family);
-    /*font-family: var(--main-font-family);*/
-    font-size: 80%;
-    display: inline-block;
-}
-
-#header .bread a:first-child {
-    font-size: 150%;
-}
-
-#header .bread a, 
-#header .nav-user a {
-    color: {{color.bread_links}};
-}
-
-#header .topright {
-  text-align: right;
-  white-space:nowrap;
-  font-family: var(--main-font-family);
-  font-size: 90%;
-  padding-top: 0.5em;
-  padding-right: 0.3em;
-  display: inline-block;
-  float: right;
-  clear: both;
-  color: {{color.header_text_topright}};
-}
-#header .topright a {
-    color: {{color.header_text_topright}};
-}
-#header .topright #communication-wrapper {
-  display: none;
-  padding: 0.25em;
-}
-#header .undertopright {
-  text-align: right;
-  white-space:nowrap;
-  font-family: var(--main-font-family);
-  float: right;
-  color: {{color.header_text_topright}};
-}
-#header .undertopright a {
-    color: {{color.header_text_topright}};
-}
-#header .undertopright:first-child {
-    margin-top: 0;
-}
-
-#header #navi {
-  white-space: nowrap;
-  text-align: right;
-  color: {{color.header_navi_text}};
-  font-family: var(--main-font-family);
-  font-size: 90%;
-  padding: 0.1em 0.3em;
-  position: absolute;
-  bottom: 0em;
-  right: 0em;
-  z-index: 5;
-}
 
 
 
 
-/********************* navbar (menu at top) ***************************/
-
-/* Navbar container */
-#navbar {
-  /*font-size: 0em;*/
-  font-size: 90%;
-  /*width: 100%;*/
-  /*position: fixed;
-  width = 100%;*/
-  /*overflow: hidden;*/
-  background: #fff;
-  padding: 0em;
-  margin: 0em 0em 0.7rem 0em;
-  box-shadow: 0em 0em 1rem 0em rgba(0,0,0,0.2);
-  z-index: 1000000;
-}
-
-#navbar .flex-container {
-  display: inline-flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: center;
-  max-width: 100%;
-}
-
-#navbar a,
-#navbar div {
-  font-family: var(--control-font-family);
-}
-
-/* Links in header of navbar */
-#navbar a.heading {
-  font-size: 1em;
-  color: #333;
-  text-align: center;
-  /*padding: 0.3em 0.3em;*/
-  text-decoration: none;
-}
-.logo a, 
-.logo a:hover, 
-body.knowl .logo a:hover {
-  background: none;
-}
-#navbar .logo {
-  float: left;
-  display: inline-block;
-  /*display: none;*/
-  padding: 0;
-  margin: 0;
-  outline: none;
-}
-#navbar .logo a {
-  /*float: left;*/
-  /*float: none;*/
-  font-size: 1em;
-  display: inline-block;
-  padding: 0;
-  margin: 0;
-  /*padding: 0.3em 0em 0.3em 0em;
-  margin: 0em 1em 0em 0em;*/
-  vertical-align: middle;
-  text-decoration: none;
-}
-#navbar .logo img {
-  max-height: 1.8em;
-  /*padding-top: 0.3em;*/
-  padding: 0.6em 0.7em 0.6em 0em;
-  margin: 0;
-  /*margin: 1em 0.7em 0.7em 0em;*/
-}
-
-/* The dropdown container */
-#navbar .dropdown {
-  /*font-size: 1em;*/
-  display: inline-block;
-  position: relative;
-  /*margin: 0em;*/
-  padding: 0em;
-  /*border: 1px solid black;*/ /*debug*/
-  /*outline: none;*/
-/*  display: inline; 
-  float: left;
-  overflow: hidden;
-*/}
-
-/* Dropdown button */
-#navbar .dropbtn {
-  font-size: 1em;
-  /*float: left;*/
-  border: none;
-  border-radius: 0;
-  outline: none;
-  color: #555;
-  padding: 1em 0.7em 1em 0.7em;
-  background-color: inherit;
-  font-family: inherit; /* Important for vertical align on mobile phones */
-  /*margin: 0;  Important for vertical align on mobile phones */
-}
-
-#navbar a.heading,
-#navbar div.heading {
-  /*font-size: 1em;*/
-}
-
-/* Add a background color to navbar links on hover */
-#navbar a.heading:hover,
-#navbar .dropbtn:hover,
-#navbar .dropdown-content a:hover {
-  background-color: #ddd;
-}
-
-/* Dropdown content (hidden by default) */
-#navbar .dropdown-content {
-  font-size: {% if BETA %} 0.9em; {% else %} 1em; {% endif %} /* will scale the whole dropdown-content */
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  /*min-width: 10.7em;*/
-  box-shadow: 0 0.5em 1em 0 rgba(0,0,0,0.2);
-  z-index: 1000;
-  /*top      : 100%;*/
-  white-space: nowrap;
-}
-
-#navbar div.dropdown-content-right-to-left {
-  left: auto;
-  right: 0;
-}
-#navbar div.dropdown-content-left-to-right {
-  left: 0;
-  right: auto;
-}
-
-/* Links inside the dropdown */
-#navbar .dropdown-content .part {
-  float: none;
-  color: black;
-  padding: 0.8em 1.2em;
-  text-decoration: none;
-  display: block;
-  text-align: left;
-}
-
-#navbar .dropdown-content .entry {
-  float: none;
-  color: black;
-  padding: 0.8em 1.2em;
-  text-decoration: none;
-  display: block;
-  text-align: center;
-}
 
 
-#navbar .dropdown-content table.link-bar {
-  margin-left: auto;
-  margin-right: auto;
-  width: 100%;
-} 
-
-#navbar .dropdown-content .link-bar td {
-  padding: 0em;
-  width: auto;
-  align: center;
-}
-
-#navbar .dropdown-content .group-title {
-  font-size: 70%;
-  color: #777;
-  text-align: right;
-  padding-right: 0.4em;
-  /*color: #fff;
-  background-color: #777; 
-  text-align: center;*/
-  border-bottom: 1px solid #ddd;
-}
-
-#navbar .dropdown-content .link-bar-title {
-  font-size: 85%;
-  color: #555;
-  text-align: center;
-  padding: 0.2em 1em 0em 1em;
-  /*padding-right: 0.13em;*/
-  /*color: #fff;
-  background-color: #777; 
-  text-align: center;*/
-  border-bottom: 1px solid #ddd;
-}
-
-
-#navbar .future {
-  /*display: none !important;*/ /* toggle this to show/hide the future */
-  color: #aaa !important;
-}
-
-#navbar button.dropbtn.beta {
-  border-top: 0.3em solid #a84;
-  padding-top: 0.7em;
-  /*background-color: #dcb;*/
-}
-#navbar .dropdown-content .beta {
-  border-right: 0.3em solid #a84;
-}
-
-#navbar .tall-entries a, 
-#navbar .tall-entries div {
-  padding-top: 1.3em !important;
-  padding-bottom: 1.3em !important;
-}
-
-@media only screen and (min-width: 1100px) {
-  /**** Fix navbar on top: ****/
-  #navbar {
-    position: fixed; /* Set the navbar to fixed position */
-    top: 0; /* Position the navbar at the top of the page */
-     width: 100%;
-    z-index: 1000000;
-    overflow: visible; /* To make the dropdown menus visible */
-  }
-  #header {
-    margin-top: 3.85rem; /* space for navbar */
-  }
-}
-
-@media (hover: hover) {
-  .no-hover-available {
-    display: none !important;
-  }
-  #navbar .dropdown:hover .dropdown-content {
-    display: block;
-  } 
-}
-
-@media not (hover: hover) {
-  .hover-available {
-    display: none !important;
-  }
-}
+/****************************** testing styles ************************/
 
 /*
-@media only screen and (max-width: 800px) {
-  :root,
-  body {
-    font-size: 2vw;
-  }
+* {
+  font-family: var(--main-font-family) !important;
 }
 */
 
-@media only screen and (max-width: 600px) {
-  :root,
-  body {
-    font-size: 3vw;
-  }
-}
-
-/********************* footer *****************************************/
-
-#footer {
-    clear: both;
-    margin-top: 0;
-    background-color: {{color.footer_background}};
-    /*border-top: 0.13em solid {{ color.footer_border }}; */
-    padding: 1.7em 0.7em;
-    text-align: center;
-    font-size: 75%;
-    font-family: var(--control-font-family);
-    line-height: 1.8;
-    color: #bbb; /*{{color.footer_text}};*/
-}
-
-#footer a,
-#footer div {
-    font-family: var(--control-font-family);
-}
-
-#footer-data-credit {
-    width: 100%;
-    font-size: 75%;
-    text-align: center;
-    margin-top: 3.3em;
-    margin-bottom: 2em; 
-}
-
-#footer .box-text {
-    display: inline-block;
-    background-color: inherit;
-    width: 25em;
-    margin: 1.3em 3.3em 1.3em 1.3em;
-    border-style: none;
-    text-align: left;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-#footer .box-links {
-    display: inline-block;
-    background-color: inherit;
-    width: 10em;
-    margin: 1.3em 3.3em 1.3em 3.3em;
-    border-style: none;
-    text-align: center;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-#footer a {
-    color: #fff; /*{{color.footer_link}};*/
-}
-
-#footer a:hover {
-    color: #fff; /*{{color.footer_link}};*/
-    background-color: #666;
-}
-
-#footer-data-credit-hr {
-    width: 7em;
-    border-top: 1px solid #888;
-    margin: 0 auto 1.3em auto;
+/*
+input,
+textarea,
+select,
+button {
+  border-width: 2px;
 }
 
 
-/********** Mobile friendly content ***********************************/
-
-/* Automatic horizontal scrollbars if content is too long for outer container */
-.horizontal-scroller {
-  white-space: normal;
-  /*display: block;*/
-  max-width: 100%;
-  overflow: auto;
-  overflow-y: hidden;
-  -ms-overflow-y: hidden; /* for IE8 */
-  margin: 0;
-  padding: 0;
+select {
+  background: #eee;
+}
+select:hover {
+  background: #eeeeee;
 }
 
-/* Automatic horizontal scrollbar, no white space wrapping allowed for content */
-.horizontal-scroller-nowrap {
-  white-space: nowrap;
-  /*display: block;*/
-  max-width: 100%;
-  overflow: auto;
-  overflow-y: hidden;
-  -ms-overflow-y: hidden; /* for IE8 */
-  margin: 0;
-  padding: 0;
+button {
+  background: #3a5;
+  color: #fff;
+}
+button:hover {
+  background: #395 !important;
 }
 
-
-#content p.no-wrap {
-  white-space: nowrap !important;
-  display: block;
-  max-width: 100%;
-  overflow: auto;
-  overflow-y: hidden;
-  -ms-overflow-y: hidden; /* for IE8 */
+input:active,
+input:focus,
+textarea:active,
+textarea:focus {
+  border-color: #38c;
 }
-
-
-@media only screen and (max-width: 600px) {
-  #content > p,
-  #content > table.ntdata,
-  #content > div > table.ntdata,
-  #content > table.number_table,
-  #content .embed-container,
-  #content .katex-display {
-    display: block;
-    max-width: 100%;
-    overflow: auto !important;
-    overflow-y: hidden;
-    -ms-overflow-y: hidden; /* for IE8 */
-  }
-}
-
-/************** Grid layout with 12 columns ***************************/
-
- /* For small phones: */
-[class*="col-"],
-col-all {
-  grid-column: auto / span 12;
-}
-
-.col-xs-1 { grid-column: auto / span 1; }
-.col-xs-2 { grid-column: auto / span 2; }
-.col-xs-3 { grid-column: auto / span 3; }
-.col-xs-4 { grid-column: auto / span 4; }
-.col-xs-5 { grid-column: auto / span 5; }
-.col-xs-6 { grid-column: auto / span 6; }
-.col-xs-7 { grid-column: auto / span 7; }
-.col-xs-8 { grid-column: auto / span 8; }
-.col-xs-9 { grid-column: auto / span 9; }
-.col-xs-10 { grid-column: auto / span 10; }
-.col-xs-11 { grid-column: auto / span 11; }
-.col-xs-12 { grid-column: auto / span 12; }
-
-@media only screen and (min-width: 600px) {
-  /* For tablets, large phones: */
-  .col-s-1 { grid-column: auto / span 1; }
-  .col-s-2 { grid-column: auto / span 2; }
-  .col-s-3 { grid-column: auto / span 3; }
-  .col-s-4 { grid-column: auto / span 4; }
-  .col-s-5 { grid-column: auto / span 5; }
-  .col-s-6 { grid-column: auto / span 6; }
-  .col-s-7 { grid-column: auto / span 7; }
-  .col-s-8 { grid-column: auto / span 8; }
-  .col-s-9 { grid-column: auto / span 9; }
-  .col-s-10 { grid-column: auto / span 10; }
-  .col-s-11 { grid-column: auto / span 11; }
-  .col-s-12 { grid-column: auto / span 12; }
-}
-
-@media only screen and (min-width: 768px) {
-  /* For large tablet, small laptop: */
-  .col-1 { grid-column: auto / span 1; }
-  .col-2 { grid-column: auto / span 2; }
-  .col-3 { grid-column: auto / span 3; }
-  .col-4 { grid-column: auto / span 4; }
-  .col-5 { grid-column: auto / span 5; }
-  .col-6 { grid-column: auto / span 6; }
-  .col-7 { grid-column: auto / span 7; }
-  .col-8 { grid-column: auto / span 8; }
-  .col-9 { grid-column: auto / span 9; }
-  .col-10 { grid-column: auto / span 10; }
-  .col-11 { grid-column: auto / span 11; }
-  .col-12 { grid-column: auto / span 12; }
-} 
-
-@media only screen and (min-width: 1024px) {
-  /* For large desktop: */
-  .col-l-1 { grid-column: auto / span 1; }
-  .col-l-2 { grid-column: auto / span 2; }
-  .col-l-3 { grid-column: auto / span 3; }
-  .col-l-4 { grid-column: auto / span 4; }
-  .col-l-5 { grid-column: auto / span 5; }
-  .col-l-6 { grid-column: auto / span 6; }
-  .col-l-7 { grid-column: auto / span 7; }
-  .col-l-8 { grid-column: auto / span 8; }
-  .col-l-9 { grid-column: auto / span 9; }
-  .col-l-10 { grid-column: auto / span 10; }
-  .col-l-11 { grid-column: auto / span 11; }
-  .col-l-12 { grid-column: auto / span 12; }
-} 
-
-.grid12 {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  grid-auto-flow: row;
-}
-
-.row-span-2 {
-  grid-row: auto / span 2;
-}
-.row-span-3 {
-  grid-row: auto / span 3;
-}
-.row-span-4 {
-  grid-row: auto / span 4;
-}
-
-
-/*************** new Knowl index **************************************/
-
-#knowl-index > tr > td{
-  padding: 0em;
-}
-
-#knowl-index .knowl-flex {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-content: flex-start;
-  width: 100%;
-  padding: 0;
-  margin: 0;
-}
-
-#knowl-index .knowl-flex-entry {
-  display: inline-block;
-  margin: 0em 1em;
-  padding-bottom: 0.2em;
-  /*border: 1px solid #ddd;*/
-  border-top: 1px solid #aaa;
-}
-
-
-#knowl-index .knowl-flex-entry > a {
-  display: block;
-  padding: 0em;
-  position: relative;
-  /*max-width: 20em;*/
-  width: 15em;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  min-height: 1.5em;
-}
-
-
-#knowl-index .knowl-flex-entry > span {
-  font-family: var(--control-font-family);
-  font-size: xx-small;
-  color: {{color.grey}};
-  position: relative;
-  line-height: 1em;
-  width: 15em;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  
-}
-
-#knowl-index tr td:first-child {
-  width: 2em;
-  vertical-align: top;
-  text-align: center;
-  font-size: 1.8em;
-  color: {{color.knowl_hyper_text}};
-  padding: 0.8em ;
-}
-
-#knowl-index div.knowl-flex-entry:hover {
-  background: {{ color.knowl_hover }};
-  cursor: pointer;
-}
-
-
-
-
-
+*/
