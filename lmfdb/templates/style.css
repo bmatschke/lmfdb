@@ -428,6 +428,184 @@ div.where {
   font-weight: bold;
 }
 
+div.user {
+  font-size: 90%;
+  padding: 0em;
+}
+div.user ul li {
+  line-height: 80%;
+}
+
+/* an horizonal list with bullet points */
+ul.horizontal-list {
+  display:inline-block;
+  padding:0;
+  margin: 0.5em;
+  margin-block-start: 0;
+}
+ul.horizontal-list li {
+  display: inline;
+  white-space: nowrap;
+}
+ul.horizontal-list li:after {
+  content:" ";
+  letter-spacing:1em;
+  background: center center no-repeat url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOwAAADsABataJCQAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xMkMEa+wAAAAnSURBVBhXY/Dz89MA4sNA/B9Ka4AEYQIwfBgkiCwAxjhVopnppwEApxQqhnyQ+VkAAAAASUVORK5CYII=);
+}
+
+input.color_selecter {
+    margin: 0.7em;
+}
+
+
+
+/* the advanced search options themselves, hidden by default */
+.advanced {
+    display: none;
+}
+
+
+a.paginate_active {
+    font-weight: bold;
+    padding: 0.3em;
+}
+
+a.paginate_button {
+    padding: 0.3em;
+}
+
+/* Pagination nested */
+.paginate_disabled_previous, 
+.paginate_enabled_previous, 
+.paginate_disabled_next, 
+.paginate_enabled_next {
+    height: 1.25em;
+    width: 1.25em;
+    margin-left: 0.2em;
+    float: left;
+}
+
+.paginate_disabled_previous {
+    background-image: url('/static/images/back_disabled.jpg');
+}
+
+.paginate_enabled_previous {
+    background-image: url('/static/images/back_enabled.jpg');
+}
+
+.paginate_disabled_next {
+    background-image: url('/static/images/forward_disabled.jpg');
+}
+
+.paginate_enabled_next {
+    background-image: url('/static/images/forward_enabled.jpg');
+}
+
+.example_alt_pagination div.dataTables_info {
+    width: 40%;
+}
+
+.paging_full_numbers {
+    height: 1.5em;
+    line-height: 1.5em;
+}
+
+.paging_full_numbers span.paginate_button,
+.paging_full_numbers span.paginate_active {
+    border: 1px solid {{color.grey}};
+    padding: 0.13em 0.3em;position: fixed; /* Set the navbar to fixed position */
+  top: 0; /* Position the navbar at the top of the page */
+  width: 100%;
+    margin: 0 0.2em;
+    cursor: pointer;
+    *cursor: hand;
+}
+
+.paging_full_numbers span.paginate_button {
+    background-color: {{color.light_grey_3}};
+}
+
+.paging_full_numbers span.paginate_button:hover {
+    background-color: {{color.light_grey_4}};
+}
+
+.paging_full_numbers span.paginate_active {
+    background-color: {{color.knowl_1}};
+}
+
+/* TODO: div? -> don't put global div properties*/
+div.box {
+    height: 6.7em;
+    padding: 0.7em;
+    overflow: auto;
+    border: 1px solid {{color.knowl_thin_border}};
+    background-color: {{color.knowl_background}};
+}
+
+div.codebox {
+    margin: 0.13em;
+    padding: 0.2em;
+    /*text-padding: 0.7em;*/
+    /*border: 1px solid #496;*/
+    /*border-left-width: 0.3em;*/
+    border-radius: 0em;
+    /*background-color: #ddeedf;*/
+    /*background-color: #eef5ee;*/
+    /*background-color: {{color.knowl_background}};
+    box-shadow: 0.2em 0.2em 0.2em {{color.knowl_shadow}};*/
+    box-shadow: 0em 0em 0.3em rgba(0,0,0,0.5);
+    white-space: pre;
+}
+
+p.short {
+  margin: 0;
+}
+
+.float-right {
+    float:right;
+}
+.float-left {
+    float:left;
+}
+
+.mjx_basic {
+    font-family: MJX_Math;
+}
+
+input::placeholder {
+    color: #cccccc;
+}
+
+/* e.g. "Next" button */
+a.navlink {
+  color: {{color.a_nav_text}};
+  background-color: {{color.a_nav_background}};
+  font-weight: bold;
+  font-size: 0.75em;
+  text-align: center;
+  padding: 0.3em;
+  padding-top: 0.2em;
+  padding-bottom: 0.25em;
+  border: 1px solid {{color.a_nav_border}};
+  outline: 1px solid {{color.a_nav_background}};
+  text-decoration: none;
+  margin-left: 1px;
+  margin-top: 0.7em;
+  vertical-align: top;
+}
+
+hr {
+  border: 1px solid {{ color.hr_border }};
+  margin: 1em 0;
+}
+
+/* jquery ui slider */
+.slider {
+  margin: 1em; 0.3em;
+}
+
+
+
 
 /************* Generic table classes **********************************/
 
@@ -451,6 +629,295 @@ td.forminfo {
 td.right {
     text-align: right;
 }
+
+table td.title {
+  /*font-weight: bold;*/
+  font-size: 130%;
+  text-align: center;
+  background: {{color.box_background_title}};
+  height: 2em;
+  padding: 0.3em;
+  padding-left: 0.7em;
+  border-top-right-radius: 0.7em;
+}
+table td.content {
+  background: {{color.box_background_img}};
+  font-size: 90%;
+  padding-left: 1em;
+  padding-bottom: 0.3em;
+  vertical-align: top;
+}
+
+td.nowrap {
+    white-space:nowrap;
+}
+
+.dataTables_wrapper {
+    width: 37em; /* TODO: Think about mobile-support */
+    zoom: 1; /* Feeling sorry for IE */
+}
+
+.dataTables_processing {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 17em;
+    height: 2em;
+    margin-left: -8.3em;
+    margin-top: -1em;
+    padding: 1em 0 0.13em 0;
+    border: 1px solid {{color.light_grey_3}};
+    text-align: center;
+    color: {{color.grey}};
+    font-size: 1em;
+    background-color: {{color.white}};
+}
+
+.dataTables_length {
+    width: 100%;
+    line-height: 2.7em;
+}
+
+.dataTables_filter {
+    width: 100%;
+    line-height: 2.7em;
+}
+
+.dataTables_info {
+    width: 45%;
+    float: left;
+    margin: 0.3em;
+}
+
+.dataTables_paginate {
+    width: 50%;
+    * width: 3.3em;
+    float: right;
+    text-align: right;
+    margin: 0.3em;
+}
+
+table.display {
+    margin: 0 auto;
+    clear: both;
+    width: 100%;
+}
+
+table.display thead th {
+    padding: 0.2em 1.2em 0.2em 0.7em;
+    border-bottom: 1px solid {{color.black}};
+    font-weight: bold;
+    cursor: pointer;
+    * cursor: hand;
+}
+
+table.display tfoot th {
+    padding: 0.2em 1.2em 0.2em 0.7em;
+    border-top: 1px solid {{color.black}};
+    font-weight: bold;
+}
+
+table.display tr.heading2 td {
+    border-bottom: 1px solid {{color.grey}};
+}
+
+table.display td {
+    padding: 0.2em 0.7em;
+}
+
+table.display td.center {
+    text-align: center;
+}
+
+.sorting_asc {
+    background: url('/static/images/sort_asc.png') no-repeat center right;
+}
+
+.sorting_desc {
+    background: url('/static/images/sort_desc.png') no-repeat center right;
+}
+
+.sorting {
+    background: url('/static/images/sort_both.png') no-repeat center right;
+}
+
+.sorting_asc_disabled {
+    background: url('/static/images/sort_asc_disabled.png') no-repeat center right;
+}
+
+.sorting_desc_disabled {
+    background: url('/static/images/sort_desc_disabled.png') no-repeat center right;
+}
+
+.dataTables_scroll {
+    clear: both;
+}
+
+.dataTables_scrollBody {
+    *margin-top: -1px;
+}
+
+.dataTables_empty {
+    text-align: center;
+}
+
+/* Too generic names: */
+.top, 
+.bottom {
+    padding: 3.5em 0.3em 0.3em;
+    background-color: {{color.white_1}};
+    border: 1px solid {{color.light_grey_4}};
+}
+
+.top .dataTables_info {
+    float: none;
+}
+
+.clear {
+    clear: both;
+}
+
+tfoot input {
+    margin: 0.5em 0;
+    width: 100%;
+    color: {{color.dark_grey_1}};
+}
+
+tfoot input.search_init {
+    color: {{color.grey}};
+}
+
+td.group {
+    background-color: {{color.light_red_grey}};
+    border-bottom: 0.13em solid {{color.red_grey}};
+    border-top: 0.13em solid {{color.red_grey}};
+}
+
+td.details {
+    background-color: {{color.light_red_grey}};
+    border: 0.13em solid {{color.red_grey}};
+}
+
+
+
+table.display tr.even.row_selected td {
+    background-color: {{color.blue_grey}};
+}
+
+table.display tr.odd.row_selected td {
+    background-color: {{color.blue_grey_1}};
+}
+
+tr.odd td.sorting_1 {
+    background-color: {{color.knowl_l_1}};
+}
+
+tr.odd td.sorting_2 {
+    background-color: {{color.knowl_l_2}};
+}
+
+tr.odd td.sorting_3 {
+    background-color: {{color.knowl_l_3}};
+}
+
+tr.even td.sorting_1 {
+    background-color: {{color.knowl_l_4}};
+}
+
+tr.even td.sorting_2 {
+    background-color: {{color.knowl_l_5}};
+}
+
+tr.even td.sorting_3 {
+    background-color: {{color.knowl_l_6}};
+}
+
+.cmf-dim-table th.level {
+    padding-left: 5.3em;
+}
+th.weight-label {
+    padding-left: 0.3em;
+    padding-right: 0em;
+}
+
+td.op {
+    font-family: MJX_Math;
+    text-align: center;
+    margin-right: 0;
+    padding-right: 0.13em;
+    margin-left: 0;
+    padding-left: 0.13em;
+}
+
+td.topspace {
+    padding-top: 1em;
+}
+
+.table_rotate {
+   /* see the word "Weight" on the left edge of the table in
+        /ModularForm/GL2/Q/holomorphic/?search_type=Dimensions&dim=1
+   */
+  transform: rotate(180deg);
+
+  writing-mode: vertical-lr;
+  white-space: nowrap;
+}
+
+/*************** .table-scroll-wrapper  *******************************/
+
+.table-scroll-wrapper {
+    overflow-y:auto;
+}
+
+.table-scroll-wrapper table {
+    margin-right: 1px;
+    margin-bottom: 1px;
+    border-collapse: collapse;
+}
+.table-scroll-wrapper th {
+    position: -webkit-sticky; top: 0;
+    position: sticky; top: 0;
+    z-index:1;
+    background:{{color.table_ntdata_background_2}};
+    background-clip: padding-box;
+}
+div.table-scroll-wrapper thead tr {
+    border-bottom: 0;
+}
+div.table-scroll-wrapper thead > tr:last-child > th {
+    border-bottom: 0.13em solid {{ color.table_ntdata_border}};
+}
+
+.table-scroll-wrapper td.border-right, 
+.table-scroll-wrapper th.border-right {
+    border-right: 0; /* We need to put the border on td:after for scrolling */
+}
+.table-scroll-wrapper .border-right:after {
+    content:'';
+    position:absolute;
+    right: 0;
+    top: 0;
+    height:100%;
+    border-right: 0.13em solid {{ color.table_ntdata_border}};
+}
+.table-scroll-wrapper .sticky-col {
+    position: -webkit-sticky; left: 0;
+    position: sticky; left: 0;
+    z-index:2;
+    background-clip: padding-box;
+}
+.table-scroll-wrapper th.sticky-head {
+    position: -webkit-sticky; left: 0; top: 0;
+    position: sticky; left: 0; top: 0;
+    z-index:3;
+}
+
+.table-scroll-wrapper table.sticky-embeddings {
+    margin: 0;
+    padding: 0;
+    min-width: 3.7em;
+}
+
 
 
 /************************ table.ntdata ********************************/
@@ -599,6 +1066,15 @@ table.ntdata td.light {
     background: white;
 }
 
+table.ntdata td.nowrap a {
+    display: inline;
+}
+
+table.ntdata td.embedding-wrap {
+    margin: 0;
+    padding: 0;
+}
+
 /******************** table chardata **********************************/
 
 table.chardata a {
@@ -728,7 +1204,124 @@ table.statgrid td.cnt {
     border-right: 1px solid #ccc;
 }
 
-/**************** Tables for the Siegel corner ************************/
+/******************** table.tablesorter *******************************/
+
+/* TODO: where? do colors get used?*/
+table.tablesorter {
+    font-family:arial;
+    background-color: {{color.light_grey_2}};
+    margin: 0.7em 0 1em;
+    font-size: 0.55em;
+    width: 100%;
+    text-align: left;
+}
+table.tablesorter thead tr th, 
+table.tablesorter tfoot tr th {
+  background-color: {{color.col_main_ll}};/*TODO: or really light grey?*/
+  border: 1px solid {{color.white}};
+    font-size: 0.55em;
+    padding: 0.25em;
+}
+table.tablesorter thead tr .header {
+    background-image: url("static/images/black-unsorted.gif");
+    background-repeat: no-repeat;
+    background-position: center right;
+    cursor: pointer;
+  padding-left: 0.25em;
+  padding-right: 1em;
+}
+table.tablesorter tbody td {
+    color: {{color.dark_grey}};
+    padding: 0.25em;
+    background-color: {{color.white}};
+    vertical-align: top;
+}
+table.tablesorter tbody tr.odd td {
+    background-color:{{color.knowl_background}};
+}
+table.tablesorter thead tr .headerSortUp {
+    background-image: url("static/images/black-asc.gif");
+}
+table.tablesorter thead tr .headerSortDown {
+    background-image: url("static/images/black-desc.gif");
+}
+table.tablesorter thead tr .headerSortDown, 
+table.tablesorter thead tr .headerSortUp {
+    background-color: {{color.light_grey_2}};
+}
+
+/************ table.coeff_ring_basis **********************************/
+
+table.coeff_ring_basis {
+    margin-left: 1em;
+}
+
+table.coeff_ring_basis td {
+    vertical-align: top;
+}
+
+table.coeff_ring_basis td.LHS {
+    text-align: right;
+    margin-right: 0;
+    padding-right: 0;
+}
+table.coeff_ring_basis td.eq {
+    text-align: center;
+    margin-right: 0;
+    padding-right: 0.13em;
+    margin-left: 0;
+    padding-left: 0.13em;
+}
+table.coeff_ring_basis td.RHS {
+    text-align: left;
+    margin-left: 0;
+    padding-left: 0;
+}
+
+/******************* table.complex-cols *******************************/
+
+table.complex-cols td.real {
+    font-family: MJX_Math;
+    text-align: right;
+    margin-right: 0;
+    padding-right: 0;
+}
+table.complex-cols td.imag {
+    font-family: MJX_Math;
+    text-align: left;
+    margin-left: 0;
+    padding-left: 0;
+}
+
+/******************* table.sticky-embeddings **************************/
+
+table.sticky-embeddings td.vstrut {
+    margin-left: 0;
+    padding-left: 0;
+    margin-right: 0;
+    padding-right: 0;
+}
+
+/******************* table.qexp-table *********************************/
+
+table.qexp-table td.fdef {
+    text-align: right;
+    margin-right: 0;
+    padding-right: 0;
+    vertical-align: top;
+}
+table.qexp-table td.op {
+    vertical-align: top;
+}
+
+table.qexp-table td.output {
+    margin-left: 0;
+    padding-left: 0;
+    vertical-align: top;
+}
+
+
+/**************** Tables for the Siegel corner (?) ********************/
 
 /** TODO these definitions are too broad. please make siegel a
  * blueprint (name is e.g. "siegel") and prefix all siegel
@@ -779,42 +1372,11 @@ table.statgrid td.cnt {
   margin-bottom: 1em
 }
 
-a.navlink {
-  color: {{color.a_nav_text}};
-  background-color: {{color.a_nav_background}};
-  font-weight: bold;
-  font-size: 0.75em;
-  text-align: center;
-  padding: 0.3em;
-  padding-top: 0.2em;
-  padding-bottom: 0.25em;
-  border: 1px solid {{color.a_nav_border}};
-  outline: 1px solid {{color.a_nav_background}};
-  text-decoration: none;
-  margin-left: 1px;
-  margin-top: 0.7em;
-  vertical-align: top;
-}
-
-hr {
-  border: 1px solid {{ color.hr_border }};
-  margin: 1em 0;
-}
-/*TODO: above*/
-body.knowl hr {
-  border: 0.13em solid {{ color.knowl_border }};
-}
-
-/* jquery ui slider */
-.slider {
-  margin: 1em; 0.3em;
-}
 
 /********************** end table Siegel ******************************/
 
 /*********** Generated forms (generated by search_boxes.py) ***********/
 
-/*TODO: where do the following show up? -> in the forms*/
 .formexample {
    font-size: 80%;
    font-style: italic;
@@ -895,6 +1457,28 @@ body.knowl hr {
   margin: 0.3em;
 }
 
+/********************* Maass form plot ********************************/
+
+div.maassformplot {
+    position: absolute;
+    width: 48em;
+    position: relative;
+    /*    height: 53em;
+        overflow: hidden;
+        position: relative; */
+}
+
+div.maassformplot img {
+    width:100%;
+    height:auto;
+/*    position: absolute;
+    top: -13em;
+    left: -58em;*/
+}
+
+/* End of styling of Maass form plot */
+
+
 /****************** body.knowl ****************************************/
 /*TODO: shouldn't body rather have an ID instead of a class?*/
 
@@ -942,6 +1526,10 @@ body.knowl #content a {
 body.knowl a:hover {
   background: {{ color.knowl_hover }};
 }
+body.knowl hr {
+  border: 0.13em solid {{ color.knowl_border }};
+}
+
 
 /******************** Knowls ******************************************/
 
@@ -1154,6 +1742,48 @@ div.limit-height {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /**********************************************************************/
 /**********************************************************************/
 /**********************************************************************/
@@ -1168,6 +1798,12 @@ div.limit-height {
 
 /* TODO: Should we really have #content-specific definitions?
  * This gives these definitions automatically high specificity.
+ * 
+ * Perhaps only for the toplevel children of #content (">")...
+ * 
+ * As for now, #content stands here on top of the IDs, such at least
+ * other id-specific declarations will overwrite it, if needed.
+ * 
  */
 
 #content  h1
@@ -1277,6 +1913,10 @@ div.limit-height {
   overflow-y: hidden;
   -ms-overflow-y: hidden; /* for IE8 */
 }
+
+/* Make too wide elements horizontally scrollable:
+ * (Perhaps rather only for point-click devices, but for arbitrary size?)
+ */   
 @media only screen and (max-width: 600px) {
   #content > p,
   #content > table.ntdata,
@@ -1299,38 +1939,7 @@ div.limit-height {
   padding-right: 0.7em;
 }
 
-/****************** #search-topright **********************************/
 
-/*
-#search-topright {
-  display: inline;
-}
-#search-topright input {
-  font-size: 75%;
-  border: 1px solid {{ color.search_border }};
-  padding: 1px;
-  background: {{color.search_background}} ;
-  position: relative;
-  top: -1px;
-}
-*/
-
-/******************** #flashes ****************************************/
-
-/* TODO: what? */
-#flashes p {
-  border-left: 1em solid {{color.knowl_border}};
-  padding: 0.3em;
-  background: {{color.knowl_background}};
-}
-
-#flashes p.error {
-  margin: 1em 0;
-  font-size: 95%;
-  border: 0;
-  border-left: 1em solid {{color.flashes_border}};
-  background: {{color.flashes_background}};
-}
 
 /********************** #main *****************************************/
 
@@ -1341,266 +1950,6 @@ div.limit-height {
   min-height: 45em;
 }
 
-/********** #properties (Property boxes on right hand side) ***********/
-
-#properties {
-    z-index: 99;
-    font-size: 85%;
-    font-family: var(--main-font-family);
-    float: right;
-    clear: right;
-    margin: 0.7em 0em 1.3em 1.3em;
-    position: relative;
-    border: 1px solid {{color.properties_border}};
-    border: 0;
-    padding: 0em;
-    min-width: 14.5em;
-}
-#properties .properties-body div, 
-#properties .properties-body p {
-  padding: 0.3em;
-}
-#properties .properties-body h1, 
-#properties .properties-body h2 {
-    color: {{ color.properties_header_text }};
-    padding: 0.3em;
-    margin: 0;
-    margin-bottom: 0;
-    background: {{ color.properties_text_h1h2 }};
-}
-#properties .properties-body h1 {
-    font-size: 120%;
-}
-#properties .properties-body h2 {
-    font-size: 110%;
-    margin-top: 0.7em;
-}
-#properties .properties-body h2:first-child { 
-  margin-top: 0em; 
-}
-#properties .properties-body table th,
-#properties .properties-body table td {
-  padding: 0.13em 0.7em;
-}
-#properties .properties-body table tr:last-child td {
-  padding-bottom: 0.5em;
-}
-#properties .properties-body table tr:first-child td {
-  padding-top: 0.5em;
-}
-#properties .properties-body .label {
-  /*font-weight: bold;*/
-}
-#properties .properties-body ul {
-  margin: 0em;
-  padding: 0em;
-}
-
-#properties .properties-body ul:last-child li:last-child a {
-  border-bottom-left-radius: 0.7em;
-}
-#properties .properties-body li {
-  display: block;
-  padding: 0.3em 0 0 0.5em;
-  margin: 0;
-}
-#properties .properties-body li:first-child {
-  padding-top: 0.5em;
-}
-#properties .properties-body li:last-child {
-  padding-bottom: 0.3em;
-}
-#properties .properties-body li a {
- display: block;
-/*
- padding: 0.3em;
-*/
-}
-
-#properties .properties-body {
-  margin: 0em;
-  padding: 0em;
-  background: {{color.properties_body_background}};
-  min-width: 13em;
-  border-bottom-left-radius: 0.7em;
-  max-height: 29; /* 21 items with padding: 22 + 21*19 + 9 */
-  overflow-y: auto; /* scrollbar if we overflow */
-}
-#properties .properties-header {
-  border-top-left-radius: 0.7em;
-  margin: 0;
-  margin-top: 0.7em;
-  padding: 0.4em 1em;
-  color: {{ color.properties_header_text }};
-  background: {{ color.properties_header_background }};
-  font-size: 120%;
-  font-weight: normal;
-  cursor: pointer;
-  padding-right: 2em;
-}
-#properties-collapser {
-  cursor: pointer;
-  color: {{ color.properties_collapser }};
-  font-size: 1.2em;
-  font-weight: bold;
-  text-align: center;
-  border: 1px solid ;
-  width: 1.5em;
-  height: 1.5em;
-  position: absolute;
-  top:   0.95em;
-  right: 0.8em;
-  {{ BORDER_RADIUS(1.3) }}
-}
-
-@media only screen and (max-width: 600px) {
-  #properties {
-    z-index: 0;
-    font-size: 85%;
-    font-family: var(--main-font-family);
-    float: none;
-    display: block;
-    margin: 0.3em 0em 0.3em 0em;
-    padding: 0.1em;
-    position: relative;
-    border: 1px solid {{color.properties_border}};
-    border: 0;
-    padding: 0;
-  }
-  #properties-collapser {
-    top: 0.25em;
-  }
-  #properties .properties-header {
-    border-top-right-radius: 0.7em;
-  }
-}
-
-/******************* #advancedtoggle **********************************/
-/* the button to show advanced search options */
-/* TODO: rather a class */
-
-#advancedtoggle {
-    margin-left: 1.3em;
-}
-#advancedtoggle:hover {
-    background:    {{color.button_background_hover}};
-    border: 1px solid #aaa; /*{{color.button_border_hover}};*/
-}
-
-/******************* #advancedtoggle **********************************/
-/* TODO: rather a class */
-
-#complex_embeddings {
-    padding-top: 0.7em;
-}
-
-/******************* #knowl-search ************************************/
-
-#knowl-search input {
-  font-size: small;
-  background: {{ color.knowl_background }};
-}
-
-/******************* #knowl-index *************************************/
-
-/* OLD: */
-/*
-#knowl-index td div > a {
-  padding: 0em;
-  position: absolute;
-  top: 0.8em;
-  width: 11em;
-  height: 4.3em;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-#knowl-index td div > span {
-  font-size: xx-small;
-  color: {{color.grey}};
-  position: absolute;
-  top: 0.13em;
-  line-height: 1em;
-  width: 170px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-#knowl-index td div {
-  position: relative;
-  width: 11em;
-  height: 4.3em;
-  float: left;
-  min-height: 4em;
-  padding: 0.13em;
-  margin: 1px;
-  border-radius: 0.13em;
-}
-#knowl-index td div:hover {
-  background: {{ color.knowl_hover }};
-  cursor: pointer;
-}
-#knowl-index td {
-  padding: 0;
-}
-*/
-
-#knowl-index > tr > td{
-  padding: 0.5em;
-}
-
-#knowl-index .knowl-flex {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: flex-start;
-  width: 100%;
-}
-
-#knowl-index .knowl-flex-entry {
-  display: inline-block;
-  margin: 0.1em 1em;
-  /*border: 1px solid #ddd;*/
-}
-
-
-#knowl-index .knowl-flex-entry > a {
-  padding: 0em;
-  position: relative;
-  /*max-width: 20em;*/
-  width: 15em;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  min-height: 1.5em;
-}
-
-
-#knowl-index .knowl-flex-entry > span {
-  font-family: var(--control-font-family);
-  font-size: xx-small;
-  color: {{color.grey}};
-  position: relative;
-  line-height: 1em;
-  width: 20em;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  
-}
-/*
-#knowl-index td div {
-  position: relative;
-  width: 11em;
-  height: 4.3em;
-  float: left;
-  min-height: 4em;
-  padding: 0.13em;
-  margin: 1px;
-  border-radius: 0.13em;
-}
-*/
-
-#knowl-index div.knowl-flex-entry:hover {
-  background: {{ color.knowl_hover }};
-  cursor: pointer;
-}
 
 /********************* header (except navbar) *************************/
 
@@ -1701,6 +2050,21 @@ body.knowl #header {
   z-index: 5;
 }
 
+/****************** #search-topright **********************************/
+
+/*
+#search-topright {
+  display: inline;
+}
+#search-topright input {
+  font-size: 75%;
+  border: 1px solid {{ color.search_border }};
+  padding: 1px;
+  background: {{color.search_background}} ;
+  position: relative;
+  top: -1px;
+}
+*/
 
 
 /********************* #navbar (menu at top) **************************/
@@ -1920,6 +2284,141 @@ body.knowl .logo a:hover {
   } 
 }
 
+/********** #properties (Property boxes on right hand side) ***********/
+
+#properties {
+    z-index: 99;
+    font-size: 85%;
+    font-family: var(--main-font-family);
+    float: right;
+    clear: right;
+    margin: 0.7em 0em 1.3em 1.3em;
+    position: relative;
+    border: 1px solid {{color.properties_border}};
+    border: 0;
+    padding: 0em;
+    min-width: 14.5em;
+}
+#properties .properties-body div, 
+#properties .properties-body p {
+  padding: 0.3em;
+}
+#properties .properties-body h1, 
+#properties .properties-body h2 {
+    color: {{ color.properties_header_text }};
+    padding: 0.3em;
+    margin: 0;
+    margin-bottom: 0;
+    background: {{ color.properties_text_h1h2 }};
+}
+#properties .properties-body h1 {
+    font-size: 120%;
+}
+#properties .properties-body h2 {
+    font-size: 110%;
+    margin-top: 0.7em;
+}
+#properties .properties-body h2:first-child { 
+  margin-top: 0em; 
+}
+#properties .properties-body table th,
+#properties .properties-body table td {
+  padding: 0.13em 0.7em;
+}
+#properties .properties-body table tr:last-child td {
+  padding-bottom: 0.5em;
+}
+#properties .properties-body table tr:first-child td {
+  padding-top: 0.5em;
+}
+#properties .properties-body .label {
+  /*font-weight: bold;*/
+}
+#properties .properties-body ul {
+  margin: 0em;
+  padding: 0em;
+}
+
+#properties .properties-body ul:last-child li:last-child a {
+  border-bottom-left-radius: 0.7em;
+}
+#properties .properties-body li {
+  display: block;
+  padding: 0.3em 0 0 0.5em;
+  margin: 0;
+}
+#properties .properties-body li:first-child {
+  padding-top: 0.5em;
+}
+#properties .properties-body li:last-child {
+  padding-bottom: 0.3em;
+}
+#properties .properties-body li a {
+ display: block;
+/*
+ padding: 0.3em;
+*/
+}
+
+#properties .properties-body {
+  margin: 0em;
+  padding: 0em;
+  background: {{color.properties_body_background}};
+  min-width: 13em;
+  border-bottom-left-radius: 0.7em;
+  max-height: 29; /* 21 items with padding: 22 + 21*19 + 9 */
+  overflow-y: auto; /* scrollbar if we overflow */
+}
+#properties .properties-header {
+  border-top-left-radius: 0.7em;
+  margin: 0;
+  margin-top: 0.7em;
+  padding: 0.4em 1em;
+  color: {{ color.properties_header_text }};
+  background: {{ color.properties_header_background }};
+  font-size: 120%;
+  font-weight: normal;
+  cursor: pointer;
+  padding-right: 2em;
+}
+#properties-collapser {
+  cursor: pointer;
+  color: {{ color.properties_collapser }};
+  font-size: 1.2em;
+  font-weight: bold;
+  text-align: center;
+  border: 1px solid ;
+  width: 1.5em;
+  height: 1.5em;
+  position: absolute;
+  top:   0.95em;
+  right: 0.8em;
+  {{ BORDER_RADIUS(1.3) }}
+}
+
+@media only screen and (max-width: 600px) {
+  #properties {
+    z-index: 0;
+    font-size: 85%;
+    font-family: var(--main-font-family);
+    float: none;
+    display: block;
+    margin: 0.3em 0em 0.3em 0em;
+    padding: 0.1em;
+    position: relative;
+    border: 1px solid {{color.properties_border}};
+    border: 0;
+    padding: 0;
+  }
+  #properties-collapser {
+    top: 0.25em;
+  }
+  #properties .properties-header {
+    border-top-right-radius: 0.7em;
+  }
+}
+
+
 /********************* footer *****************************************/
 
 #footer {
@@ -1984,6 +2483,7 @@ body.knowl .logo a:hover {
     margin: 0 auto 1.3em auto;
 }
 
+
 /******************* #index-boxes (for front page) ********************/
 
 #index-boxes {
@@ -2037,625 +2537,152 @@ body.knowl .logo a:hover {
 
 
 
+/******************* #knowl-search ************************************/
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/********************* tables *****************************************/
-
-
-table td.title {
-  /*font-weight: bold;*/
-  font-size: 130%;
-  text-align: center;
-  background: {{color.box_background_title}};
-  height: 2em;
-  padding: 0.3em;
-  padding-left: 0.7em;
-  border-top-right-radius: 0.7em;
+#knowl-search input {
+  font-size: small;
+  background: {{ color.knowl_background }};
 }
-table td.content {
-  background: {{color.box_background_img}};
-  font-size: 90%;
-  padding-left: 1em;
-  padding-bottom: 0.3em;
-  vertical-align: top;
-}
-div.user {
-  font-size: 90%;
+
+/******************* #knowl-index *************************************/
+
+#knowl-index > tr > td{
   padding: 0em;
 }
-div.user ul li {
-  line-height: 80%;
-}
 
-
-
-/* TODO: where? do colors get used?*/
-table.tablesorter {
-    font-family:arial;
-    background-color: {{color.light_grey_2}};
-    margin: 0.7em 0 1em;
-    font-size: 0.55em;
-    width: 100%;
-    text-align: left;
-}
-table.tablesorter thead tr th, 
-table.tablesorter tfoot tr th {
-  background-color: {{color.col_main_ll}};/*TODO: or really light grey?*/
-  border: 1px solid {{color.white}};
-    font-size: 0.55em;
-    padding: 0.25em;
-}
-table.tablesorter thead tr .header {
-    background-image: url("static/images/black-unsorted.gif");
-    background-repeat: no-repeat;
-    background-position: center right;
-    cursor: pointer;
-  padding-left: 0.25em;
-  padding-right: 1em;
-}
-table.tablesorter tbody td {
-    color: {{color.dark_grey}};
-    padding: 0.25em;
-    background-color: {{color.white}};
-    vertical-align: top;
-}
-table.tablesorter tbody tr.odd td {
-    background-color:{{color.knowl_background}};
-}
-table.tablesorter thead tr .headerSortUp {
-    background-image: url("static/images/black-asc.gif");
-}
-table.tablesorter thead tr .headerSortDown {
-    background-image: url("static/images/black-desc.gif");
-}
-table.tablesorter thead tr .headerSortDown, 
-table.tablesorter thead tr .headerSortUp {
-    background-color: {{color.light_grey_2}};
-}
-
-.dataTables_wrapper {
-    width: 37em;
-    zoom: 1; /* Feeling sorry for IE */
-}
-
-.dataTables_processing {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 17em;
-    height: 2em;
-    margin-left: -8.3em;
-    margin-top: -1em;
-    padding: 1em 0 0.13em 0;
-    border: 1px solid {{color.light_grey_3}};
-    text-align: center;
-    color: {{color.grey}};
-    font-size: 1em;
-    background-color: {{color.white}};
-}
-
-.dataTables_length {
-    width: 100%;
-    line-height: 2.7em;
-}
-
-.dataTables_filter {
-    width: 100%;
-    line-height: 2.7em;
-}
-
-.dataTables_info {
-    width: 45%;
-    float: left;
-    margin: 0.3em;
-}
-
-.dataTables_paginate {
-    width: 50%;
-    * width: 3.3em;
-    float: right;
-    text-align: right;
-    margin: 0.3em;
-}
-
-a.paginate_active {
-    font-weight: bold;
-    padding: 0.3em;
-}
-
-a.paginate_button {
-    padding: 0.3em;
-}
-
-/* Pagination nested */
-.paginate_disabled_previous, 
-.paginate_enabled_previous, 
-.paginate_disabled_next, 
-.paginate_enabled_next {
-    height: 1.25em;
-    width: 1.25em;
-    margin-left: 0.2em;
-    float: left;
-}
-
-.paginate_disabled_previous {
-    background-image: url('/static/images/back_disabled.jpg');
-}
-
-.paginate_enabled_previous {
-    background-image: url('/static/images/back_enabled.jpg');
-}
-
-.paginate_disabled_next {
-    background-image: url('/static/images/forward_disabled.jpg');
-}
-
-.paginate_enabled_next {
-    background-image: url('/static/images/forward_enabled.jpg');
-}
-
-table.display {
-    margin: 0 auto;
-    clear: both;
-    width: 100%;
-}
-
-table.display thead th {
-    padding: 0.2em 1.2em 0.2em 0.7em;
-    border-bottom: 1px solid {{color.black}};
-    font-weight: bold;
-    cursor: pointer;
-    * cursor: hand;
-}
-
-table.display tfoot th {
-    padding: 0.2em 1.2em 0.2em 0.7em;
-    border-top: 1px solid {{color.black}};
-    font-weight: bold;
-}
-
-table.display tr.heading2 td {
-    border-bottom: 1px solid {{color.grey}};
-}
-
-table.display td {
-    padding: 0.2em 0.7em;
-}
-
-table.display td.center {
-    text-align: center;
-}
-
-.sorting_asc {
-    background: url('/static/images/sort_asc.png') no-repeat center right;
-}
-
-.sorting_desc {
-    background: url('/static/images/sort_desc.png') no-repeat center right;
-}
-
-.sorting {
-    background: url('/static/images/sort_both.png') no-repeat center right;
-}
-
-.sorting_asc_disabled {
-    background: url('/static/images/sort_asc_disabled.png') no-repeat center right;
-}
-
-.sorting_desc_disabled {
-    background: url('/static/images/sort_desc_disabled.png') no-repeat center right;
-}
-
-
-
-
-.dataTables_scroll {
-    clear: both;
-}
-
-.dataTables_scrollBody {
-    *margin-top: -1px;
-}
-
-.top, 
-.bottom {
-    padding: 3.5em 0.3em 0.3em;
-    background-color: {{color.white_1}};
-    border: 1px solid {{color.light_grey_4}};
-}
-
-.top .dataTables_info {
-    float: none;
-}
-
-.clear {
-    clear: both;
-}
-
-.dataTables_empty {
-    text-align: center;
-}
-
-tfoot input {
-    margin: 0.5em 0;
-    width: 100%;
-    color: {{color.dark_grey_1}};
-}
-
-tfoot input.search_init {
-    color: {{color.grey}};
-}
-
-td.group {
-    background-color: {{color.light_red_grey}};
-    border-bottom: 0.13em solid {{color.red_grey}};
-    border-top: 0.13em solid {{color.red_grey}};
-}
-
-td.details {
-    background-color: {{color.light_red_grey}};
-    border: 0.13em solid {{color.red_grey}};
-}
-
-
-.example_alt_pagination div.dataTables_info {
-    width: 40%;
-}
-
-.paging_full_numbers {
-    height: 1.5em;
-    line-height: 1.5em;
-}
-
-.paging_full_numbers span.paginate_button,
-.paging_full_numbers span.paginate_active {
-    border: 1px solid {{color.grey}};
-    padding: 0.13em 0.3em;position: fixed; /* Set the navbar to fixed position */
-  top: 0; /* Position the navbar at the top of the page */
+#knowl-index .knowl-flex {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-content: flex-start;
   width: 100%;
-    margin: 0 0.2em;
-    cursor: pointer;
-    *cursor: hand;
-}
-
-.paging_full_numbers span.paginate_button {
-    background-color: {{color.light_grey_3}};
-}
-
-.paging_full_numbers span.paginate_button:hover {
-    background-color: {{color.light_grey_4}};
-}
-
-.paging_full_numbers span.paginate_active {
-    background-color: {{color.knowl_1}};
-}
-
-table.display tr.even.row_selected td {
-    background-color: {{color.blue_grey}};
-}
-
-table.display tr.odd.row_selected td {
-    background-color: {{color.blue_grey_1}};
-}
-
-tr.odd td.sorting_1 {
-    background-color: {{color.knowl_l_1}};
-}
-
-tr.odd td.sorting_2 {
-    background-color: {{color.knowl_l_2}};
-}
-
-tr.odd td.sorting_3 {
-    background-color: {{color.knowl_l_3}};
-}
-
-tr.even td.sorting_1 {
-    background-color: {{color.knowl_l_4}};
-}
-
-tr.even td.sorting_2 {
-    background-color: {{color.knowl_l_5}};
-}
-
-tr.even td.sorting_3 {
-    background-color: {{color.knowl_l_6}};
-}
-
-
-
-/* TODO: div? -> don't put global div properties*/
-div.box {
-    height: 6.7em;
-    padding: 0.7em;
-    overflow: auto;
-    border: 1px solid {{color.knowl_thin_border}};
-    background-color: {{color.knowl_background}};
-}
-
-div.codebox {
-    margin: 0.13em;
-    padding: 0.2em;
-    /*text-padding: 0.7em;*/
-    /*border: 1px solid #496;*/
-    /*border-left-width: 0.3em;*/
-    border-radius: 0em;
-    /*background-color: #ddeedf;*/
-    /*background-color: #eef5ee;*/
-    /*background-color: {{color.knowl_background}};
-    box-shadow: 0.2em 0.2em 0.2em {{color.knowl_shadow}};*/
-    box-shadow: 0em 0em 0.3em rgba(0,0,0,0.5);
-    white-space: pre;
-}
-
-/********************* Maass form plot ********************************/
-
-div.maassformplot {
-    position: absolute;
-    width: 48em;
-    position: relative;
-    /*    height: 53em;
-        overflow: hidden;
-        position: relative; */
-}
-
-div.maassformplot img {
-    width:100%;
-    height:auto;
-/*    position: absolute;
-    top: -13em;
-    left: -58em;*/
-}
-
-/* End of styling of Maass form plot */
-
-
-
-
-
-
-
-
-
-p.short {
+  padding: 0;
   margin: 0;
 }
 
-.table-scroll-wrapper {
-    overflow-y:auto;
-}
-
-.table-scroll-wrapper table {
-    margin-right: 1px;
-    margin-bottom: 1px;
-    border-collapse: collapse;
-}
-.table-scroll-wrapper th {
-    position: -webkit-sticky; top: 0;
-    position: sticky; top: 0;
-    z-index:1;
-    background:{{color.table_ntdata_background_2}};
-    background-clip: padding-box;
-}
-.cmf-dim-table th.level {
-    padding-left: 5.3em;
-}
-th.weight-label {
-    padding-left: 0.3em;
-    padding-right: 0em;
-}
-
-div.table-scroll-wrapper thead tr {
-    border-bottom: 0;
-}
-div.table-scroll-wrapper thead > tr:last-child > th {
-    border-bottom: 0.13em solid {{ color.table_ntdata_border}};
-}
-
-.table-scroll-wrapper td.border-right, 
-.table-scroll-wrapper th.border-right {
-    border-right: 0; /* We need to put the border on td:after for scrolling */
-}
-.table-scroll-wrapper .border-right:after {
-    content:'';
-    position:absolute;
-    right: 0;
-    top: 0;
-    height:100%;
-    border-right: 0.13em solid {{ color.table_ntdata_border}};
-}
-.table-scroll-wrapper .sticky-col {
-    position: -webkit-sticky; left: 0;
-    position: sticky; left: 0;
-    z-index:2;
-    background-clip: padding-box;
-}
-.table-scroll-wrapper th.sticky-head {
-    position: -webkit-sticky; left: 0; top: 0;
-    position: sticky; left: 0; top: 0;
-    z-index:3;
-}
-td.nowrap {
-    white-space:nowrap;
-}
-table.ntdata td.nowrap a {
-    display: inline;
-}
-
-.float-right {
-    float:right;
-}
-.float-left {
-    float:left;
+#knowl-index .knowl-flex-entry {
+  display: inline-block;
+  margin: 0em 1em;
+  padding-bottom: 0.2em;
+  /*border: 1px solid #ddd;*/
+  border-top: 1px solid #aaa;
 }
 
 
-table.coeff_ring_basis {
-    margin-left: 1em;
+#knowl-index .knowl-flex-entry > a {
+  display: block;
+  padding: 0em;
+  position: relative;
+  /*max-width: 20em;*/
+  width: 15em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-height: 1.5em;
 }
 
-table.coeff_ring_basis td {
-    vertical-align: top;
+
+#knowl-index .knowl-flex-entry > span {
+  font-family: var(--control-font-family);
+  font-size: xx-small;
+  color: {{color.grey}};
+  position: relative;
+  line-height: 1em;
+  width: 15em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  
 }
 
-table.coeff_ring_basis td.LHS {
-    text-align: right;
-    margin-right: 0;
-    padding-right: 0;
-}
-table.coeff_ring_basis td.eq {
-    text-align: center;
-    margin-right: 0;
-    padding-right: 0.13em;
-    margin-left: 0;
-    padding-left: 0.13em;
-}
-table.coeff_ring_basis td.RHS {
-    text-align: left;
-    margin-left: 0;
-    padding-left: 0;
+#knowl-index tr td:first-child {
+  width: 2em;
+  vertical-align: top;
+  text-align: center;
+  font-size: 1.8em;
+  color: {{color.knowl_hyper_text}};
+  padding: 0.8em ;
 }
 
-table.complex-cols td.real {
-    font-family: MJX_Math;
-    text-align: right;
-    margin-right: 0;
-    padding-right: 0;
-}
-table.complex-cols td.imag {
-    font-family: MJX_Math;
-    text-align: left;
-    margin-left: 0;
-    padding-left: 0;
-}
-td.op {
-    font-family: MJX_Math;
-    text-align: center;
-    margin-right: 0;
-    padding-right: 0.13em;
-    margin-left: 0;
-    padding-left: 0.13em;
+#knowl-index div.knowl-flex-entry:hover {
+  background: {{ color.knowl_hover }};
+  cursor: pointer;
 }
 
-table.ntdata td.embedding-wrap {
-    margin: 0;
-    padding: 0;
-}
-.table-scroll-wrapper table.sticky-embeddings {
-    margin: 0;
-    padding: 0;
-    min-width: 3.7em;
-}
-table.sticky-embeddings td.vstrut {
-    margin-left: 0;
-    padding-left: 0;
-    margin-right: 0;
-    padding-right: 0;
+
+/******************** #flashes ****************************************/
+/* rather a class? */
+
+/* TODO: what? */
+#flashes p {
+  border-left: 1em solid {{color.knowl_border}};
+  padding: 0.3em;
+  background: {{color.knowl_background}};
 }
 
-table.qexp-table td.fdef {
-    text-align: right;
-    margin-right: 0;
-    padding-right: 0;
-    vertical-align: top;
-}
-table.qexp-table td.op {
-    vertical-align: top;
-}
-
-td.topspace {
-    padding-top: 1em;
-}
-table.qexp-table td.output {
-    margin-left: 0;
-    padding-left: 0;
-    vertical-align: top;
-}
-
-.mjx_basic {
-    font-family: MJX_Math;
-}
-
-input::placeholder {
-    color: #cccccc;
-}
-
-.table_rotate {
-   /* see the word "Weight" on the left edge of the table in
-        /ModularForm/GL2/Q/holomorphic/?search_type=Dimensions&dim=1
-   */
-  transform: rotate(180deg);
-
-  writing-mode: vertical-lr;
-  white-space: nowrap;
-}
-
-/* an horizonal list with bullet points */
-ul.horizontal-list {
-  display:inline-block;
-  padding:0;
-  margin: 0.5em;
-  margin-block-start: 0;
-}
-ul.horizontal-list li {
-  display: inline;
-  white-space: nowrap;
-}
-ul.horizontal-list li:after {
-  content:" ";
-  letter-spacing:1em;
-  background: center center no-repeat url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOwAAADsABataJCQAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xMkMEa+wAAAAnSURBVBhXY/Dz89MA4sNA/B9Ka4AEYQIwfBgkiCwAxjhVopnppwEApxQqhnyQ+VkAAAAASUVORK5CYII=);
-}
-
-input.color_selecter {
-    margin: 0.7em;
+#flashes p.error {
+  margin: 1em 0;
+  font-size: 95%;
+  border: 0;
+  border-left: 1em solid {{color.flashes_border}};
+  background: {{color.flashes_background}};
 }
 
 
 
-/* the advanced search options themselves, hidden by default */
-.advanced {
-    display: none;
+/******************* #advancedtoggle **********************************/
+/* the button to show advanced search options */
+/* TODO: rather a class */
+
+#advancedtoggle {
+    margin-left: 1.3em;
 }
+#advancedtoggle:hover {
+    background:    {{color.button_background_hover}};
+    border: 1px solid #aaa; /*{{color.button_border_hover}};*/
+}
+
+/******************* #advancedtoggle **********************************/
+/* TODO: rather a class */
+
+#complex_embeddings {
+    padding-top: 0.7em;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2706,3 +2733,12 @@ textarea:focus {
   border-color: #38c;
 }
 */
+
+
+
+
+
+
+
+
+
