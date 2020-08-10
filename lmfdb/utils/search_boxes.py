@@ -2,8 +2,16 @@ from .utilities import display_knowl
 from sage.structure.unique_representation import UniqueRepresentation
 from sage.rings.real_mpfr import RR
 
-class TdElt(object):
-    _wrap_type = 'td'
+def px_to_em(length_in_px):
+    '''
+    Assume that the parent font-size 1em equals 15px for the conversion.
+    '''
+    return (RR(length_in_px)/15.0).str(digits=3) 
+
+class DivElt(object):
+    #_wrap_type = 'td'
+    _wrap_type = 'div'
+    _closing_tag = '</%s>' % _wrap_type
     def _add_class(self, D, clsname):
         if 'class' in D:
             D['class'] = D['class'] + ' ' + clsname
@@ -21,46 +29,45 @@ class TdElt(object):
             keys.append(' %s="%s"' % (key, val))
         return "<%s%s>" % (typ, "".join(keys))
 
-    def td(self, colspan=None, **kwds):
+    def wrap(self, colspan=None, classes=[], inner_html="", **kwds):
+        classes.append(self.__class__.__name__)
         if colspan is not None:
             kwds['colspan'] = colspan
-        return self._wrap("td", **kwds)
+        if len(classes) != 0:
+            kwds['class'] = " ".join(classes)
+        if inner_html == None:
+            inner_html = ""
+        return self._wrap(self._wrap_type, **kwds) + inner_html + self._closing_tag
         
-    def px_to_em(self, length_in_px):
-        '''
-        Assume that the parent font-size 1em equals 15px for the conversion.
-        '''
-        return (RR(length_in_px)/15.0).str(digits=3) 
-
-class Spacer(TdElt):
+class Spacer(DivElt):
     def __init__(self, colspan=None, advanced=False):
         self.colspan = colspan
         self.advanced = advanced
 
     def input_html(self, info=None):
-        return self.td(self.colspan) + "</td>"
+        return self.wrap(self.colspan)
 
     def label_html(self, info=None):
-        return self.td(self.colspan) + "</td>"
+        return self.wrap(self.colspan)
 
     def example_html(self, info=None):
-        return self.td() + "</td>"
+        return self.wrap()
 
     def has_label(self, info=None):
         return False
 
+    def html(self, info=None):
+        return self.wrap(classes=["spacer"])
+
+#TODO: refactor:
 class RowSpacer(Spacer):
     def __init__(self, rowheight, advanced=False):
         self.rowheight = rowheight
         self.advanced = advanced
 
-    def tr(self, rowspan=0, **kwds): # used for row spacers
-        if rowspan is not None:
-            kwds['style'] = "height:%sem" % self.px_to_em(rowspan)
-        return self._wrap("tr", **kwds)
-
     def html(self, info=None):
-        return self.tr(self.rowheight) + "</tr>"
+        return self.wrap(classes=["form-rowspacer","col-all"],
+                         style = "height:%sem" % px_to_em(self.rowheight))
 
 
 class BasicSpacer(Spacer):
@@ -69,8 +76,7 @@ class BasicSpacer(Spacer):
         self.msg = msg
 
     def input_html(self, info=None):
-        return self.td(self.colspan) + self.msg + "</td>"
-
+        return self.wrap(self.colspan,inner_html=self.msg,classes=["spacer-msg"])
 
 class CheckboxSpacer(Spacer):
     def __init__(self, checkbox, colspan=1, advanced=False):
@@ -78,16 +84,10 @@ class CheckboxSpacer(Spacer):
         self.checkbox = checkbox
 
     def html(self, info=None):
-        return (
-            self.td(self.colspan)
-            + self.checkbox._label(info)
-            + " "
-            + self.checkbox._input(info)
-            + "</td>"
-        )
+        inner_html = self.checkbox._label(info) + " " + self.checkbox._input(info)
+        return self.wrap(self.colspan, classes=["form-checkbox","col-all"], inner_html=inner_html)
 
-
-class SearchBox(TdElt):
+class SearchBox(DivElt):
     """
     Class abstracting the input boxes used for LMFDB searches.
     """
@@ -110,6 +110,7 @@ class SearchBox(TdElt):
         example_col=False,
         id=None,
         qfield=None,
+        css_class=None
     ):
         self.name = name
         self.id = id
@@ -132,6 +133,7 @@ class SearchBox(TdElt):
             width = self._default_width
         self.width = width
         self.short_width = self.width if short_width is None else short_width
+        self.css_class = "search-box" if css_class is None else css_class
 
     def _label(self, info):
         label = self.label if info is None else self.short_label
@@ -145,21 +147,56 @@ class SearchBox(TdElt):
 
     def label_html(self, info=None):
         colspan = self.label_colspan if info is None else self.short_colspan
-        return self.td(colspan, rowspan=self.label_rowspan) + self._label(info) + "</td>"
+        return self.wrap(colspan, rowspan=self.label_rowspan, classes=["form-label"],
+                         inner_html=self._label(info))
 
     def input_html(self, info=None):
         colspan = self.input_colspan if info is None else self.short_colspan
-        return self.td(colspan, rowspan=self.input_rowspan) + self._input(info) + "</td>"
+        return self.wrap(colspan, rowspan=self.input_rowspan, classes=['form-inputs'],
+                         inner_html=self._input(info))
 
     def example_html(self, info=None):
+        #TODO: check:
         if self.example_span:
-            return (
-                self.td(self.example_span_colspan)
-                + '<span class="formexample">e.g. %s</span></td>' % self.example_span
-            )
+            return '<div class="formexample">e.g. %s</div>' % self.example_span
         elif self.example_col:
-            return "<td></td>"
+            return '<div class="formexample"></div>'
 
+    def gridspan_css_classes(self, info=None):
+        #only consider space requirements of title and input:
+        colspan = max(self.label_colspan,self.input_colspan)
+        if colspan == 1:
+            result = "col-l-3 col-4 col-s-6"
+        elif colspan in (2,3,4):
+            result = "col-l-6 col-8"
+        else:
+            result = "col-all"
+            
+        # The following is a quick hack in order to make the grid row-span look good
+        # based on the current way the form is given. 
+        # TODO: In the future, the row-span requirement should be directly given
+        # in the form description.    
+        
+        if colspan == 1:
+            if self.example_span_colspan > 1:
+                result += " row-span-2"        
+        return result
+        
+    def html(self, info=None):
+        label = self.label_html(info)
+        input_ = self.input_html(info)
+        example = self.example_html(info)
+        inner_html = ""
+        if label != None:
+            inner_html += label
+        if input_ != None:
+            inner_html += input_
+        if example != None:
+            inner_html += example
+            
+        result = self.wrap(classes=[self.css_class,self.gridspan_css_classes(info)],
+                           inner_html=inner_html)
+        return result
 
 class TextBox(SearchBox):
     """
@@ -197,6 +234,7 @@ class TextBox(SearchBox):
         id=None,
         qfield=None,
         extra=[],
+        css_class=None
     ):
         SearchBox.__init__(
             self,
@@ -215,6 +253,7 @@ class TextBox(SearchBox):
             example_col=example_col,
             id=id,
             qfield=qfield,
+            css_class=css_class
         )
         self.extra = extra
         self.example_value = example_value
@@ -230,12 +269,12 @@ class TextBox(SearchBox):
                 keys.append('value="%s"' % self.example)
             else:
                 keys.append('placeholder="%s"' % self.example)
-        if info is None:
-            if self.width is not None:
-                keys.append('style="width: %sem"' % self.px_to_em(self.width))
+        #if info is None:
+        #    if self.width is not None:
+        #        keys.append('style="width: %sem"' % px_to_em(self.width))
         else:
-            if self.short_width is not None:
-                keys.append('style="width: %sem"' % self.px_to_em(self.short_width))
+            #if self.short_width is not None:
+            #    keys.append('style="width: %sem"' % px_to_em(self.short_width))
             if self.name in info:
                 keys.append('value="%s"' % info[self.name])
         return '<input type="text" ' + " ".join(keys) + "/>"
@@ -277,6 +316,7 @@ class SelectBox(SearchBox):
         id=None,
         qfield=None,
         extra=[],
+        css_class=None
     ):
         SearchBox.__init__(
             self,
@@ -295,6 +335,7 @@ class SelectBox(SearchBox):
             example_col=example_col,
             id=id,
             qfield=qfield,
+            css_class=css_class
         )
         if options is None:
             options = self._options
@@ -307,12 +348,12 @@ class SelectBox(SearchBox):
             keys.append('id="%s"' % self.id)
         if self.advanced:
             keys.append('class="advanced"')
-        if info is None:
-            if self.width is not None:
-                keys.append('style="width: %sem"' % self.px_to_em(self.width))
-        else:
-            if self.short_width is not None:
-                keys.append('style="width: %sem"' % self.px_to_em(self.short_width))
+        #if info is None:
+        #    if self.width is not None:
+        #        keys.append('style="width: %sem"' % px_to_em(self.width))
+        #else:
+        #    if self.short_width is not None:
+        #        keys.append('style="width: %sem"' % px_to_em(self.short_width))
         opts = []
         for value, display in self.options:
             if (
@@ -336,10 +377,8 @@ class SelectBox(SearchBox):
 
 class NoEg(SearchBox):
     def example_html(self, info=None):
-        return (
-            self.td(self.example_span_colspan)
-            + '<span class="formexample">%s</span></td>' % self.example_span
-        )
+        return self.wrap(self.example_span_colspan, classes=["formexample"],
+                         inner_html=self.example_span)
 
 class TextBoxNoEg(NoEg, TextBox):
     pass
@@ -379,33 +418,40 @@ class TextBoxWithSelect(TextBox):
         self.select_box = select_box
         TextBox.__init__(self, name, label, **kwds)
 
+    '''
     def label_html(self, info=None):
         colspan = self.label_colspan if info is None else self.short_colspan
         return (
-            self.td(colspan)
+            self.div(colspan)
             + '<div style="display: flex; justify-content: space-between;">'
             + self._label(info)
             + '<span style="margin-left: 0.3em;"></span>'
             + self.select_box._input(info)
             + "</div>"
-            + "</td>"
+            + "</div>"
         )
-
+    '''
+    
+    def _input(self, info=None):
+        #print("super:",super,type(super))
+        inner_html = '<table><tr><td>'+self.select_box._input(info)+'</td>'
+        inner_html += '<td width="100%">'+super()._input(info)+'</td></tr></table>'
+        return inner_html;
+        #return self.select_box._input(info) + super()._input(info)
 
 class DoubleSelectBox(SearchBox):
     def __init__(self, label, select_box1, select_box2, **kwds):
         self.select_box1 = select_box1
         self.select_box2 = select_box2
         SearchBox.__init__(self, label, **kwds)
+        #TODO: add css class for this particular input type
 
     def _input(self, info):
-        return (
-            '<div style="display: flex; justify-content: space-between;">'
-            + self.select_box1._input(info)
-            + self.select_box2._input(info)
-            + "</div>"
-        )
-
+        inner_html = '<table width="100%"><tr><td width="50%">' + self.select_box1._input(info) + '</td>'
+        inner_html += '<td width="50%">' + self.select_box2._input(info) + '</td></tr></table>'
+        return inner_html
+        #return self.select_box1._input(info) + self.select_box2._input(info);
+ 
 class ExcludeOnlyBox(SelectBox):
     _options = [("", ""),
                 ("exclude", "exclude"),
@@ -469,10 +515,10 @@ class SearchButton(SearchBox):
         self.value = value
         self.description = description
 
-    def td(self, colspan=None, **kwds):
+    def wrap(self, colspan=None, classes=[], inner_html="", **kwds):
         kwds = dict(kwds)
         self._add_class(kwds, 'button')
-        return SearchBox.td(self, colspan, **kwds)
+        return SearchBox.wrap(self, colspan, classes, inner_html, **kwds)
 
     def _input(self, info):
         if info is None:
@@ -481,10 +527,10 @@ class SearchButton(SearchBox):
             onclick = " onclick='resetStart()'"
         btext = "<button type='submit' name='search_type' value='{val}' style='width: {width}em;'{onclick}>{desc}</button>"
         return btext.format(
-            width=self.px_to_em(self.width),
-            val=self.value,
-            desc=self.description,
-            onclick=onclick,
+            width = px_to_em(self.width),
+            val = self.value,
+            desc = self.description,
+            onclick = onclick,
         )
 
 class SearchButtonWithSelect(SearchButton):
@@ -494,15 +540,9 @@ class SearchButtonWithSelect(SearchButton):
 
     def label_html(self, info=None):
         colspan = self.label_colspan if info is None else self.short_colspan
-        return (
-            self.td(colspan)
-            + '<div style="display: flex; justify-content: space-between;">'
-            + self._label(info)
-            + '<span style="margin-left: 0.3em;"></span>'
-            + self.select_box._input(info)
-            + "</div>"
-            + "</td>"
-        )
+        inner_html = self._label(info) + self.select_box._input(info)
+        return self.wrap(colspan,classes=["button-with-select"],
+                         inner_html=inner_html)
 
 class SearchArray(UniqueRepresentation):
     """
@@ -555,6 +595,23 @@ class SearchArray(UniqueRepresentation):
     def _print_table(self, grid, info, layout_type):
         if not grid:
             return ""
+            
+        print("grid:",grid)
+        
+        inner_html = ""
+        for row in grid:
+            print("row:",row)
+            if isinstance(row, Spacer):
+                inner_html += row.html(info)
+                continue
+            for element in row:
+                print("element:",element)
+                inner_html += element.html(info)
+        result = '<div class="grid12">' + inner_html + "</div>"
+        return result
+        
+        #OLD:
+        '''
         lines = []
         for row in grid:
             if isinstance(row, Spacer):
@@ -582,16 +639,24 @@ class SearchArray(UniqueRepresentation):
                     bot_cols.append(box.input_html(info))
                     ex = box.example_html(info)
                     if ex:
-                        top_cols.append('<td width="%s"></td>' % self._ex_col_width)
+                        #top_cols.append('<td width="%s"></td>' % self._ex_col_width)
+                        top_cols.append('<span width="%s"></span>' % self._ex_col_width)
                         bot_cols.append(ex)
                 lines.append("".join("\n      " + col for col in top_cols))
                 lines.append("".join("\n      " + col for col in bot_cols))
+        #return (
+        #    '  <table border="0">'
+        #    + "".join("\n    <tr>" + line + "\n    </tr>" for line in lines)
+        #    + "\n  </table>"
+        #)
+        
         return (
-            '  <table border="0">'
-            + "".join("\n    <tr>" + line + "\n    </tr>" for line in lines)
-            + "\n  </table>"
+               ' <div class="grid12">'
+             + "".join("\n     " + line + "\n" for line in lines)
+             + '\n  </div>'
         )
-
+        '''
+        
     def _st(self, info):
         if info is not None:
             return info.get("search_type", info.get("hst", "List"))
@@ -654,7 +719,7 @@ class SearchArray(UniqueRepresentation):
 
     def has_advanced_inputs(self, info=None):
         for row in self.main_array(info):
-            if isinstance(row, TdElt) and row.advanced:
+            if isinstance(row, DivElt) and row.advanced:
                 return True
             for col in row:
                 if col.advanced:
@@ -670,7 +735,7 @@ class SearchArray(UniqueRepresentation):
             if st is None:
                 buttons.append(BasicSpacer("Display:"))
             for but in self.search_types(info):
-                if isinstance(but, TdElt):
+                if isinstance(but, DivElt):
                     buttons.append(but)
                 else:
                     buttons.append(SearchButton(*but))
@@ -696,4 +761,4 @@ class SearchArray(UniqueRepresentation):
         # We don't use SearchBoxes since we want the example to be below, and the button directly to the right of the input (regardless of how big the example is)
         return """<p><input type='text' name='jump' placeholder='%s' style='width:%sem;' value='%s'>
 <button type='submit'>Find</button>
-<br><span class='formexample'>%s</span></p>""" % (jump_example, TdElt().px_to_em(jump_width), info.get("jump", ""), jump_egspan)
+<br><span class='formexample'>%s</span></p>""" % (jump_example, px_to_em(jump_width), info.get("jump", ""), jump_egspan)

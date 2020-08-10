@@ -403,7 +403,6 @@ body > .debug {
 {
 }
 
-
 .visible {
     visibility: visible;
 }
@@ -422,11 +421,67 @@ body > .debug {
 .nodisplay {
     display: None;
 }
-/*TODO: where do the following show up?*/
+
+
+/************************** Forms *************************************/
+
+/*TODO: where do the following show up? -> in the forms*/
 .formexample {
    font-size: 80%;
    font-style: italic;
-   color: {{color.grey}};
+   color: #777; /*{{color.grey}};*/
+   text-align: right;
+}
+
+.search-box {
+  padding: 0.5em 1.5em 0.1em 1.5em;
+  border: 0.3em solid #fff;
+  background: #fafafa;
+}
+.search-box td {
+  padding: 0;
+}
+.search-box select {
+  width: 100%;
+}
+
+.form-inputs input {
+  width: calc(100% - 2 * 0.3em);
+  /*padding-right: 0 !important;*/
+}
+/*
+.TextBoxWithSelect .form-inputs {
+  display: block;
+  white-space: no-wrap;
+  overflow: hidden;
+  width: 100%;
+}
+.TextBoxWithSelect input {
+  width: 100%;
+}
+*/
+.TextBoxWithSelect select {
+  width: auto;
+}
+.TextBoxWithSelect td:first-child {
+  padding-right: 1em;;
+}
+
+.DoubleSelectBox td:first-child {
+  padding-right: 0.5em;
+}
+.DoubleSelectBox td:last-child {
+  padding-left: 0.5em;
+}
+.DoubleSelectBox select {
+  width: 100%;
+}
+
+.CheckboxSpacer {
+  padding: 0.5em 1em 1em 1.5em;
+}
+.CheckboxSpacer input {
+  margin-top: 0.2em;
 }
 
 .errmsg {
@@ -443,7 +498,7 @@ td.forminfo {
 }
 
 input, textarea {
-  border: 1px solid {{color.input_border}};
+  border: 1px solid #aaa; /*{{color.input_border}};*/
   font-size: 110%;
   padding: 0.2em;
   border-radius: 0.3em;
@@ -453,11 +508,11 @@ input, textarea {
 
 button, 
 select {
-  font-size: 1em;
-  padding: 0.2em 0.4em;
+  font-size: 1rem; /* use rem here, as some buttons are used within some <h2> */
+  padding: 0.2rem 0.4rem;
   border-radius: 0.25em;
   cursor: pointer;
-  border: 1px solid {{color.button_border}};
+  border: 1px solid #aaa; /*{{color.button_border}};*/
   min-width: 5em;
 }
 
@@ -466,7 +521,8 @@ button {
 }
 
 select {
-   background: {{color.select_background}};
+   /*background: {{color.select_background}};*/
+   background: #fff;
 }
 
 body.knowl form button,
@@ -480,7 +536,8 @@ body.knowl form input {
 }
 
 form button:hover,
-form select:hover {
+form select:hover, 
+#advancedtoggle:hover {
     background:    {{color.button_background_hover}};
     border: 1px solid {{color.button_border_hover}};
 }
@@ -796,14 +853,6 @@ table .knowl-link {
   padding: 0;
 }
 */
-#knowl-index tr td:first-child {
-  width: 3.3em;
-  vertical-align: top;
-  text-align: center;
-  font-size: x-large;
-  color: {{color.knowl_hyper_text}};
-  padding-top: 0.8em;
-}
 body.knowl table.ntdata thead tr {
   background: {{ color.knowl_background }};
   border-bottom: 0.13em solid {{ color.knowl_underline }};
@@ -2307,6 +2356,7 @@ body.knowl .logo a:hover {
 @media only screen and (max-width: 600px) {
   #content > p,
   #content > table.ntdata,
+  #content > div > table.ntdata,
   #content > table.number_table,
   #content .embed-container,
   #content .katex-display {
@@ -2321,7 +2371,8 @@ body.knowl .logo a:hover {
 /************** Grid layout with 12 columns ***************************/
 
  /* For small phones: */
-[class*="col-"] {
+[class*="col-"],
+col-all {
   grid-column: auto / span 12;
 }
 
@@ -2379,9 +2430,15 @@ body.knowl .logo a:hover {
   grid-auto-flow: row;
 }
 
+.row-span-2 {
+  grid-row: auto / span 2;
+}
+
+
+/*************** new Knowl index **************************************/
 
 #knowl-index > tr > td{
-  padding: 0.5em;
+  padding: 0em;
 }
 
 #knowl-index .knowl-flex {
@@ -2389,17 +2446,23 @@ body.knowl .logo a:hover {
   flex-wrap: wrap;
   flex-direction: row;
   justify-content: flex-start;
+  align-content: flex-start;
   width: 100%;
+  padding: 0;
+  margin: 0;
 }
 
 #knowl-index .knowl-flex-entry {
   display: inline-block;
-  margin: 0.1em 1em;
+  margin: 0em 1em;
+  padding-bottom: 0.2em;
   /*border: 1px solid #ddd;*/
+  border-top: 1px solid #aaa;
 }
 
 
 #knowl-index .knowl-flex-entry > a {
+  display: block;
   padding: 0em;
   position: relative;
   /*max-width: 20em;*/
@@ -2416,26 +2479,27 @@ body.knowl .logo a:hover {
   color: {{color.grey}};
   position: relative;
   line-height: 1em;
-  width: 20em;
+  width: 15em;
   overflow: hidden;
   text-overflow: ellipsis;
   
 }
-/*
-#knowl-index td div {
-  position: relative;
-  width: 11em;
-  height: 4.3em;
-  float: left;
-  min-height: 4em;
-  padding: 0.13em;
-  margin: 1px;
-  border-radius: 0.13em;
+
+#knowl-index tr td:first-child {
+  width: 2em;
+  vertical-align: top;
+  text-align: center;
+  font-size: 1.8em;
+  color: {{color.knowl_hyper_text}};
+  padding: 0.8em ;
 }
-*/
 
 #knowl-index div.knowl-flex-entry:hover {
   background: {{ color.knowl_hover }};
   cursor: pointer;
 }
+
+
+
+
 
