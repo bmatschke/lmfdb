@@ -429,13 +429,14 @@ body > .debug {
 .formexample {
    font-size: 80%;
    font-style: italic;
-   color: #777; /*{{color.grey}};*/
+   color: #555; /*{{color.grey}};*/
    text-align: right;
+   font-family: var(--control-font-family);
 }
 
 .search-box {
-  padding: 0.5em 1.5em 0.1em 1.5em;
-  border: 0.3em solid #fff;
+  padding: 0.4em 1.5em 0.1em 1.5em;
+  border: 0.5em solid #fff;
   background: #fafafa;
 }
 .search-box td {
@@ -2376,6 +2377,19 @@ col-all {
   grid-column: auto / span 12;
 }
 
+.col-xs-1 { grid-column: auto / span 1; }
+.col-xs-2 { grid-column: auto / span 2; }
+.col-xs-3 { grid-column: auto / span 3; }
+.col-xs-4 { grid-column: auto / span 4; }
+.col-xs-5 { grid-column: auto / span 5; }
+.col-xs-6 { grid-column: auto / span 6; }
+.col-xs-7 { grid-column: auto / span 7; }
+.col-xs-8 { grid-column: auto / span 8; }
+.col-xs-9 { grid-column: auto / span 9; }
+.col-xs-10 { grid-column: auto / span 10; }
+.col-xs-11 { grid-column: auto / span 11; }
+.col-xs-12 { grid-column: auto / span 12; }
+
 @media only screen and (min-width: 600px) {
   /* For tablets, large phones: */
   .col-s-1 { grid-column: auto / span 1; }
@@ -2432,6 +2446,12 @@ col-all {
 
 .row-span-2 {
   grid-row: auto / span 2;
+}
+.row-span-3 {
+  grid-row: auto / span 3;
+}
+.row-span-4 {
+  grid-row: auto / span 4;
 }
 
 

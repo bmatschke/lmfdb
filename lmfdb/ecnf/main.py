@@ -18,7 +18,7 @@ from lmfdb.utils import (
     parse_ints, parse_noop, nf_string_to_label, parse_element_of,
     parse_nf_string, parse_nf_elt, parse_bracketed_posints,
     SearchArray, TextBox, ExcludeOnlyBox, SelectBox, CountBox,
-    search_wrap, parse_rational
+    search_wrap, parse_rational, get_css_grid_classes
     )
 from lmfdb.number_fields.number_field import field_pretty
 from lmfdb.number_fields.web_number_field import nf_display_knowl, WebNumberField
@@ -725,38 +725,44 @@ class ECNFSearchArray(SearchArray):
             label="Base field",
             knowl="nf",
             example="2.2.5.1",
-            example_span="2.2.5.1 or Qsqrt5")
+            example_span="2.2.5.1 or Qsqrt5",
+        )
         include_base_change = ExcludeOnlyBox(
             name="include_base_change",
             label="Base change curves",
-            knowl="ec.base_change")
+            knowl="ec.base_change",
+        )
         include_Q_curves = ExcludeOnlyBox(
             name="include_Q_curves",
             label=r"\(\Q\)-curves",
-            knowl="ec.q_curve")
+            knowl="ec.q_curve",
+        )
         conductor_norm = TextBox(
             name="conductor_norm",
             label="Conductor norm",
             knowl="ec.conductor",
             example="31",
-            example_span="31 or 1-100")
+            example_span="31 or 1-100",
+        )
         one = SelectBox(
             name="one",
             label="Curves per isogeny class",
             knowl="ec.isogeny_class",
             options=[("", ""),
-                     ("yes", "one")])
+                     ("yes", "one")],
+        )
         include_cm = ExcludeOnlyBox(
             name="include_cm",
             label="CM",
-            knowl="ec.complex_multiplication")
+            knowl="ec.complex_multiplication",
+        )
         cm_disc = TextBox(
             name="cm_disc",
             label= "CM discriminant",
             example="-4",
             example_span="-4 or -3,-8",
-            knowl="ec.complex_multiplication"
-            )
+            knowl="ec.complex_multiplication",
+        )
         jinv = TextBox(
             name="jinv",
             label="j-invariant",
@@ -766,12 +772,15 @@ class ECNFSearchArray(SearchArray):
             colspan=(1, 4, 1),
             example_span_colspan=2,
             example="105474/49 + a*34213/49",
-            example_span="")
+            example_span="",
+            css_grid=get_css_grid_classes()['wider_next_to_normal'],
+        )
         torsion = TextBox(
             name="torsion",
             label="Torsion order",
             knowl="ec.torsion_order",
-            example="2")
+            example="2",
+        )
         def disp_tor(t):
             if len(t) == 1:
                 return "[%s]" % t, "C%s" % t
@@ -779,17 +788,20 @@ class ECNFSearchArray(SearchArray):
                 return "[%s,%s]" % t, "C%s&times;C%s" % t
         tor_opts = ([("", ""),
                      ("[]", "trivial")] +
-                    [disp_tor(tuple(t)) for t in ECNF_stats().torsion_counts if t])
+                    [disp_tor(tuple(t)) for t in ECNF_stats().torsion_counts if t]
+        )
         torsion_structure = SelectBox(
             name="torsion_structure",
             label="Torsion structure",
             knowl="ec.torsion_subgroup",
-            options=tor_opts)
+            options=tor_opts,
+        )
         isodeg = TextBox(
             name="isodeg",
             label="Cyclic isogeny degree",
             knowl="ec.isogeny",
-            example="16")
+            example="16",
+        )
         count = CountBox()
 
         self.browse_array = [

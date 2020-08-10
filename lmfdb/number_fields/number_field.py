@@ -17,7 +17,7 @@ from lmfdb.utils import (
     SearchArray, TextBox, TextBoxNoEg, YesNoBox, SubsetNoExcludeBox, TextBoxWithSelect,
     clean_input, nf_string_to_label, parse_galgrp, parse_ints, parse_bool,
     parse_signed_ints, parse_primes, parse_bracketed_posints, parse_nf_string,
-    parse_floats, parse_subfield, search_wrap)
+    parse_floats, parse_subfield, search_wrap, get_css_grid_classes)
 from lmfdb.galois_groups.transitive_group import (
     cclasses_display_knowl,character_table_display_knowl,
     group_phrase, galois_group_data,
@@ -965,28 +965,33 @@ class NFSearchArray(SearchArray):
             name="degree",
             label="Degree",
             knowl="nf.degree",
-            example=3)
+            example=3,
+        )
         signature = TextBox(
             name="signature",
             label="Signature",
             knowl="nf.signature",
-            example="[1,1]")
+            example="[1,1]",
+        )
         discriminant = TextBox(
             name="discriminant",
             label="Discriminant",
             knowl="nf.discriminant",
             example="-1000..-1",
-            example_span="-3 or 1000-2000")
+            example_span="-3 or 1000-2000",
+        )
         rd = TextBox(
             name="rd",
             label="Root discriminant",
             knowl="nf.root_discriminant",
             example="1..4.3",
-            example_span="a range such as 1..4.3 or 3-10")
+            example_span="a range such as 1..4.3 or 3-10",
+        )
         cm_field = YesNoBox(
             name="cm_field",
             label="CM field",
-            knowl="nf.cm_field")
+            knowl="nf.cm_field",
+        )
         gal = TextBoxNoEg(
             name="galois_group",
             label="Galois group",
@@ -996,49 +1001,59 @@ class NFSearchArray(SearchArray):
             example_span="list of %s, e.g. [8,3] or [16,7], group names from the %s, e.g. C5 or S12, and %s, e.g., 7T2 or 11T5" % (
                 display_knowl("group.small_group_label", "GAP id's"),
                 display_knowl("nf.galois_group.name", "list of group labels"),
-                display_knowl("gg.label", "transitive group labels")))
+                display_knowl("gg.label", "transitive group labels")),
+            css_grid=get_css_grid_classes()["default"] + " row-span-2",
+        )
         regulator = TextBox(
             name="regulator",
             label="Regulator",
             knowl="nf.regulator",
             example="1..3.5",
-            example_span="a range such as 1..3.5")
+            example_span="a range such as 1..3.5",
+        )
         class_number = TextBox(
             name="class_number",
             label="Class number",
             knowl="nf.class_number",
-            example="5")
+            example="5",
+        )
         class_group = TextBox(
             name="class_group",
             label="Class group structure",
             knowl="nf.ideal_class_group",
             example="[2,4]",
-            example_span="[ ], [3], or [2,4]")
+            example_span="[ ], [3], or [2,4]",
+        )
         num_ram = TextBox(
             name="num_ram",
             label="Number of ramified primes",
             knowl="nf.ramified_primes",
-            example=2)
+            example=2,
+        )
         ram_quantifier = SubsetNoExcludeBox(
-            name="ram_quantifier")
+            name="ram_quantifier",
+        )
         ram_primes = TextBoxWithSelect(
             name="ram_primes",
-            label="Ram. primes",
+            label="Ramified primes",
             knowl="nf.ramified_primes",
             example="2,3",
-            select_box=ram_quantifier)
+            select_box=ram_quantifier,
+        )
         ur_primes = TextBox(
             name="ur_primes",
             label="Unramified primes",
             knowl="nf.unramified_prime",
-            example="2,3")
+            example="2,3",
+        )
         subfield = TextBox(
             name="subfield",
             label="Intermediate field",
             knowl="nf.intermediate_fields",
             example_span="2.2.5.1 or x^2-5 or a "+
                 display_knowl("nf.nickname", "field nickname"),
-            example="x^2-5")
+            example="x^2-5",
+        )
         count = CountBox()
 
         self.browse_array = [

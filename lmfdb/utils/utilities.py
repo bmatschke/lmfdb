@@ -520,6 +520,44 @@ def pol_to_html(p):
     s = re.sub(r"x", r"<i>x</i>", s)
     return s
 
+css_grid_classes = None #unique global such dictionary
+
+def get_css_grid_classes():
+    r"""
+    Returns a dictionary with CSS classes that are used in 
+    responsive html design via grids with 12 columns.
+    If an html container has class "grid12", 
+    then an item in that container might want to have class
+    css_grid_classes()["default"].
+    """
+    
+    global css_grid_classes
+    if css_grid_classes is not None:
+        return css_grid_classes
+    css_grid_classes = {
+        #horizontal spacing:
+        'tiny': "col-l-1, col-2, col-s-3, col-xs-4",
+        'small': "col-l-2, col-3, col-s-4, col-xs-6",
+        'normal': "col-l-3 col-4 col-s-6",
+        'wide_next_to_normal': "col-l-6 col-8", #good if used next to 'normal'
+        'wide_next_to_wide': "col-l-6", #good wrapping if used next to same kind
+        'wider_next_to_normal': "col-l-9", #good if used next to 'normal'
+        'full_row': "col-all",
+         #vertical spacing:
+        'row_span_2': "row-span-2",
+        'row_span_3': "row-span-3",
+        'row_span_4': "row-span-4"
+    }
+    css_grid_classes['default'] = css_grid_classes['normal']
+    return css_grid_classes
+    
+
+def px_to_em(length_in_px):
+    r"""
+    Converts px (pixels) into em (font-size), assuming that the parent 
+    font-size 1em equals 15px for the conversion.
+    """
+    return (RR(length_in_px)/15.0).str(digits=3) 
 
 
 ################################################################################

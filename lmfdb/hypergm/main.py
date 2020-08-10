@@ -14,7 +14,8 @@ from lmfdb.utils import (
     image_callback, flash_error, list_to_factored_poly_otherorder,
     clean_input, parse_ints, parse_bracketed_posints, parse_rational,
     parse_restricted, integer_options, search_wrap,
-    SearchArray, TextBox, TextBoxNoEg, SelectBox, CountBox, BasicSpacer, SearchButton,
+    SearchArray, TextBox, TextBoxNoEg, SelectBox, CountBox, BasicSpacer, 
+    SearchButton, EmptySpacer,
     to_dict, web_latex)
 from lmfdb.galois_groups.transitive_group import small_group_display_knowl
 from lmfdb.hypergm import hypergm_page
@@ -587,36 +588,42 @@ class HGMSearchArray(SearchArray):
     jump_example = "A2.2_B1.1_t1.2"
     jump_egspan = "an HGM label encoding the triple $(A, B, t)$"
     def __init__(self):
+        css3 = "col-s-4" #makes 3 columns in grid unless screen is tiny
         degree = TextBox(
             name="degree",
             label="Degree",
             knowl="hgm.degree",
             example="4",
-            extra=['class="family"'])
+            extra=['class="family"'],
+            css_grid=css3)
         weight = TextBox(
             name="weight",
             label="Weight",
             knowl="hgm.weight",
             example="3",
-            extra=['class="family"'])
+            extra=['class="family"'],
+            css_grid=css3)
         famhodge = TextBox(
             name="famhodge",
             label="Family Hodge vector",
             knowl="hgm.familyhodgevector",
             example="[1,1,1,1]",
-            extra=['class="family"'])
+            extra=['class="family"'],
+            css_grid=css3)
         A = TextBox(
             name="A",
             label="$A$",
             knowl="hgm.defining_parameters",
             example="[3,2,2]",
-            extra=['class="family"'])
+            extra=['class="family"'],
+            css_grid=css3)
         B = TextBox(
             name="B",
             label="$B$",
             knowl="hgm.defining_parameters",
             example="[6,4]",
-            extra=['class="family"'])
+            extra=['class="family"'],
+            css_grid=css3)
         p = SelectBox(
             name="p",
             label="Prime $p$",
@@ -624,32 +631,38 @@ class HGMSearchArray(SearchArray):
             options=[("",2),
                      ("3",3),
                      ("5",5),
-                     ("7",7)])
+                     ("7",7)],
+            css_grid=css3)
         Ap = TextBox(
             name="Ap",
             label="$A_p$",
             knowl="hgm.defining_parameter_ppart",
             example="[2,2,1,1]",
-            extra=['class="family"'])
+            extra=['class="family"'],
+            css_grid=css3)
         Bp = TextBox(
             name="Bp",
             label="$B_p$",
             knowl="hgm.defining_parameter_ppart",
             example="[2,2,1,1]",
-            extra=['class="family"'])
+            extra=['class="family"'],
+            css_grid=css3)
         Apperp = TextBox(
             name="Apperp",
             label=r"$A^\perp_p$",
             knowl="hgm.defining_parameter_primetoppart",
             example="[2,2,1,1]",
-            extra=['class="family"'])
+            extra=['class="family"'],
+            css_grid=css3)
         Bpperp = TextBox(
             name="Bpperp",
             label=r"$B^\perp_p$",
             knowl="hgm.defining_parameter_primetoppart",
             example="[2,2,1,1]",
-            extra=['class="family"'])
-        spacer = BasicSpacer("")
+            extra=['class="family"'],
+            css_grid=css3)
+        spacer = EmptySpacer(
+            css_grid=css3)
 
         conductor = TextBox(
             name="conductor",
@@ -686,7 +699,7 @@ class HGMSearchArray(SearchArray):
         count = CountBox()
 
         self.family_array = [
-            [degree, weight],
+            [degree, weight, spacer],
             [famhodge, A, B],
             [p, Ap, Bp],
             [spacer, Apperp, Bpperp]]

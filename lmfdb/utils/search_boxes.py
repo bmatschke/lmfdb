@@ -1,12 +1,19 @@
-from .utilities import display_knowl
+from .utilities import display_knowl, get_css_grid_classes, px_to_em
 from sage.structure.unique_representation import UniqueRepresentation
-from sage.rings.real_mpfr import RR
 
-def px_to_em(length_in_px):
-    '''
-    Assume that the parent font-size 1em equals 15px for the conversion.
-    '''
-    return (RR(length_in_px)/15.0).str(digits=3) 
+'''
+Update: 
+  - td -> div
+  - colspan and rowspan should be replaced in the future
+  - instead use css_classes such as the ones generated in 
+    SearchBox.gridspan_css_classes().
+    It would be convenient if these css classes are given in the form data
+    rather than rowspan, colspan.
+    For example in the first table of the motives/Q search,
+    it would make sense to use the css class 
+    "col-s-4" or perhaps even "col-xs-4", which make the grid having
+    3 columns (unless in the "col-s-4" case when the screen is very small).
+'''
 
 class DivElt(object):
     #_wrap_type = 'td'
@@ -39,27 +46,37 @@ class DivElt(object):
             inner_html = ""
         return self._wrap(self._wrap_type, **kwds) + inner_html + self._closing_tag
         
-class Spacer(DivElt):
-    def __init__(self, colspan=None, advanced=False):
-        self.colspan = colspan
-        self.advanced = advanced
-
+class EmptySpacer(DivElt):
+    '''
+    We should use this one for empty space in the grid, via css classes.
+    '''
+    
+    def __init__(self, css_grid=None, advanced=False):
+        self.css_grid = get_css_grid_classes()["default"] if css_grid is None else css_grid;
+        self.advanced = advanced;
+    
     def input_html(self, info=None):
-        return self.wrap(self.colspan)
+        return ""
 
     def label_html(self, info=None):
-        return self.wrap(self.colspan)
+        return ""
 
-    def example_html(self, info=None):
-        return self.wrap()
+    def label_html(self, info=None):
+        return ""
+        
+    def html(self, info=None):
+        return self.wrap(classes=[self.css_grid])    
+        
+#we keep this for legacy, colspan is not used anymore
+class Spacer(EmptySpacer):
+    def __init__(self, colspan=None, advanced=False, css_grid=None):
+        self.colspan = colspan
+        super().__init__(css_grid=css_grid, advanced=advanced)
 
     def has_label(self, info=None):
         return False
 
-    def html(self, info=None):
-        return self.wrap(classes=["spacer"])
-
-#TODO: refactor:
+#legacy:
 class RowSpacer(Spacer):
     def __init__(self, rowheight, advanced=False):
         self.rowheight = rowheight
@@ -69,7 +86,7 @@ class RowSpacer(Spacer):
         return self.wrap(classes=["form-rowspacer","col-all"],
                          style = "height:%sem" % px_to_em(self.rowheight))
 
-
+#legacy:
 class BasicSpacer(Spacer):
     def __init__(self, msg, colspan=1, advanced=False):
         Spacer.__init__(self, colspan=colspan, advanced=advanced)
@@ -78,6 +95,7 @@ class BasicSpacer(Spacer):
     def input_html(self, info=None):
         return self.wrap(self.colspan,inner_html=self.msg,classes=["spacer-msg"])
 
+#legacy:
 class CheckboxSpacer(Spacer):
     def __init__(self, checkbox, colspan=1, advanced=False):
         Spacer.__init__(self, colspan=colspan, advanced=advanced)
@@ -87,7 +105,7 @@ class CheckboxSpacer(Spacer):
         inner_html = self.checkbox._label(info) + " " + self.checkbox._input(info)
         return self.wrap(self.colspan, classes=["form-checkbox","col-all"], inner_html=inner_html)
 
-class SearchBox(DivElt):
+class SearchBox(EmptySpacer):
     """
     Class abstracting the input boxes used for LMFDB searches.
     """
@@ -101,8 +119,8 @@ class SearchBox(DivElt):
         example=None,
         example_span=None,
         example_span_colspan=1,
-        colspan=(1, 1, 1),
-        rowspan=(1, 1),
+        colspan=(1, 1, 1), #outdated, use css_grid instead
+        rowspan=(1, 1), #outdated
         width=None,
         short_width=None,
         short_label=None,
@@ -110,8 +128,10 @@ class SearchBox(DivElt):
         example_col=False,
         id=None,
         qfield=None,
-        css_class=None
+        css_class=None,
+        css_grid=None
     ):
+        super().__init__(css_grid=css_grid,advanced=advanced)
         self.name = name
         self.id = id
         self.label = label
@@ -127,7 +147,6 @@ class SearchBox(DivElt):
         if short_label is None:
             short_label = label
         self.short_label = short_label
-        self.advanced = advanced
         self.qfield = name if qfield is None else qfield
         if width is None:
             width = self._default_width
@@ -162,26 +181,6 @@ class SearchBox(DivElt):
         elif self.example_col:
             return '<div class="formexample"></div>'
 
-    def gridspan_css_classes(self, info=None):
-        #only consider space requirements of title and input:
-        colspan = max(self.label_colspan,self.input_colspan)
-        if colspan == 1:
-            result = "col-l-3 col-4 col-s-6"
-        elif colspan in (2,3,4):
-            result = "col-l-6 col-8"
-        else:
-            result = "col-all"
-            
-        # The following is a quick hack in order to make the grid row-span look good
-        # based on the current way the form is given. 
-        # TODO: In the future, the row-span requirement should be directly given
-        # in the form description.    
-        
-        if colspan == 1:
-            if self.example_span_colspan > 1:
-                result += " row-span-2"        
-        return result
-        
     def html(self, info=None):
         label = self.label_html(info)
         input_ = self.input_html(info)
@@ -194,7 +193,7 @@ class SearchBox(DivElt):
         if example != None:
             inner_html += example
             
-        result = self.wrap(classes=[self.css_class,self.gridspan_css_classes(info)],
+        result = self.wrap(classes=[self.css_class,self.css_grid],
                            inner_html=inner_html)
         return result
 
@@ -234,7 +233,8 @@ class TextBox(SearchBox):
         id=None,
         qfield=None,
         extra=[],
-        css_class=None
+        css_class=None,
+        css_grid=None
     ):
         SearchBox.__init__(
             self,
@@ -253,7 +253,8 @@ class TextBox(SearchBox):
             example_col=example_col,
             id=id,
             qfield=qfield,
-            css_class=css_class
+            css_class=css_class,
+            css_grid=css_grid
         )
         self.extra = extra
         self.example_value = example_value
@@ -316,7 +317,8 @@ class SelectBox(SearchBox):
         id=None,
         qfield=None,
         extra=[],
-        css_class=None
+        css_class=None,
+        css_grid=None
     ):
         SearchBox.__init__(
             self,
@@ -335,7 +337,8 @@ class SelectBox(SearchBox):
             example_col=example_col,
             id=id,
             qfield=qfield,
-            css_class=css_class
+            css_class=css_class,
+            css_grid=css_grid
         )
         if options is None:
             options = self._options
@@ -497,7 +500,7 @@ class SubsetNoExcludeBox(SelectBox):
                 ('subset', 'subset')]
 
 class CountBox(TextBox):
-    def __init__(self):
+    def __init__(self,css_grid=None):
         TextBox.__init__(
             self,
             name="count",
@@ -505,7 +508,8 @@ class CountBox(TextBox):
             example=50,
             example_col=True,
             example_value=True,
-            example_span="")
+            example_span="",
+            css_grid=css_grid)
 
 class SearchButton(SearchBox):
     _default_width = 170

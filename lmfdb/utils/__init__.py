@@ -53,6 +53,7 @@ from .utilities import (
     display_multiset, pair2complex, round_CBF_to_half_int, str_to_CBF,
     to_dict, display_float, display_complex, round_to_half_int,
     splitcoeff, comma, format_percentage, signtocolour, rgbtohex, pol_to_html,
+    get_css_grid_classes, px_to_em,
     web_latex, web_latex_factored_integer, web_latex_ideal_fact, web_latex_split_on,
     web_latex_split_on_pm, web_latex_split_on_re, display_knowl, bigint_knowl, too_big,
     make_bigint, teXify_pol, add_space_if_positive,
@@ -81,7 +82,7 @@ from .search_boxes import (
     SkipBox, CheckBox, CheckboxSpacer, DoubleSelectBox, HiddenBox,
     SelectBox, YesNoBox, YesNoMaybeBox, ExcludeOnlyBox,
     ParityBox, ParityMod, SubsetBox, SubsetNoExcludeBox, SelectBoxNoEg, CountBox,
-    SearchButton, SearchButtonWithSelect, RowSpacer)
+    SearchButton, SearchButtonWithSelect, RowSpacer, EmptySpacer)
 from .downloader import Downloader
 from .display_stats import formatters, proportioners, totaler, StatsDisplay
 from .config import Configuration

@@ -10,7 +10,7 @@ from lmfdb.utils import (
     to_dict, web_latex_ideal_fact, flash_error,
     nf_string_to_label, parse_nf_string, parse_noop, parse_start, parse_count, parse_ints,
     SearchArray, TextBox, SelectBox, ExcludeOnlyBox, CountBox,
-    teXify_pol, search_wrap)
+    teXify_pol, search_wrap, get_css_grid_classes)
 from lmfdb.number_fields.web_number_field import field_pretty, WebNumberField, nf_display_knowl
 from lmfdb.nfutils.psort import ideal_from_label
 from lmfdb.bianchi_modular_forms import bmf_page
@@ -406,36 +406,39 @@ class BMFSearchArray(SearchArray):
             knowl='nf',
             example='2.0.4.1',
             example_span=r'either a field label, e.g. 2.0.4.1 for \(\mathbb{Q}(\sqrt{-1})\), or a nickname, e.g. Qsqrt-1',
-            example_span_colspan=4)
+            example_span_colspan=4,
+            css_grid=get_css_grid_classes()["default"]+" row-span-2"
+        )
         level = TextBox(
             name='level_norm',
             label='Level norm',
             knowl='mf.bianchi.level',
             example='1',
-            example_span='e.g. 1 or 1-100')
+            example_span='e.g. 1 or 1-100',
+        )
         dimension = TextBox(
             name='dimension',
             label='Dimension',
             knowl='mf.bianchi.spaces',
             example='1',
-            example_span='e.g. 1 or 2')
-
+            example_span='e.g. 1 or 2',
+        )
         sign = SelectBox(
             name='sfe',
             label='Sign',
             knowl='mf.bianchi.sign',
             options=[("", ""), ("+1", "+1"), ("-1", "-1")],
-            example_col=True
+            example_col=True,
         )
         base_change = ExcludeOnlyBox(
             name='include_base_change',
             label='Base change',
-            knowl='mf.bianchi.base_change'
+            knowl='mf.bianchi.base_change',
         )
         CM = ExcludeOnlyBox(
             name='include_cm',
             label='CM',
-            knowl='mf.bianchi.cm'
+            knowl='mf.bianchi.cm',
         )
         count = CountBox()
 
@@ -443,7 +446,7 @@ class BMFSearchArray(SearchArray):
             [field],
             [level, sign],
             [dimension, base_change],
-            [count, CM]
+            [CM, count]
         ]
         self.refine_array = [
             [field, level, dimension],

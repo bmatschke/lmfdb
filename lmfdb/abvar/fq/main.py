@@ -15,7 +15,7 @@ from lmfdb.utils import (
     to_dict, flash_error, integer_options, display_knowl, coeff_to_poly,
     SearchArray, TextBox, TextBoxWithSelect, SkipBox, CheckBox, CheckboxSpacer, YesNoBox,
     parse_ints, parse_string_start, parse_subset, parse_submultiset, parse_bool, parse_bool_unknown,
-    search_wrap, count_wrap, YesNoMaybeBox, CountBox, SubsetBox,
+    search_wrap, count_wrap, YesNoMaybeBox, CountBox, SubsetBox, get_css_grid_classes,
 )
 from . import abvarfq_page
 from .search_parsing import parse_newton_polygon, parse_nf_string, parse_galgrp
@@ -188,7 +188,7 @@ class AbvarSearchArray(SearchArray):
             example="81",
             example_span="81 or 3-49",
         )
-        pshort = display_knowl("ag.base_field", "Base char.")
+        pshort = display_knowl("ag.base_field", "Base characteristic")
         p = TextBox(
             "p",
             label="Characteristic of the %s" % (qshort),
@@ -224,6 +224,7 @@ class AbvarSearchArray(SearchArray):
             example_col=False,
             advanced=True,
         )
+        css_wide = get_css_grid_classes()["wide_next_to_wide"]
         newton_polygon = TextBox(
             "newton_polygon",
             label="Slopes of Newton polygon",
@@ -234,6 +235,7 @@ class AbvarSearchArray(SearchArray):
             short_width=160,
             short_label="Slopes",
             advanced=True,
+            css_grid=css_wide,
         )
         initial_coefficients = TextBox(
             "initial_coefficients",
@@ -251,6 +253,7 @@ class AbvarSearchArray(SearchArray):
             short_width=160,
             short_label="Points on variety",
             advanced=True,
+            css_grid=css_wide,
         )
         curve_point_count = TextBox(
             "curve_point_count",
@@ -262,6 +265,7 @@ class AbvarSearchArray(SearchArray):
             short_width=160,
             short_label="Points on curve",
             advanced=True,
+            css_grid=css_wide,
         )
         def nbsp(knowl, label):
             return "&nbsp;&nbsp;&nbsp;&nbsp;" + display_knowl(knowl, label)
@@ -296,8 +300,8 @@ class AbvarSearchArray(SearchArray):
         #    example_col=False,
         #    advanced=True,
         #)
-        gdshort = display_knowl("av.endomorphism_field", "End.") + " degree"
-        gdlong = "Degree of " + display_knowl("av.endomorphism_field", "endomorphism_field")
+        gdshort = display_knowl("av.endomorphism_field", "Endomorphism") + " degree"
+        gdlong = "Degree of " + display_knowl("av.endomorphism_field", "endomorphism field")
         geom_deg = TextBox(
             "geom_deg",
             label=gdlong,
@@ -320,10 +324,10 @@ class AbvarSearchArray(SearchArray):
             knowl="av.hyperelliptic_count",
             example="6",
             example_col=False,
-            short_label="# Hyp. Jacobians",
+            short_label="# Hyperell. Jacobians",
             advanced=True,
         )
-        tcshort = display_knowl("av.twist", "# twists")
+        tcshort = display_knowl("av.twist", "# Twists")
         tclong = "Number of " + display_knowl("av.twist", "twists")
         twist_count = TextBox(
             "twist_count",
@@ -349,7 +353,7 @@ class AbvarSearchArray(SearchArray):
             "geom_simple",
             label="Geometrically simple",
             knowl="av.geometrically_simple",
-            short_label="Geom. simple",
+            short_label="Geometrically simple",
         )
         primitive = YesNoBox(
             "primitive",
@@ -379,6 +383,7 @@ class AbvarSearchArray(SearchArray):
             return nbsp("av.decomposition", "Dimension %s factors" % d)
         def short_label(d):
             return display_knowl("av.decomposition", "Dim %s factors" % d)
+        css_dim = "col-l-3 col-s-6"
         dim1 = TextBox(
             "dim1_factors",
             label=long_label(1),
@@ -386,6 +391,7 @@ class AbvarSearchArray(SearchArray):
             example_col=False,
             short_label=short_label(1),
             advanced=True,
+            css_grid=css_dim,
         )
         dim1d = TextBox(
             "dim1_distinct",
@@ -395,6 +401,7 @@ class AbvarSearchArray(SearchArray):
             example_span="2 or 1-3",
             short_label="(distinct)",
             advanced=True,
+            css_grid=css_dim,
         )
         dim2 = TextBox(
             "dim2_factors",
@@ -403,6 +410,7 @@ class AbvarSearchArray(SearchArray):
             example_col=False,
             short_label=short_label(2),
             advanced=True,
+            css_grid=css_dim,
         )
         dim2d = TextBox(
             "dim2_distinct",
@@ -412,6 +420,7 @@ class AbvarSearchArray(SearchArray):
             example_span="2 or 1-3",
             short_label="(distinct)",
             advanced=True,
+            css_grid=css_dim,
         )
         dim3 = TextBox(
             "dim3_factors",
@@ -420,6 +429,7 @@ class AbvarSearchArray(SearchArray):
             example_col=False,
             short_label=short_label(3),
             advanced=True,
+            css_grid=css_dim,
         )
         dim3d = TextBox(
             "dim3_distinct",
@@ -429,6 +439,7 @@ class AbvarSearchArray(SearchArray):
             example_span="2 or 0-1",
             short_label="(distinct)",
             advanced=True,
+            css_grid=css_dim,
         )
         dim4 = TextBox(
             "dim4_factors",
@@ -437,6 +448,7 @@ class AbvarSearchArray(SearchArray):
             example_col=False,
             short_label=short_label(4),
             advanced=True,
+            css_grid=css_dim,
         )
         dim5 = TextBox(
             "dim5_factors",
@@ -445,8 +457,9 @@ class AbvarSearchArray(SearchArray):
             example_col=False,
             short_label=short_label(5),
             advanced=True,
+            css_grid=css_dim,
         )
-        dim4d = dim5d = SkipBox(example_span="0 or 1", advanced=True)
+        dim4d = dim5d = SkipBox(example_span="0 or 1", advanced=True,css_grid=css_dim)
         simple_quantifier = SubsetBox(
             "simple_quantifier",
         )
@@ -460,8 +473,9 @@ class AbvarSearchArray(SearchArray):
             short_width=2*190 - 30,
             example="1.2.b,1.2.b,2.2.a_b",
             advanced=True,
+            css_grid=css_wide,
         )
-        count = CountBox()
+        count = CountBox(css_grid=css_dim)
 
         self.refine_array = [
             [q, p, g, p_rank, initial_coefficients],
@@ -471,8 +485,25 @@ class AbvarSearchArray(SearchArray):
             #[size],
             [simple, geom_simple, primitive, polarizable, jacobian],
             use_geom_refine,
-            [dim1, dim2, dim3, dim4, dim5],
-            [dim1d, dim2d, dim3d, number_field, galois_group],
+            #
+            #BM: Apologies David and Kiran, the following is changed to make the
+            #new grid layout work to _some_ extent for your abvar.
+            #It's far from optimal.
+            #The right thing would be to pair dimX and dimXd into one group,
+            #either with two rows and normal width, or
+            #with normal height and twice the width.
+            #
+            #[dim1, dim2, dim3, dim4, dim5],
+            #[dim1d, dim2d, dim3d, number_field, galois_group],            
+            #
+            [dim1, dim1d],
+            [dim2, dim2d],
+            [dim3, dim3d],
+            [dim4, dim4d],
+            [dim5, dim5d],
+            [number_field],
+            [galois_group],
+
         ]
         self.browse_array = [
             [q, primitive],
@@ -498,6 +529,8 @@ class AbvarSearchArray(SearchArray):
             [galois_group],
             [count],
         ]
+        
+   
 
     def search_types(self, info):
         return self._search_again(info, [

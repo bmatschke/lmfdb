@@ -15,7 +15,7 @@ from lmfdb.utils import (
     search_wrap,
     Downloader,
     SearchArray, TextBox, SelectBox, YesNoBox, TextBoxWithSelect, CountBox, SubsetBox,
-    StatsDisplay, formatters)
+    StatsDisplay, formatters, get_css_grid_classes)
 from lmfdb.sato_tate_groups.main import st_link_by_name
 from lmfdb.genus2_curves import g2c_page
 from lmfdb.genus2_curves.web_g2c import WebG2C, min_eqn_pretty, st0_group_name
@@ -501,10 +501,11 @@ class G2CSearchArray(SearchArray):
     noun = "curve"
     plural_noun = "curves"
     def __init__(self):
+        
         geometric_invariants_type = SelectBox(
             name="geometric_invariants_type",
             width=115,
-            options=[("", "Igusa-Clebsh"), ("igusa_inv", "Igusa"), ("g2_inv", "G2")],
+            options=[("", "Igusa-Clebsh"), ("igusa_inv", "Igusa"), ("g2_inv", "G2")]
         )
 
         geometric_invariants = TextBoxWithSelect(
@@ -515,8 +516,9 @@ class G2CSearchArray(SearchArray):
             select_box=geometric_invariants_type,
             width=689,
             colspan=(1, 4, 1),
-            example_span="",
-        )  # the last 1 is irrelevant
+            example_span="", #this one is irrelevant
+            css_grid=get_css_grid_classes()['wider_next_to_normal']
+        )
 
         conductor = TextBox(
             name="cond",
