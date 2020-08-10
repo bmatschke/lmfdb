@@ -6,6 +6,7 @@ t{# template defs #}
 
 {# end defs #}
 
+{#
 /* About the layout of this CSS file
  * ---------------------------------
  * 
@@ -29,6 +30,7 @@ t{# template defs #}
  * 
  * 
  */
+#}
 
 /**********************************************************************/
 /**********************************************************************/
@@ -65,7 +67,6 @@ t{# template defs #}
 }
 
 
-
 /**********************************************************************/
 /**********************************************************************/
 /**********************************************************************/
@@ -88,24 +89,29 @@ img {
 }
 
 body {
-    margin: 0em;
-    padding: 0em;
-    font-family: var(--main-font-family);
-    color: {{color.body_text}};
-    background-color: {{color.body_background}};
+  margin: 0em;
+  padding: 0em;
+  font-family: var(--main-font-family);
+  color: {{color.body_text}};
+  background-color: {{color.body_background}};
 }
 
 a {
-    color: {{color.col_link}};
-    text-decoration: none;
-    font-family: var(--main-font-family);
+  color: {{color.col_link}};
+  text-decoration: none;
+  font-family: var(--main-font-family);
+}
+a:visited {
+  color: {{color.a_text_visited}};
+}
+a:hover {
+  color: {{color.a_text_hover}};
+  background: {{color.a_background_hover}};
+}
+table a:hover {
+  background: {{color.table_background_hover}};
 }
 
-a:visited { color: {{color.a_text_visited}}; }
-a:hover {
-    color: {{color.a_text_hover}};
-    background: {{color.a_background_hover}};
-}
 
 input, 
 textarea {
@@ -135,22 +141,21 @@ button {
 }
 
 select {
-   /*background: {{color.select_background}};*/
-   background: #fff;
+  /*background: {{color.select_background}};*/
+  background: #fff;
 }
-
 
 form button:hover,
 form select:hover {
-    background:    {{color.button_background_hover}};
-    border: 1px solid #aaa; /*{{color.button_border_hover}};*/
+   background:    {{color.button_background_hover}};
+   border: 1px solid #aaa; /*{{color.button_border_hover}};*/
 }
+
 
 table {
-    border: 0;
-    border-collapse:collapse;
+   border: 0;
+   border-collapse:collapse;
 }
-
 table th {
   color: {{color.a_text}};
   padding-bottom: 0.3em;
@@ -158,17 +163,11 @@ table th {
   font-size: 120%;
   line-height: 130%;
 }
-
 table th,
 table td {
   padding-left:  0.7em;
   padding-right: 0.7em;
 }
-
-table a:hover {
-    background: {{color.table_background_hover}};
-}
-
 
 
 /**********************************************************************/
@@ -180,7 +179,7 @@ table a:hover {
  * 
  * Put here all generic definitions for elements and pseudo-elements
  * for the main content of the page. 
- *
+ * 
  */
 
 
@@ -200,6 +199,17 @@ table a:hover {
 }
 
 /************** Grid layout with 12 columns ***************************/
+
+{#
+Quick guide on how to use responsive grids:
+Give the container div the class "grid12".
+For the items in the container, give them classes either
+ - from utils.get_css_grid_classes(), or more directly
+ - e.g. "col-m-4" if it should use (at most) 4 out of 12 columns
+   on screens that are at least medium ("m") wide.
+   These classes can be combined.
+ - e.g. "row-span-2" for items of larger height.
+#}
 
 .grid12 {
   display: grid;
@@ -244,18 +254,18 @@ col-all {
 
 /* For large tablet, small laptop: */
 @media only screen and (min-width: 768px) {
-  .col-1 { grid-column: auto / span 1; }
-  .col-2 { grid-column: auto / span 2; }
-  .col-3 { grid-column: auto / span 3; }
-  .col-4 { grid-column: auto / span 4; }
-  .col-5 { grid-column: auto / span 5; }
-  .col-6 { grid-column: auto / span 6; }
-  .col-7 { grid-column: auto / span 7; }
-  .col-8 { grid-column: auto / span 8; }
-  .col-9 { grid-column: auto / span 9; }
-  .col-10 { grid-column: auto / span 10; }
-  .col-11 { grid-column: auto / span 11; }
-  .col-12 { grid-column: auto / span 12; }
+  .col-m-1 { grid-column: auto / span 1; }
+  .col-m-2 { grid-column: auto / span 2; }
+  .col-m-3 { grid-column: auto / span 3; }
+  .col-m-4 { grid-column: auto / span 4; }
+  .col-m-5 { grid-column: auto / span 5; }
+  .col-m-6 { grid-column: auto / span 6; }
+  .col-m-7 { grid-column: auto / span 7; }
+  .col-m-8 { grid-column: auto / span 8; }
+  .col-m-9 { grid-column: auto / span 9; }
+  .col-m-10 { grid-column: auto / span 10; }
+  .col-m-11 { grid-column: auto / span 11; }
+  .col-m-12 { grid-column: auto / span 12; }
 } 
 
 /* For large desktop: */
@@ -286,7 +296,7 @@ col-all {
 
 /********************* less generic ones ******************************/
 
-/* Bound the width of the page content */
+/* Bounds the width of the page content */
 .horizontal-container {
     max-width: 73em;
     /*max-width: 1100px;*/ 
@@ -295,60 +305,6 @@ col-all {
     /*border: 0.2em solid black; debug */
     padding: 0 0.7em; /* needed for small screens */
 }
-
-/* TODO: It would be better/safer if all knowl hyperlinks 
- * (that open the knowl within the page) get a class name. */
-a[knowl] {
-    color: {{color.col_a_knowl}};
-}
-
-a.inactive {
-    color: {{color.a_inactive}};
-}
-
-a.inactive:hover {
-    background: inherit;
-}
-
-h2.link > a {
-    color: {{color.box_tab_text}};
-}
-
-td.title {
-    color: {{color.box_tab_text}};
-}
-
-table tbody tr.trivial {
-    color: {{color.grey}};
-}
-
-table tbody tr.trivial a {
-    color: {{color.grey}};
-}
-table tbody tr.trivial a:hover {
-    color: inherit;
-    background: inherit;
-}
-
-.debug {
-    background: #FF9;
-    font-style: italic;
-}
-
-body > .debug {
-    margin: 1.3em;
-    padding: 0.13em;
-}
-
-
-body.checklist {
- font-size: 70%;
-}
-
-span.disable-links {
-  pointer-events: none;
-}
-
 
 .visible {
     visibility: visible;
@@ -375,36 +331,9 @@ span.disable-links {
    color: {{color.red}};
 }
 
-
-
-button.inactive {
-    background: {{color.button_background_inactive}};
-    border: 1px solid {{color.button_border_inactive}};
-}
-
-button.inactive:hover {
-    background: {{color.button_background_inactive}};
-    border: 1px solid {{color.button_border_inactive}};
-}
-
 /* HGCWA */
 .tab button.active {
     background-color: {{color.col_main_ll}}; <!-- col_main_ll -->
-}
-
-div.center {
-    text-align: center;
-}
-
-/* TODO: where? */
-div.literature {
-    margin-top: 0.7em;
-    font-size: 90%;
-    color: {{color.black}};
-}
-
-div.where {
-    margin: 0.7em 0 0.7em 0;
 }
 
 .emph {
@@ -426,6 +355,130 @@ div.where {
 .highlight {
   /* text-decoration: underline; */
   font-weight: bold;
+}
+
+.debug {
+    background: #FF9;
+    font-style: italic;
+}
+
+body > .debug {
+    margin: 1.3em;
+    padding: 0.13em;
+}
+
+/* the advanced search options themselves, hidden by default */
+.advanced {
+    display: none;
+}
+
+.float-right {
+    float:right;
+}
+.float-left {
+    float:left;
+}
+
+.mjx_basic {
+    font-family: MJX_Math;
+}
+
+
+
+/* TODO: It would be better/safer if all knowl hyperlinks 
+ * (that open the knowl within the page) get a class name. */
+a[knowl] {
+    color: {{color.col_a_knowl}};
+}
+
+a.inactive {
+    color: {{color.a_inactive}};
+}
+
+a.inactive:hover {
+    background: inherit;
+}
+
+h2.link > a {
+    color: {{color.box_tab_text}};
+}
+
+
+/* e.g. "Next" button */
+a.navlink {
+  color: {{color.a_nav_text}};
+  background-color: {{color.a_nav_background}};
+  font-weight: bold;
+  font-size: 0.75em;
+  text-align: center;
+  padding: 0.3em;
+  padding-top: 0.2em;
+  padding-bottom: 0.25em;
+  border: 1px solid {{color.a_nav_border}};
+  outline: 1px solid {{color.a_nav_background}};
+  text-decoration: none;
+  margin-left: 1px;
+  margin-top: 0.7em;
+  vertical-align: top;
+}
+
+a.paginate_active {
+    font-weight: bold;
+    padding: 0.3em;
+}
+
+a.paginate_button {
+    padding: 0.3em;
+}
+
+hr {
+  border: 1px solid {{ color.hr_border }};
+  margin: 1em 0;
+}
+
+p.short {
+  margin: 0;
+}
+input::placeholder {
+    color: #cccccc;
+}
+
+input.color_selecter {
+    margin: 0.7em;
+}
+
+button.inactive {
+    background: {{color.button_background_inactive}};
+    border: 1px solid {{color.button_border_inactive}};
+}
+
+button.inactive:hover {
+    background: {{color.button_background_inactive}};
+    border: 1px solid {{color.button_border_inactive}};
+}
+
+div.center {
+    text-align: center;
+}
+
+/* TODO: where? */
+div.literature {
+    margin-top: 0.7em;
+    font-size: 90%;
+    color: {{color.black}};
+}
+
+div.where {
+    margin: 0.7em 0 0.7em 0;
+}
+
+/* rather an id? */
+body.checklist {
+ font-size: 70%;
+}
+
+span.disable-links {
+  pointer-events: none;
 }
 
 div.user {
@@ -453,25 +506,33 @@ ul.horizontal-list li:after {
   background: center center no-repeat url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOwAAADsABataJCQAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xMkMEa+wAAAAnSURBVBhXY/Dz89MA4sNA/B9Ka4AEYQIwfBgkiCwAxjhVopnppwEApxQqhnyQ+VkAAAAASUVORK5CYII=);
 }
 
-input.color_selecter {
-    margin: 0.7em;
+/* jquery ui slider */
+.slider {
+  margin: 1em; 0.3em;
 }
 
-
-
-/* the advanced search options themselves, hidden by default */
-.advanced {
-    display: none;
+/* TODO: div? -> don't put global div properties*/
+div.box {
+    height: 6.7em;
+    padding: 0.7em;
+    overflow: auto;
+    border: 1px solid {{color.knowl_thin_border}};
+    background-color: {{color.knowl_background}};
 }
 
-
-a.paginate_active {
-    font-weight: bold;
-    padding: 0.3em;
-}
-
-a.paginate_button {
-    padding: 0.3em;
+div.codebox {
+    margin: 0.13em;
+    padding: 0.2em;
+    /*text-padding: 0.7em;*/
+    /*border: 1px solid #496;*/
+    /*border-left-width: 0.3em;*/
+    border-radius: 0em;
+    /*background-color: #ddeedf;*/
+    /*background-color: #eef5ee;*/
+    /*background-color: {{color.knowl_background}};
+    box-shadow: 0.2em 0.2em 0.2em {{color.knowl_shadow}};*/
+    box-shadow: 0em 0em 0.3em rgba(0,0,0,0.5);
+    white-space: pre;
 }
 
 /* Pagination nested */
@@ -533,81 +594,23 @@ a.paginate_button {
     background-color: {{color.knowl_1}};
 }
 
-/* TODO: div? -> don't put global div properties*/
-div.box {
-    height: 6.7em;
-    padding: 0.7em;
-    overflow: auto;
-    border: 1px solid {{color.knowl_thin_border}};
-    background-color: {{color.knowl_background}};
-}
-
-div.codebox {
-    margin: 0.13em;
-    padding: 0.2em;
-    /*text-padding: 0.7em;*/
-    /*border: 1px solid #496;*/
-    /*border-left-width: 0.3em;*/
-    border-radius: 0em;
-    /*background-color: #ddeedf;*/
-    /*background-color: #eef5ee;*/
-    /*background-color: {{color.knowl_background}};
-    box-shadow: 0.2em 0.2em 0.2em {{color.knowl_shadow}};*/
-    box-shadow: 0em 0em 0.3em rgba(0,0,0,0.5);
-    white-space: pre;
-}
-
-p.short {
-  margin: 0;
-}
-
-.float-right {
-    float:right;
-}
-.float-left {
-    float:left;
-}
-
-.mjx_basic {
-    font-family: MJX_Math;
-}
-
-input::placeholder {
-    color: #cccccc;
-}
-
-/* e.g. "Next" button */
-a.navlink {
-  color: {{color.a_nav_text}};
-  background-color: {{color.a_nav_background}};
-  font-weight: bold;
-  font-size: 0.75em;
-  text-align: center;
-  padding: 0.3em;
-  padding-top: 0.2em;
-  padding-bottom: 0.25em;
-  border: 1px solid {{color.a_nav_border}};
-  outline: 1px solid {{color.a_nav_background}};
-  text-decoration: none;
-  margin-left: 1px;
-  margin-top: 0.7em;
-  vertical-align: top;
-}
-
-hr {
-  border: 1px solid {{ color.hr_border }};
-  margin: 1em 0;
-}
-
-/* jquery ui slider */
-.slider {
-  margin: 1em; 0.3em;
-}
-
-
-
-
 /************* Generic table classes **********************************/
+
+td.title {
+    color: {{color.box_tab_text}};
+}
+
+table tbody tr.trivial {
+    color: {{color.grey}};
+}
+
+table tbody tr.trivial a {
+    color: {{color.grey}};
+}
+table tbody tr.trivial a:hover {
+    color: inherit;
+    background: inherit;
+}
 
 form table td.button {
     padding-top: 0.5em
@@ -2535,8 +2538,6 @@ body.knowl .logo a:hover {
 }
 */
 
-
-
 /******************* #knowl-search ************************************/
 
 #knowl-search input {
@@ -2608,7 +2609,6 @@ body.knowl .logo a:hover {
   cursor: pointer;
 }
 
-
 /******************** #flashes ****************************************/
 /* rather a class? */
 
@@ -2647,46 +2647,6 @@ body.knowl .logo a:hover {
 #complex_embeddings {
     padding-top: 0.7em;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -536,10 +536,10 @@ def get_css_grid_classes():
         return css_grid_classes
     css_grid_classes = {
         #horizontal spacing:
-        'tiny': "col-l-1, col-2, col-s-3, col-xs-4",
-        'small': "col-l-2, col-3, col-s-4, col-xs-6",
-        'normal': "col-l-3 col-4 col-s-6",
-        'wide_next_to_normal': "col-l-6 col-8", #good if used next to 'normal's
+        'tiny': "col-l-1, col-m-2, col-s-3, col-xs-4",
+        'small': "col-l-2, col-m-3, col-s-4, col-xs-6",
+        'normal': "col-l-3 col-m-4 col-s-6",
+        'wide_next_to_normal': "col-l-6 col-m-8", #good if used next to 'normal's
         'wide_next_to_wide': "col-l-6", #good wrapping if used next to same kind
         'wider_next_to_normal': "col-l-9", #good if used next to 'normal'
         'full_row': "col-all",
