@@ -289,35 +289,36 @@ The function which was called for this page is: {{calling_function}}
 
 <div id="footer">
   <div class="horizontal-container">
-
-    <div class="box-text">
-      {% if support -%}
-        {{ support|safe }}
-      {%- else -%}
-        {{ shortthanks|safe }}
-      {%- endif %}
-    </div>
-    
-    
-    <div class="box-links">
-      <a href="{{ url_for('contact') }}">Contact + feedback</a>
-      <br>
-      <a href="{{ url_for('citation') }}">How to cite</a>
-      <br>
-      <a href="{{ url_for('acknowledgment') }}">Acknowledgments</a>
-      <br>
-      <a href="{{ url_for('editorial_board') }}">Editorial Board</a>
-      {# <a href="{{ 'about' }}">About</a> #}
-    </div>
-    
-    <div class="box-links">
-      {{ current_source|safe }}
-      <br>
-      {{ latest_changeset|safe }} {# TODO: This is a very ugly link description, can we give it a better name? #}
-      <br>
-      <a href="https://sagemath.org/">{{ sage_version|safe }}</a>
-      <br>
-      {{ version|safe }}
+    <div class="box-container">
+      <div class="box-text">
+        {% if support -%}
+          {{ support|safe }}
+        {%- else -%}
+          {{ shortthanks|safe }}
+        {%- endif %}
+      </div>
+      
+      
+      <div class="box-links">
+        <a href="{{ url_for('contact') }}">Contact + feedback</a>
+        <br>
+        <a href="{{ url_for('citation') }}">How to cite</a>
+        <br>
+        <a href="{{ url_for('acknowledgment') }}">Acknowledgments</a>
+        <br>
+        <a href="{{ url_for('editorial_board') }}">Editorial Board</a>
+        {# <a href="{{ 'about' }}">About</a> #}
+      </div>
+      
+      <div class="box-links">
+        {{ current_source|safe }}
+        <br>
+        {{ latest_changeset|safe }} {# TODO: This is a very ugly link description, can we give it a better name? #}
+        <br>
+        <a href="https://sagemath.org/">{{ sage_version|safe }}</a>
+        <br>
+        {{ version|safe }}
+      </div>
     </div>
   </div>
 </div>

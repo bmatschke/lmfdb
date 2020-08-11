@@ -1421,7 +1421,7 @@ class CMFSearchArray(SearchArray):
             label='Projective image',
             knowl='cmf.projective_image',
             example='D15',
-            example_span='wt. 1 only')
+            example_span='weight 1 only')
 
         projective_image_type = SelectBoxNoEg(
             name='projective_image_type',
@@ -1432,7 +1432,7 @@ class CMFSearchArray(SearchArray):
                      ('A4', 'A4'),
                      ('S4', 'S4'),
                      ('A5','A5')],
-            example_span='wt. 1 only')
+            example_span='weight 1 only')
 
         num_newforms = TextBox(
             name='num_forms',
