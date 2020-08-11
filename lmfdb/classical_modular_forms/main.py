@@ -1306,7 +1306,7 @@ class CMFSearchArray(SearchArray):
         level_primes = TextBoxWithSelect(
             name='level_primes',
             knowl='cmf.bad_prime',
-            label=r'Bad \(p\)',
+            label=r'Bad primes',
             example='2,3',
             example_span='2,3',
             select_box=prime_quantifier)
@@ -1331,7 +1331,7 @@ class CMFSearchArray(SearchArray):
 
         dim = TextBoxWithSelect(
             name='dim',
-            label='Dim.',
+            label='Dimension',
             knowl='cmf.dimension',
             example='1',
             example_span='2, 1-6',

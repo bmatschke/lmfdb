@@ -696,7 +696,7 @@ class ECSearchArray(SearchArray):
             name="surj_quantifier")
         nonsurj_primes = TextBoxWithSelect(
             name="nonsurj_primes",
-            label="Non-max. $p$",
+            label="Non-maximal primes",
             short_label="Non-max. $p$",
             knowl="ec.maximal_galois_rep",
             example="2,3",
@@ -705,7 +705,7 @@ class ECSearchArray(SearchArray):
             name="bad_quantifier")
         bad_primes = TextBoxWithSelect(
             name="bad_primes",
-            label="Bad $p$",
+            label="Bad primes",
             knowl="ec.q.reduction_type",
             example="5,13",
             select_box=bad_quant)

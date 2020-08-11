@@ -13,7 +13,7 @@ from lmfdb.utils import (
     parse_ints, parse_container, parse_bool, clean_input, flash_error,
     SearchArray, TextBox, TextBoxNoEg, ParityBox, CountBox, 
     SubsetNoExcludeBox, TextBoxWithSelect, SelectBoxNoEg,
-    display_knowl, search_wrap, to_dict)
+    display_knowl, search_wrap, to_dict, get_css_grid_classes)
 from lmfdb.utils.search_parsing import search_parser
 from lmfdb.number_fields.web_number_field import WebNumberField
 from lmfdb.galois_groups.transitive_group import complete_group_code
@@ -424,6 +424,8 @@ class ArtinSearchArray(SearchArray):
     jump_example = "4.5648.6t13.b.a"
     jump_egspan = "e.g. 4.5648.6t13.b.a"
     def __init__(self):
+        css = get_css_grid_classes()
+        css_2rows = css["default"]+" "+css["row_span_2"]
         dimension = TextBox(
             name="dimension",
             label="Dimension",
@@ -443,7 +445,8 @@ class ArtinSearchArray(SearchArray):
             example_span="list of %s, e.g. [8,3] or [16,7], group names from the %s, e.g. C5 or S12, and %s, e.g., 7T2 or 11T5" % (
                 display_knowl("group.small_group_label", "GAP id's"),
                 display_knowl("nf.galois_group.name", "list of group labels"),
-                display_knowl("gg.label", "transitive group labels")))
+                display_knowl("gg.label", "transitive group labels")),
+            css_grid=css_2rows)
         parity = ParityBox(
             name="parity",
             label="Parity",
@@ -480,13 +483,15 @@ class ArtinSearchArray(SearchArray):
             label="Frobenius-Schur indicator",
             knowl="artin.frobenius_schur_indicator",
             example="1",
-            example_span="+1 for orthogonal, -1 for symplectic, 0 for non-real character")
+            example_span="+1 for orthogonal, -1 for symplectic, 0 for non-real character",
+            css_grid=css_2rows)
         projective_image = TextBoxNoEg(
             name='projective_image',
             label='Projective image',
             knowl='artin.projective_image',
             example_span="a GAP id, such as [4,1] or [12,5], a transitive group in nTj notation, such as 5T1, or a <a title = 'Galois group labels' knowl='nf.galois_group.name'>group label</a>.",
-            example='D5')
+            example='D5',
+            css_grid=css_2rows)
         projective_image_type = SelectBoxNoEg(
             name='projective_image_type',
             knowl='artin.projective_image_type',

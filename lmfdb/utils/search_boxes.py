@@ -610,9 +610,10 @@ class SearchArray(UniqueRepresentation):
             
         #print("grid:",grid)
         print("--- info:",info)
+
+        inner_html = ""
         
         #In the new grid layout, we basically flatten the list of lists grid:
-        inner_html = ""
         for row in grid:
             print("row:",row)
             if isinstance(row, Spacer):
