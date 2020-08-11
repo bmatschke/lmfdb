@@ -2167,9 +2167,9 @@ body.knowl .logo a:hover {
   /*float: left;*/
   border: none;
   border-radius: 0;
-  outline: none;
+  /*outline: none;*/
   color: #555;
-  padding: 1em 0.7em 1em 0.7em;
+  padding: 0;
   background-color: inherit;
   font-family: inherit; /* Important for vertical align on mobile phones */
   /*margin: 0;  Important for vertical align on mobile phones */
@@ -2177,7 +2177,9 @@ body.knowl .logo a:hover {
 
 #navbar a.heading,
 #navbar div.heading {
+  display: block;
   /*font-size: 1em;*/
+  padding: 1em 0.7em 1em 0.7em;
 }
 
 /* Add a background color to navbar links on hover */
@@ -2270,7 +2272,7 @@ body.knowl .logo a:hover {
   color: #aaa !important;
 }
 
-#navbar button.dropbtn.beta {
+#navbar button.dropbtn.beta .heading {
   border-top: 0.3em solid #a84;
   padding-top: 0.7em;
   /*background-color: #dcb;*/
