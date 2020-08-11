@@ -40,12 +40,13 @@ t{# template defs #}
  *
  */
 
+
 :root {
   --main-font-family: Georgia, 'Bitstream Charter', serif; 
-  /*--main-font-family: 'Times New Roman', 'Times', serif; */
+}  /*--main-font-family: 'Times New Roman', 'Times', serif; */
+:root {
   --control-font-family: Arial, sans-serif;
 }
-
 :root {
   font-size: 1em; /* yes, it's in some sense a variable: the parent for rem, the root of em. */
 }
