@@ -2293,6 +2293,7 @@ body.knowl .logo a:hover {
 /* How about rainbow menu colors? */
 
 #navbar .dropbtn .heading:hover {
+  background: #888;
   color: #fff;
 }
 #navbar .dropbtn .l-functions:hover {
@@ -2311,7 +2312,7 @@ body.knowl .logo a:hover {
   background: #FED9A6;
 } 
 #navbar .dropbtn .motives:hover {
-  background: #FFFFCC;
+  background: #f0f0bb;
 } 
 #navbar .dropbtn .groups:hover {
   background: #E5D8BD;
