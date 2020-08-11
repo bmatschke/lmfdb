@@ -259,18 +259,17 @@
     - title: "Characters:"
       status: beta
       parts:
-        - title: Dirichlet
+        - title: Dirichlet characters
           url_for:  "characters.render_Dirichletwebpage"
           status: beta
-        - title: Hecke
+        - title: Hecke characters
           url_for:  "characters.render_Heckewebpage"
           status: future
     - title: "Galois:"
-      status: future
       parts:
-        - title: Artin
+        - title: Artin representations
           url_for: "artin_representations.index"
-        - title: mod &#8467;
+        - title: Mod &#8467; Galois representations
           status: future
     - title: Weil-Deligne
       status: future

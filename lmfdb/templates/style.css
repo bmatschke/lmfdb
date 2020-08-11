@@ -2283,9 +2283,13 @@ body.knowl .logo a:hover {
 
 #navbar .tall-entries a, 
 #navbar .tall-entries div {
-  padding-top: 1.3em !important;
+  /*padding-top: 1.3em !important;
   padding-bottom: 1.3em !important;
+  */
+  padding: 1.3em 1.6em !important;
 }
+
+
 
 /* This must come after the #header and #navbar section */
 @media only screen and (min-width: 1100px) {
@@ -2524,7 +2528,7 @@ body.knowl .logo a:hover {
   font-size: 1em;
 }
 #index-boxes table.box {
-  background: {{color.box_background}};
+  background: #fafafa; {{color.box_background}};
   max-width: 35em;
   min-width: 25em;
   padding: 0.7em;
@@ -2533,7 +2537,7 @@ body.knowl .logo a:hover {
   margin: 1em;
 }
 #index-boxes table.box td.img {
-  background: {{color.box_background_img}};
+  background: #fafafa; {{color.box_background_img}};
   width: 10em;
   /*height: auto;*/
   border: 1em;
@@ -2557,6 +2561,10 @@ body.knowl .logo a:hover {
   list-style-type: none;
   list-style-position: inside;
   line-height: 135%;
+}
+
+#index-boxes table.box td {
+  background: #fafafa;
 }
 
 /* OLD:
