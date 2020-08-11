@@ -1532,7 +1532,8 @@ body.knowl table.ntdata tr:nth-child(even) {
 
 body.knowl #header {
     /*background: {{color.knowl_header_background}};*/
-    background: {{color.header_background}};
+    /*background: {{color.header_background}}; */
+    background: #fff;
 }
 body.knowl #header #title {
     color: {{color.knowl_title_text}};
@@ -1974,14 +1975,16 @@ div.limit-height {
 
 
 #header {
-  background: {{color.header_background}};
+  /*background: {{color.header_background}};*/
+  background: #fff;
   margin: 0em;
   padding: 0em;
   /%box-shadow: 0em 0.3em 0.3em {{color.header_shadow}};%/
 }
 
 body.knowl #header {
-  background: {{color.header_background}};
+  /*background: {{color.header_background}};*/
+  background: #fff;
   /*background: {{ color.knowl_l }};
   box-shadow: 0em 0.3em 0.3em {{color.knowl_shadow}};
   */
@@ -2446,7 +2449,7 @@ body.knowl .logo a:hover {
 #footer {
   clear: both;
   margin-top: 0;
-  background-color: {{color.footer_background}};
+  background-color: #444; /*{{color.footer_background}};*/
   /*border-top: 0.13em solid {{ color.footer_border }}; */
   padding: 1.7em 0.7em;
   text-align: center;
