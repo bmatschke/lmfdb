@@ -747,9 +747,9 @@ class HGMSearchArray(SearchArray):
             return self.refine_motive_array
 
     def family_html(self):
-        return self._print_table(self.family_array, None, "horizontal")
+        return self._print_grid(self.family_array, None, "horizontal")
 
     def motive_html(self):
-        table = self._print_table(self.motive_array, None, "horizontal")
+        table = self._print_grid(self.motive_array, None, "horizontal")
         buttons = self.buttons()
         return "\n".join([table, buttons])

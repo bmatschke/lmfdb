@@ -1581,7 +1581,7 @@ class CMFSearchArray(SearchArray):
         layout = [self.hidden_inputs(info), self.main_table(info), self.buttons(info)]
         st = self._st(info)
         if st in ["Traces", "SpaceTraces"]:
-            trace_table = self._print_table(self.traces_array, info, layout_type="box")
+            trace_table = self._print_grid(self.traces_array, info, layout_type="box")
             layout.append(trace_table)
         return "\n".join(layout)
 
