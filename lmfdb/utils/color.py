@@ -118,10 +118,9 @@ class ColorScheme(object):
         'contrib_text_notes': c.dark_grey_1,
 
         # footer colors
-        'footer_background': '#444', #'col_main_ld',
+        'footer_background': 'col_main_ld',
         'footer_border': 'col_main_lg',
-        'footer_text': '#fff', #'col_main_dl',
-        'footer_link': '#bbb', #'col_main_dl',
+        'footer_text': 'col_main_dl',
 
         # a colors
         'a_text': 'col_body_text', # This occurs in for some hyperlinks, and sidebar header text.
@@ -152,13 +151,13 @@ class ColorScheme(object):
 
 
         # Header colors
-        'header_background': 'white', #'col_main_ld', #Color of the banner at the top
+        'header_background': 'col_main_ld', #Color of the banner at the top
         'header_shadow': 'col_main_lg',
         'header_text_title': 'col_main_d',
         'header_text_topright': 'col_main_dl',
         # Header navi colors
         'header_navi_text': 'col_main_dl',
-        'bread_links': '#777', #'col_main_dl',
+        'bread_links': 'col_main_dl',
 
         # flashes
         'flashes_border': c.col_light_red_1,
@@ -195,7 +194,7 @@ class ColorScheme(object):
         'button_background': 'col_main_b',
         'select_background': 'col_main_ll',
         'button_border': 'col_main_lg',
-        'button_background_hover': '#fafafa', #'#8c9', #'col_main_l',
+        'button_background_hover': 'col_main_l',
         'button_border_hover': 'col_main_lg',
         'button_background_inactive': 'light_grey_1',
         'button_border_inactive': 'col_light_red_1',
@@ -212,9 +211,9 @@ class ColorScheme(object):
         'table_ntdata_border_bottom': c.grey,
 
         #index-boxes todo
-        'box_background': '#fafafa',
-        'box_background_img': '#fafafa', #c.white, #'col_main_ll',
-        'box_background_title': '#fafafa', #c.white, #'col_main_l',
+        'box_background': c.white,
+        'box_background_img': 'col_main_ll',
+        'box_background_title': 'col_main_l',
 
         #Maass nav and show
         'maas_table_bkg': c.white,
@@ -247,7 +246,6 @@ class ColorScheme(object):
         'lf_an_button_brd': 'col_main_lg',
         'lf_ar_button_bkg': c.light_grey_1,
         'lf_ar_button_brd': c.col_light_red_1,
-        
     }
     def dict(self):
         def get(key):
@@ -413,6 +411,73 @@ class SteelBlue(GreyKnowls):
     chi_table_background = '#E3F2FD'
     chitable_imprimitive = c.black
     table_ntdata_background = c.white
+    
+class Pink_Benjamin(GreyKnowls):
+
+    code = 5
+    
+    #Copied from SteelBlue:
+    col_main_ld = '#90CAF9'
+    col_main_dl = c.black
+    col_a_knowl = '#1C61A6'
+    col_main    = '#1565C0' # P1-800
+    col_link    = '#1C61A6'
+    col_visited = '#1C61A6'
+    col_body_text = '#1565C0' # P1-800
+    col_sidebar_text = c.black
+    col_sidebar_links = '#1565C0' # P1-800
+    col_sidebar_header_links = '#0D47A1' # P1-900
+    #col_search_border = '#0D47A1' # P1-900
+    col_main_2  = '#EEEEEE'
+    col_main_l  = '#90CAF9' # P1-200
+    col_main_lg = '#0D47A1' # P1-900
+    col_main_ll = '#E3F2FD' # P1-50
+    col_main_d  = c.black # ?00
+    knowl_hyper_text = '#1565C0' # P1-800
+    knowl_shadow = '#0D47A1' # P1-900
+    sidebar_background_hover = c.white # '#CCE6FC' # accessibility change
+    a_background_hover = '#E3F2FD' # accessibility change
+    # knowl_hover = '#FFF8C1' # yellow, lighter than knowl border
+    knowl_hover = '#EDEDED'
+    knowl_border_links = c.black
+    knowl_border_hover = c.black
+    sidebar_h2_hover = c.white
+    sidebar_background_h2_hover = '#0D47A1'
+    knowl_border_text = '#333'
+    sidebar_text_beta = '#006d05'
+    knowl_error = '#006d05'
+    chi_table_background = '#E3F2FD'
+    chitable_imprimitive = c.black
+    table_ntdata_background = c.white
+
+    #Added for backgrounds of footer and header:
+    footer_background = '#444'
+    col_main_ld = '#fff' #e.g. header background 
+    
+
+    '''
+    col_main_l  = '#eee' #e.g. properties header background
+    col_main_ll = '#f5f5f5' #e.g. properties body background
+
+    col_main    = '#444' #'#fe6dbc'
+    col_main_2  = '#888'
+    
+    a_background_hover = 'none'
+    col_link    = '#24b'
+    a_text_hover = '#248'
+    col_a_knowl = '#5b7'
+    knowl_hover = 'none'
+    knowl_underline = '#888'
+    knowl_hyper_text = '#888'
+
+    col_main_d  = '#000' #'#7f365e' #e.g. header title
+
+
+    col_main_dl = '#00f' #'#cb5796'
+    col_main_lg = '#0f0' #'#fe8ac9'
+    col_main_g  = '#f00' #'#fec4e4'
+    '''
+    
 
 class IndigoHair(YellowKnowls):
     code = 18
@@ -505,17 +570,17 @@ class Tans(ColorScheme):
     grey        = '#5c4a7f'
 
 class Pink(ColorScheme):
-    code = 5
+    code = 105 #original: 5
     col_main_d  = '#7f365e'
     col_main_dl = '#cb5796'
     col_main    = '#fe6dbc'
     col_main_2  = '#fe7bc2'
     col_main_l  = '#feb6dd'
     col_main_lg = '#fe8ac9'
-    col_main_ld = '#fe98d0'
+    col_main_ld = '#fff' #'#fe98d0'
     col_main_ll = '#fed3ea'
     col_main_g  = '#fec4e4'
-
+    
 class Blues(ColorScheme):
     code = 6
     col_main_ld = '#b9c8c8'

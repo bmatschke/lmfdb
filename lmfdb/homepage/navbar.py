@@ -98,8 +98,8 @@ class NavBar(object):
             self.dropdowns.append(dropdown)
                 
             
-            print("main_heading:",main_heading)
-            print("dropdown:",dropdown)
+            #print("main_heading:",main_heading)
+            #print("dropdown:",dropdown)
 
         def item_is_constaint(item,is_beta,is_auth):
             

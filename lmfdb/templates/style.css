@@ -156,9 +156,10 @@ textarea:active {
 }
 
 form {
-  background: #f5f5f5; #fafafa;
+/*  background: #f5f5f5; #fafafa;
   border: 1px solid #eee;
   padding: 0.5em 0;
+*/
 }
 
 table {
@@ -1396,6 +1397,8 @@ table.qexp-table td.output {
    color: #555; /*{{color.grey}};*/
    text-align: right;
    font-family: var(--control-font-family);
+   padding-right: 0.5em;
+   padding-left: 0.5em;
 }
 
 /* SearchBox, container of a label, input/select(s), and example: 
@@ -1403,9 +1406,9 @@ table.qexp-table td.output {
  * we should turn it on (to debate). */
 .search-box {
   padding: 0.4em 1.5em 0.1em 1.5em;
-  margin: 0.5em;
+  /*margin: 0.5em;
   border: 0px solid #eee;
-  background: #f5f5f5; #fafafa;
+  background: #f5f5f5; #fafafa;*/  
 }
 .search-box td {
   padding: 0;
@@ -1617,8 +1620,8 @@ table .knowl-link {
 }
 *[knowl]:hover,
 *[knowl].active {
-  border-bottom: 0.13em solid {{ color.knowl_underline }};
-  background: {{ color.knowl_hover }};
+  border-bottom: 2px solid {{ color.knowl_underline }};
+  background: {{ color.knowl_hover }}; 
   color: {{ color.knowl_hyper_text }};
   margin: 0;
   padding: 0.2em 0 0 0;
