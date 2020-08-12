@@ -200,9 +200,11 @@ table td {
 /* hover can be hover or none,
  * pointer can be fine, coarse, or none.
  * 
- * We will allow hover-available classes only if both are satisfied:
+ * We will allow hover-available classes only if all four are satisfied:
  *  - the primary input device allows hover, and
  *  - the pointer is fine (i.e. mouse, touchpad)
+ *  - width >= 600px
+ *  - height >= 600px
  * 
  * Otherwise, we don't display hover-available classes.
  * 
@@ -219,7 +221,7 @@ table td {
   display: none !important;
 }
 
-@media (hover: hover) and (pointer: fine) {
+@media (hover: hover) and (pointer: fine) and (min-width: 600px) and (min-height: 600px) {
   .no-hover-available {
     display: none !important;
   }
@@ -2335,7 +2337,7 @@ body.knowl .logo a:hover {
 
 
 
-@media (hover: hover) and (pointer: fine) {
+@media (hover: hover) and (pointer: fine) and (min-width: 600px) and (min-height: 600px) {
   #navbar .dropdown:hover .dropdown-content {
     display: block;
   } 
