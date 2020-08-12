@@ -47,9 +47,6 @@ t{# template defs #}
 :root {
   --control-font-family: Arial, sans-serif;
 }
-:root {
-  font-size: 1em; /* yes, it's in some sense a variable: the parent for rem, the root of em. */
-}
 {% set max_width = '64rem' %}
 
 /* Respect user's setting for font-size until it gets too cramped: */
@@ -59,7 +56,8 @@ t{# template defs #}
   }
 }
 
-/* Define a variables that are 0rem for small screens and 1rem for bigger ones: */
+/* Define a variables that are 0rem for small screens,
+ * 1rem for bigger ones, and interpolate linearly in between: */
 :root {
   --srem: 0rem;
   --mrem: 0rem;
@@ -245,18 +243,26 @@ table td {
 .no-hover-available {
   display: inline-block !important;
 }
-.hover-available {
+.no-hover-available-block {
+  display: block !important;
+}
+.hover-available,
+.hover-available-block {
   display: none !important;
 }
 
 /* Only point where we allow px to be used is to determine device type: 
  * (and for 1px or 2px) */
 @media (hover: hover) and (pointer: fine) and (min-width: 600px) and (min-height: 600px) {
-  .no-hover-available {
+  .no-hover-available,
+  .no-hover-available-block {
     display: none !important;
   }
   .hover-available {
     display: inline-block !important;
+  }
+  .hover-available-block {
+    display: block !important;
   }
 }
 
@@ -1828,34 +1834,6 @@ div.limit-height {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /**********************************************************************/
 /**********************************************************************/
 /**********************************************************************/
@@ -2362,20 +2340,14 @@ body.knowl .logo a:hover {
   }
 }
 
-
-
+/* The following query must stay synchronized with the definitions of 
+ * .no-hover-available and hover-available (and [...]-block): 
+ */
 @media (hover: hover) and (pointer: fine) and (min-width: 600px) and (min-height: 600px) {
   #navbar .dropdown:hover .dropdown-content {
     display: block;
   } 
 }
-
-
-
-
-
-
-
 
 
 /********** #properties (Property boxes on right hand side) ***********/
@@ -2751,58 +2723,3 @@ body.knowl .logo a:hover {
 #complex_embeddings {
     padding-top: 0.7em;
 }
-
-
-
-
-
-
-
-/****************************** testing styles ************************/
-
-/*
-* {
-  font-family: var(--main-font-family) !important;
-}
-*/
-
-/*
-input,
-textarea,
-select,
-button {
-  border-width: 2px;
-}
-
-
-select {
-  background: #eee;
-}
-select:hover {
-  background: #eeeeee;
-}
-
-button {
-  background: #3a5;
-  color: #fff;
-}
-button:hover {
-  background: #395 !important;
-}
-
-input:active,
-input:focus,
-textarea:active,
-textarea:focus {
-  border-color: #38c;
-}
-*/
-
-
-
-
-
-
-
-
-

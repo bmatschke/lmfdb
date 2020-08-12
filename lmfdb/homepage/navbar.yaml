@@ -256,7 +256,7 @@
       title: Representations
       url_for: "representations"
    groups:
-    - title: "Characters:"
+    - title: "Characters"
       status: beta
       parts:
         - title: Dirichlet characters
@@ -265,7 +265,7 @@
         - title: Hecke characters
           url_for:  "characters.render_Heckewebpage"
           status: future
-    - title: "Galois:"
+    - title: "Galois representations"
       parts:
         - title: Artin representations
           url_for: "artin_representations.index"
@@ -283,7 +283,7 @@
       url_for: "motives"
    parts:
     - type: link_bar
-      title: "Hypergeometric motives:"
+      title: "Hypergeometric motives"
       status: beta
       entries:
         - title: $/\Q$
@@ -291,7 +291,7 @@
           url_for:  "hypergm.index"
         - title: $/\Q(\sqrt{d})$
           status: future
-    - title: Jacobi
+    - title: Jacobi motives
       status: future
     - title: $G_2$
       status: future
@@ -326,7 +326,7 @@
       title: Knowledge
       url_for: "knowledge.index"
    parts:
-    - css_classes: no-hover-available
+    - css_classes: no-hover-available-block
       title: Knowledge
       url_for: "knowledge.index"
     - title: LMFDB universe
@@ -338,7 +338,7 @@
       url_for: "inventory_app.show_edit_root"
    requires: auth_or_beta
    parts:
-    - css_classes: no-hover-available
+    - css_classes: no-hover-available-block
       title: Inventory
       url_for: "inventory_app.show_edit_root"
     
