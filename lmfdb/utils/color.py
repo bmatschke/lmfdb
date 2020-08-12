@@ -1,5 +1,4 @@
 
-from sage.plot.colors import Color
 
 class StandardColors(object):
     white = 'white'
@@ -248,15 +247,6 @@ class ColorScheme(object):
         'lf_ar_button_bkg': c.light_grey_1,
         'lf_ar_button_brd': c.col_light_red_1,
     }
-    
-    def rainbow_dict(self,num_colors,saturation=1.0,value=0.8):
-        result = {}
-        for hue in range(num_colors):
-            c = Color(float(hue)/num_colors,saturation,value,space="hsv")
-            key = 'rainbow_%s' % hue;
-            result[key] = c.html_color()
-        return result
-    
     def dict(self):
         def get(key):
             val = getattr(self, key, None)
@@ -281,8 +271,6 @@ class ColorScheme(object):
             scheme[std_color] = val
         for key in self.colors:
             scheme[key] = get(key)
-        rainbow = self.rainbow_dict(10,saturation=0.1,value=1.0)
-        scheme.update(rainbow)
         return scheme
 
     @classmethod
