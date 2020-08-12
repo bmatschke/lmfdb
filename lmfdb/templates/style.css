@@ -197,12 +197,26 @@ table td {
     font-size: 1em !important;
 }
 
-@media (hover: hover) {
+/* hover can be hover or none,
+ * pointer can be fine, coarse, or none.
+ * 
+ * We will allow hover-available classes only if both are satisfied:
+ *  - the primary input device allows hover, and
+ *  - the pointer is fine (i.e. mouse, touchpad)
+ * 
+ * Otherwise, we don't display hover-available classes.
+ * 
+ * We display exactly one of 
+ *  - hover-available,
+ *  - no-hover-available.
+ */ 
+
+@media (hover: hover) and (pointer: fine) {
   .no-hover-available {
     display: none !important;
   }
 }
-@media not (hover: hover) {
+@media (hover: none) or (pointer: coarse) or (pointer: none) {
   .hover-available {
     display: none !important;
   }
@@ -2306,11 +2320,21 @@ body.knowl .logo a:hover {
   }
 }
 
-@media (hover: hover) {
+
+
+@media (hover: hover) and (pointer: fine) {
   #navbar .dropdown:hover .dropdown-content {
     display: block;
   } 
 }
+
+
+
+
+
+
+
+
 
 /********** #properties (Property boxes on right hand side) ***********/
 
