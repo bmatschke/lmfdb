@@ -2266,7 +2266,6 @@ body.knowl .logo a:hover {
   border-bottom: 1px solid #ddd;
 }
 
-/***************** #navbar: add-ons from navbar.yaml ******************/ 
 
 #navbar .future {
   /*display: none !important;*/ /* toggle this to show/hide the future */
@@ -2289,34 +2288,6 @@ body.knowl .logo a:hover {
   */
   padding: 1.3em 1.6em !important;
 }
-
-/* How about rainbow menu colors? */
-
-#navbar .dropbtn .heading:hover {
-  color: #fff;
-}
-#navbar .dropbtn .l-functions:hover {
-  background: #FBB4AE;
-} 
-#navbar .dropbtn .modular-forms:hover {
-  background: #B3CDE3;
-} 
-#navbar .dropbtn .varieties:hover {
-  background: #CCEBC5;
-} 
-#navbar .dropbtn .fields:hover {
-  background: #DECBE4;
-} 
-#navbar .dropbtn .representations:hover {
-  background: #FED9A6;
-} 
-#navbar .dropbtn .motives:hover {
-  background: #FFFFCC;
-} 
-#navbar .dropbtn .groups:hover {
-  background: #E5D8BD;
-} 
-
 
 
 

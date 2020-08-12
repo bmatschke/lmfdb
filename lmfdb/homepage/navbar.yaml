@@ -66,7 +66,6 @@
    heading:
       title: L-functions
       url_for: "l_functions"
-      css_classes: l-functions
    parts:
     - type: "link_bar"
       title: "L-functions by degree:"
@@ -105,7 +104,6 @@
    heading:
       title: Modular forms
       url_for: "modular_forms"
-      css_classes: modular-forms
    groups:
      - title: $\GL(2)$ type
        parts:
@@ -148,7 +146,6 @@
    heading:
       title: Varieties
       url_for: "varieties"
-      css_classes: varieties
    groups:
      - title: Curves
        parts:
@@ -173,7 +170,6 @@
    heading:
       title: Varieties
       url_for: "varieties"
-      css_classes: varieties
    groups:
      - title: Curves
        parts:
@@ -235,7 +231,6 @@
    heading:
       title: Fields
       url_for: "fields"
-      css_classes: fields
    parts:
     - title: Global number fields
       url_for:  "number_fields.number_field_render_webpage"
@@ -249,7 +244,6 @@
    heading:
       title: Representations
       url_for: "representations"
-      css_classes: representations
    parts:
     - title: Dirichlet characters
       url_for:  "characters.render_Dirichletwebpage"
@@ -261,7 +255,6 @@
    heading:
       title: Representations
       url_for: "representations"
-      css_classes: representations
    groups:
     - title: "Characters:"
       status: beta
@@ -288,7 +281,6 @@
    heading:
       title: Motives
       url_for: "motives"
-      css_classes: motives
    parts:
     - type: link_bar
       title: "Hypergeometric motives:"
@@ -308,7 +300,6 @@
    heading:
       title: Groups
       url_for: "groups"
-      css_classes: groups
    parts:
     - title: Galois groups
       url_for: "galois_groups.index"
