@@ -2291,10 +2291,11 @@ body.knowl .logo a:hover {
 }
 
 /* How about rainbow menu colors? */
-
+/* rainbow colors by hand */
+/*
 #navbar .dropbtn .heading:hover {
   background: #888;
-  color: #fff;
+  color: #000;
 }
 #navbar .dropbtn .l-functions:hover {
   background: #CCEBC5;
@@ -2317,6 +2318,24 @@ body.knowl .logo a:hover {
 #navbar .dropbtn .groups:hover {
   background: #E5D8BD;
 } 
+*/
+
+/* Automatic rainbow coloring of headings, 
+ * computed with fixed saturation and value, rotating through hue: */
+
+#navbar .dropbtn .heading:hover {
+  color: #000;
+}
+#navbar .dropdown:nth-child(2) .heading:hover {background: {{color.rainbow_0}};}
+#navbar .dropdown:nth-child(3) .heading:hover {background: {{color.rainbow_1}};}
+#navbar .dropdown:nth-child(4) .heading:hover {background: {{color.rainbow_2}};}
+#navbar .dropdown:nth-child(5) .heading:hover {background: {{color.rainbow_3}};}
+#navbar .dropdown:nth-child(6) .heading:hover {background: {{color.rainbow_4}};}
+#navbar .dropdown:nth-child(7) .heading:hover {background: {{color.rainbow_5}};}
+#navbar .dropdown:nth-child(8) .heading:hover {background: {{color.rainbow_6}};}
+#navbar .dropdown:nth-child(9) .heading:hover {background: {{color.rainbow_7}};}
+#navbar .dropdown:nth-child(10) .heading:hover {background: {{color.rainbow_8}};}
+#navbar .dropdown:nth-child(11) .heading:hover {background: {{color.rainbow_9}};}
 
 
 
