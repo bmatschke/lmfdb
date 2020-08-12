@@ -211,16 +211,29 @@ table td {
  *  - no-hover-available.
  */ 
 
+
+.no-hover-available {
+  display: inline-block !important;
+}
+.hover-available {
+  display: none !important;
+}
+
 @media (hover: hover) and (pointer: fine) {
   .no-hover-available {
     display: none !important;
   }
+  .hover-available {
+    display: inline-block !important;
+  }
 }
+/*
 @media (hover: none) or (pointer: coarse) or (pointer: none) {
   .hover-available {
     display: none !important;
   }
 }
+*/
 
 /************** Grid layout with 12 columns ***************************/
 
