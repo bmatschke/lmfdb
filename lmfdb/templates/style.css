@@ -50,23 +50,52 @@ t{# template defs #}
 :root {
   font-size: 1em; /* yes, it's in some sense a variable: the parent for rem, the root of em. */
 }
+{% set max_width = '64rem' %}
 
-/*
-@media only screen and (max-width: 800px) {
-  :root,
-  body {
-    font-size: 2vw;
-  }
-}
-*/
-
-@media only screen and (max-width: 600px) {
-  :root,
-  body {
-    font-size: 3vw;
+/* Respect user's setting for font-size until it gets too cramped: */
+@media only screen and (max-width: 25rem) {
+  :root {
+    font-size: calc(100vw / 25);
   }
 }
 
+/* Define a variables that are 0rem for small screens and 1rem for bigger ones: */
+:root {
+  --srem: 0rem;
+  --mrem: 0rem;
+  --lrem: 0rem;
+}
+@media only screen and (min-width: 25rem) {
+  :root {
+    --srem: calc((100vw - 25rem) / (37.5 - 25));
+    --mrem: calc((100vw - 25rem) / (48 - 25));
+    --lrem: calc((100vw - 25rem) / (64 - 25));
+  }
+}
+@media only screen and (min-width: 37.5rem) {
+  :root {
+    --srem: 1rem;
+  }
+}
+@media only screen and (min-width: 48rem) {
+  :root {
+    --mrem: 1rem;
+  }
+}
+@media only screen and (min-width: 64rem) {
+  :root {
+    --lrem: 1rem;
+  }
+}
+
+/**
+ * Assuming default 1rem = 16px, we get natural break points:
+ * 320px = 20rem
+ * 400px = 25rem
+ * 600px = 37.5rem
+ * 748px = 48rem
+ * 1024px = 64 rem
+ */
 
 /**********************************************************************/
 /**********************************************************************/
@@ -170,13 +199,13 @@ table th {
   color: {{color.a_text}};
   padding-bottom: 0.3em;
   font-weight: normal;
-  font-size: 120%;
+  font-size: calc(1.05em + 0.15 * var(--lrem));
   line-height: 130%;
 }
 table th,
 table td {
-  padding-left:  0.7em;
-  padding-right: 0.7em;
+  padding-left:  calc(0.2em + 0.5 * var(--mrem));
+  padding-right: calc(0.2em + 0.5 * var(--mrem));
 }
 
 
@@ -213,7 +242,6 @@ table td {
  *  - no-hover-available.
  */ 
 
-
 .no-hover-available {
   display: inline-block !important;
 }
@@ -221,6 +249,8 @@ table td {
   display: none !important;
 }
 
+/* Only point where we allow px to be used is to determine device type: 
+ * (and for 1px or 2px) */
 @media (hover: hover) and (pointer: fine) and (min-width: 600px) and (min-height: 600px) {
   .no-hover-available {
     display: none !important;
@@ -229,13 +259,6 @@ table td {
     display: inline-block !important;
   }
 }
-/*
-@media (hover: none) or (pointer: coarse) or (pointer: none) {
-  .hover-available {
-    display: none !important;
-  }
-}
-*/
 
 /************** Grid layout with 12 columns ***************************/
 
@@ -276,7 +299,7 @@ For the items in the container, give them classes either
 .col-xs-12 { grid-column: auto / span 12; }
 
 /* For tablets, large phones: */
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: 37.5rem) {
   .col-s-1 { grid-column: auto / span 1; }
   .col-s-2 { grid-column: auto / span 2; }
   .col-s-3 { grid-column: auto / span 3; }
@@ -292,7 +315,7 @@ For the items in the container, give them classes either
 }
 
 /* For large tablet, small laptop: */
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 48rem) {
   .col-m-1 { grid-column: auto / span 1; }
   .col-m-2 { grid-column: auto / span 2; }
   .col-m-3 { grid-column: auto / span 3; }
@@ -308,7 +331,7 @@ For the items in the container, give them classes either
 } 
 
 /* For large desktop: */
-@media only screen and (min-width: 1024px) {
+@media only screen and (min-width: 64rem) {
   .col-l-1 { grid-column: auto / span 1; }
   .col-l-2 { grid-column: auto / span 2; }
   .col-l-3 { grid-column: auto / span 3; }
@@ -337,7 +360,7 @@ For the items in the container, give them classes either
 
 /* Bounds the width of the page content */
 .horizontal-container {
-    max-width: 73rem;
+    max-width: {{ max_width }};
     /*max-width: 1100px;*/ 
     /*max-width: 1280px;*/
     margin: auto; /* means center */
@@ -674,7 +697,7 @@ td.right {
 
 table td.title {
   /*font-weight: bold;*/
-  font-size: 130%;
+  font-size: calc(1.1em + 0.2 * var(--lrem));
   text-align: center;
   background: {{color.box_background_title}};
   height: 2em;
@@ -1434,7 +1457,7 @@ table.qexp-table td.output {
  * A border or background actually make groups visible, so perhaps
  * we should turn it on (to debate). */
 .search-box {
-  padding: 0.4em 1.5em 0.1em 1.5em;
+  padding: 0.4em calc(1.5 * var(--lrem)) 0.1em calc(1.5 * var(--lrem));
   /*margin: 0.5em;
   border: 0px solid #eee;
   background: #f5f5f5; #fafafa;*/  
@@ -1859,7 +1882,7 @@ div.limit-height {
 {
     /*font-size: 130%;
     font-weight: bold;*/
-    font-size: 170%;
+    font-size: calc(120% + 0.5 * var(--lrem));
     font-weight: normal;
     color: {{ color.content_text }};
     font-family: var(--main-font-family);
@@ -1875,7 +1898,7 @@ div.limit-height {
 {
     font-family: var(--main-font-family);
     text-decoration: none;
-    font-size: 150%;
+    font-size: calc(110% + 0.4 * var(--lrem));;
     text-align: left;
     font-weight: normal;
     color: {{color.a_text}};
@@ -1886,7 +1909,7 @@ div.limit-height {
 #content td.table_h2 {
     font-family: var(--main-font-family);
     text-decoration: none;
-    font-size: 130%;
+    font-size: calc(105% + 0.25 * var(--lrem));;
     text-align: left;
     font-weight: normal;
     padding: 0.3em 0 0.3em 0;
@@ -1897,7 +1920,7 @@ div.limit-height {
 #content  h4 {
     font-family: var(--main-font-family);
     text-decoration: none;
-    font-size: 110%;
+    font-size: calc(103% + 0.1 * var(--lrem));;
     text-align: left;
     font-weight: normal;
     padding: 0.3em 0 0.3em 0;
@@ -1916,7 +1939,7 @@ div.limit-height {
 }
 
 #content ul {
-  padding-left: 1.7em;
+  padding-left: calc(0.7em + 1 * var(--lrem));
 }
 
 #content  h2.inline,
@@ -1924,7 +1947,7 @@ div.limit-height {
 #content  h4.inline {
     font-weight: normal;
     display: inline;
-    padding-right: 0.7em;
+    padding-right: calc(0.2 + 0.5 * var(--lrem));
     margin: 0.3em 0 0.7em 0;
 }
 
@@ -1966,7 +1989,7 @@ div.limit-height {
 /* Make too wide elements horizontally scrollable:
  * (Perhaps rather only for point-click devices, but for arbitrary size?)
  */   
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 48rem) {
   #content > p,
   #content > table.ntdata,
   #content > div > table.ntdata,
@@ -2027,10 +2050,10 @@ body.knowl #header {
     width: calc(100% - 14em);
 }
 #header #title {
-    font-size: 220%;
+    font-size: calc(1.3rem + 0.9 * var(--lrem)) ;
     font-weight: normal;
     font-family: var(--main-font-family);
-    padding: 0.7em 2em 0.7em 2em;
+    padding: calc(0.7rem + 0 * var(--lrem)) calc(0.1rem + 1.9 * var(--lrem));
     color: {{color.header_text_title}};
 }
 
@@ -2220,7 +2243,7 @@ body.knowl .logo a:hover {
 
 /* Dropdown content (hidden by default) */
 #navbar .dropdown-content {
-  font-size: {% if BETA %} 0.9em; {% else %} 1em; {% endif %} /* will scale the whole dropdown-content */
+  font-size: {% if BETA %} calc(0.8em + 0.08 * var(--srem)); {% else %} 1em; {% endif %} /* will scale the whole dropdown-content */
   display: none;
   position: absolute;
   background-color: #f9f9f9;
@@ -2237,6 +2260,10 @@ body.knowl .logo a:hover {
 }
 #navbar div.dropdown-content-left-to-right {
   left: 0;
+  right: auto;
+}
+#navbar div.dropdown-content-centered {
+  left: auto;
   right: auto;
 }
 
@@ -2321,7 +2348,7 @@ body.knowl .logo a:hover {
 
 
 /* This must come after the #header and #navbar section */
-@media only screen and (min-width: 1100px) {
+@media only screen and (min-width: {{ max_width }}) {
   /**** Fix navbar on top: ****/
   #navbar {
     position: fixed; /* Set the navbar to fixed position */
@@ -2466,7 +2493,7 @@ body.knowl .logo a:hover {
   {{ BORDER_RADIUS(1.3) }}
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 37.5rem) {
   #properties {
     z-index: 0;
     font-size: 85%;
@@ -2569,15 +2596,15 @@ body.knowl .logo a:hover {
 #index-boxes table.box {
   background: #fafafa; {{color.box_background}};
   max-width: 35em;
-  min-width: 25em;
+  min-width: calc(15em + 10 * var(--srem));
   padding: 0.7em;
   border-radius: 0em;
   font-size: 1em;
-  margin: 1em;
+  margin: 1em var(--lrem);
 }
 #index-boxes table.box td.img {
   background: #fafafa; {{color.box_background_img}};
-  width: 10em;
+  width: calc(5rem + 5 * var(--srem));
   /*height: auto;*/
   border: 1em;
   padding-left: 0.3em;
@@ -2607,7 +2634,7 @@ body.knowl .logo a:hover {
 }
 
 /* OLD:
-@media only screen and (max-width: 1000px) {
+@media only screen and (max-width: 64rem) {
   #index-boxes table.box img {
     max-width: 15vw;
     height: auto;

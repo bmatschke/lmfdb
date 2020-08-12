@@ -126,6 +126,20 @@ function adjustLocationOfDropdownContent(content) {
   //console.log(right);
   var dropdown = content; //content.parentElement;
 
+  //debug:
+  //dropdown.classList.add("dropdown-content-centered");
+  //return;
+  /*if (right > document.body.clientWidth) {
+    //dropdown.classList.add("dropdown-content-left-to-right");
+    //content.style.left -= (right - document.body.clientWidth);
+    d = right - document.body.clientWidth;
+    content.style.left = 'auto';
+    content.style.right = (right - document.body.clientWidth)+'px';
+    //content.style.left -= d;
+  }
+  return;
+  */
+  
   if (prefer_left_to_right) {
     if (right > document.body.clientWidth) {
       dropdown.classList.remove("dropdown-content-left-to-right");
