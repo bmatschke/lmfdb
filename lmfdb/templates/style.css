@@ -1,4 +1,4 @@
-t{# template defs #}
+{# template defs #}
 
 {%- macro BORDER_RADIUS(R) -%}
   border-radius: {{R}}em;
@@ -40,13 +40,16 @@ t{# template defs #}
  *
  */
 
+/* Georgia, 'Bitstream Charter', serif; */
+
+/*--main-font-family: 'Times New Roman', 'Times', serif; */
 
 :root {
   --main-font-family: Georgia, 'Bitstream Charter', serif; 
-}  /*--main-font-family: 'Times New Roman', 'Times', serif; */
-:root {
-  --control-font-family: Arial, sans-serif;
+  /*--main-font-family: Arial, serif;*/
+  --control-font-family: Arial, serif;
 }
+
 {% set max_width = '64rem' %}
 
 /* Respect user's setting for font-size until it gets too cramped: */
@@ -2053,7 +2056,8 @@ body.knowl #header {
 
 #header .bread a, 
 #header .nav-user a {
-    color: {{color.bread_links}};
+  font-family: var(--control-font-family);
+  color: {{color.bread_links}};
 }
 
 #header .topright {
