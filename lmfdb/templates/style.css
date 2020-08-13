@@ -50,12 +50,32 @@
   --control-font-family: Arial, sans-serif;
 }
 
-{% set max_width = '64rem' %} {# unfortunately media queries don't like css variables #}
+{# unfortunately media queries don't like css variables #}
+{% set max_width_in_rem = '256' %}
+{% set min_width_in_rem = '25' %}
+{% set s_width_in_rem = '37.5' %}
+{% set m_width_in_rem = '48' %}
+{% set l_width_in_rem = '64' %}
+{% set xl_width_in_rem = '96' %}
+{% set xxl_width_in_rem = '128' %}
+{% set xxxl_width_in_rem = '192' %}
+{% set xxxxl_width_in_rem = '256' %}
+
+{% set max_width = max_width_in_rem + 'rem' %}
+{% set min_width = min_width_in_rem + 'rem' %}
+{% set s_width = s_width_in_rem + 'rem' %}
+{% set m_width = m_width_in_rem + 'rem' %}
+{% set l_width = l_width_in_rem + 'rem' %}
+{% set xl_width = xl_width_in_rem + 'rem' %}
+{% set xxl_width = xxl_width_in_rem + 'rem' %}
+{% set xxxl_width = xxxl_width_in_rem + 'rem' %}
+{% set xxxxl_width = xxxxl_width_in_rem + 'rem' %}
+
 
 /* Respect user's setting for font-size until it gets too cramped: */
-@media only screen and (max-width: 25rem) {
+@media only screen and (max-width: {{ min_width }}) {
   :root {
-    font-size: calc(100vw / 25);
+    font-size: calc(100vw / {{ min_width_in_rem }});
   }
 }
 
@@ -68,24 +88,48 @@
 }
 @media only screen and (min-width: 25rem) {
   :root {
-    --srem: calc((100vw - 25rem) / (37.5 - 25));
-    --mrem: calc((100vw - 25rem) / (48 - 25));
-    --lrem: calc((100vw - 25rem) / (64 - 25));
+    --srem: calc((100vw - {{ min_width }}) / ({{ s_width_in_rem }} - {{ min_width_in_rem }}));
+    --mrem: calc((100vw - {{ min_width }}) / ({{ m_width_in_rem }} - {{ min_width_in_rem }}));
+    --lrem: calc((100vw - {{ min_width }}) / ({{ l_width_in_rem }} - {{ min_width_in_rem }}));
+    --xlrem: calc((100vw - {{ min_width }}) / ({{ xl_width_in_rem }} - {{ min_width_in_rem }}));
+    --xxlrem: calc((100vw - {{ min_width }}) / ({{ xxl_width_in_rem }} - {{ min_width_in_rem }}));
+    --xxxlrem: calc((100vw - {{ min_width }}) / ({{ xxxl_width_in_rem }} - {{ min_width_in_rem }}));
+    --xxxxlrem: calc((100vw - {{ min_width }}) / ({{ xxxxl_width_in_rem }} - {{ min_width_in_rem }}));
   }
 }
-@media only screen and (min-width: 37.5rem) {
+@media only screen and (min-width: {{ s_width }}) {
   :root {
     --srem: 1rem;
   }
 }
-@media only screen and (min-width: 48rem) {
+@media only screen and (min-width: {{ m_width }}) {
   :root {
     --mrem: 1rem;
   }
 }
-@media only screen and (min-width: 64rem) {
+@media only screen and (min-width: {{ l_width }}) {
   :root {
     --lrem: 1rem;
+  }
+}
+@media only screen and (min-width: {{ xl_width }}) {
+  :root {
+    --xlrem: 1rem;
+  }
+}
+@media only screen and (min-width: {{ xxl_width }}) {
+  :root {
+    --xxlrem: 1rem;
+  }
+}
+@media only screen and (min-width: {{ xxxl_width }}) {
+  :root {
+    --xxxlrem: 1rem;
+  }
+}
+@media only screen and (min-width: {{ xxxxl_width }}) {
+  :root {
+    --xxxxlrem: 1rem;
   }
 }
 
@@ -308,7 +352,8 @@ For the items in the container, give them classes either
 .col-xs-12 { grid-column: auto / span 12; }
 
 /* For tablets, large phones: */
-@media only screen and (min-width: 37.5rem) {
+/* factor to previous min-width is 1.5 */
+@media only screen and (min-width: {{ s_width }}) {
   .col-s-1 { grid-column: auto / span 1; }
   .col-s-2 { grid-column: auto / span 2; }
   .col-s-3 { grid-column: auto / span 3; }
@@ -324,7 +369,8 @@ For the items in the container, give them classes either
 }
 
 /* For large tablet, small laptop: */
-@media only screen and (min-width: 48rem) {
+/* factor to previous min-width is 1.28 */
+@media only screen and (min-width: {{ m_width }}) {
   .col-m-1 { grid-column: auto / span 1; }
   .col-m-2 { grid-column: auto / span 2; }
   .col-m-3 { grid-column: auto / span 3; }
@@ -340,7 +386,8 @@ For the items in the container, give them classes either
 } 
 
 /* For large desktop: */
-@media only screen and (min-width: 64rem) {
+/* factor to previous min-width is 1.33 */
+@media only screen and (min-width: {{ l_width }}) {
   .col-l-1 { grid-column: auto / span 1; }
   .col-l-2 { grid-column: auto / span 2; }
   .col-l-3 { grid-column: auto / span 3; }
@@ -353,6 +400,74 @@ For the items in the container, give them classes either
   .col-l-10 { grid-column: auto / span 10; }
   .col-l-11 { grid-column: auto / span 11; }
   .col-l-12 { grid-column: auto / span 12; }
+} 
+
+/* For x-large desktop: */
+/* factor to previous min-width is 1.5 */
+@media only screen and (min-width: {{ xl_width }}) {
+  .col-xl-1 { grid-column: auto / span 1; }
+  .col-xl-2 { grid-column: auto / span 2; }
+  .col-xl-3 { grid-column: auto / span 3; }
+  .col-xl-4 { grid-column: auto / span 4; }
+  .col-xl-5 { grid-column: auto / span 5; }
+  .col-xl-6 { grid-column: auto / span 6; }
+  .col-xl-7 { grid-column: auto / span 7; }
+  .col-xl-8 { grid-column: auto / span 8; }
+  .col-xl-9 { grid-column: auto / span 9; }
+  .col-xl-10 { grid-column: auto / span 10; }
+  .col-xl-11 { grid-column: auto / span 11; }
+  .col-xl-12 { grid-column: auto / span 12; }
+} 
+
+/* For xx-large desktop: */
+/* factor to previous min-width is 1.33 */
+@media only screen and (min-width: {{ xxl_width }}) {
+  .col-xxl-1 { grid-column: auto / span 1; }
+  .col-xxl-2 { grid-column: auto / span 2; }
+  .col-xxl-3 { grid-column: auto / span 3; }
+  .col-xxl-4 { grid-column: auto / span 4; }
+  .col-xxl-5 { grid-column: auto / span 5; }
+  .col-xxl-6 { grid-column: auto / span 6; }
+  .col-xxl-7 { grid-column: auto / span 7; }
+  .col-xxl-8 { grid-column: auto / span 8; }
+  .col-xxl-9 { grid-column: auto / span 9; }
+  .col-xxl-10 { grid-column: auto / span 10; }
+  .col-xxl-11 { grid-column: auto / span 11; }
+  .col-xxl-12 { grid-column: auto / span 12; }
+} 
+
+/* For xxx-large desktop: */
+/* factor to previous min-width is 1.5 */
+@media only screen and (min-width: {{ xxxl_width }}) {
+  .col-xxxl-1 { grid-column: auto / span 1; }
+  .col-xxxl-2 { grid-column: auto / span 2; }
+  .col-xxxl-3 { grid-column: auto / span 3; }
+  .col-xxxl-4 { grid-column: auto / span 4; }
+  .col-xxxl-5 { grid-column: auto / span 5; }
+  .col-xxxl-6 { grid-column: auto / span 6; }
+  .col-xxxl-7 { grid-column: auto / span 7; }
+  .col-xxxl-8 { grid-column: auto / span 8; }
+  .col-xxxl-9 { grid-column: auto / span 9; }
+  .col-xxxl-10 { grid-column: auto / span 10; }
+  .col-xxxl-11 { grid-column: auto / span 11; }
+  .col-xxxl-12 { grid-column: auto / span 12; }
+} 
+
+/* For xxxx-large desktop: */
+/* factor to previous min-width is 1.33 */
+@media only screen and (min-width: {{ xxxx_width }}) {
+  .col-xxxxl-1 { grid-column: auto / span 1; }
+  .col-xxxxl-2 { grid-column: auto / span 2; }
+  .col-xxxxl-3 { grid-column: auto / span 3; }
+  .col-xxxxl-4 { grid-column: auto / span 4; }
+  .col-xxxxl-5 { grid-column: auto / span 5; }
+  .col-xxxxl-6 { grid-column: auto / span 6; }
+  .col-xxxxl-7 { grid-column: auto / span 7; }
+  .col-xxxxl-8 { grid-column: auto / span 8; }
+  .col-xxxxl-9 { grid-column: auto / span 9; }
+  .col-xxxxl-10 { grid-column: auto / span 10; }
+  .col-xxxxl-11 { grid-column: auto / span 11; }
+  .col-xxxxl-12 { grid-column: auto / span 12; }
 } 
 
 .row-span-2 {
@@ -374,7 +489,7 @@ For the items in the container, give them classes either
     /*max-width: 1280px;*/
     margin: auto; /* means center */
     /*border: 0.2em solid black; debug */
-    padding: 0 0.7em; /* needed for small screens */
+    padding: 0 calc(0.7rem + 2 * (0 * var(--lrem) + 1 * var(--xxxxlrem))); 
 }
 
 .visible {
@@ -2000,7 +2115,8 @@ div.limit-height {
   margin:  0em 0em 0em 0em;
   /*padding: 0em 0em 0em 0.7em;*/
   padding: 0em;
-  min-height: 45em;
+  /*min-height: 45em;*/
+  min-height: calc(100vh - 25rem); /* not optimal yet */
 }
 
 
