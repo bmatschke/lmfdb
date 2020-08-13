@@ -193,7 +193,7 @@ function knowl_click_handler($el) {
       var tr_tag = td_tag.parent();
 
       tr_tag.after(
-        "<div class='knowl-output col-all'" +idtag+ style_wrapwidth + ">loading '"+knowl_id+"' …</div>");
+        "<div class='knowl-output col-all'" +idtag+ ">loading '"+knowl_id+"' …</div>");
     } else {
       $el.parent().after("<div class='knowl-output'" +idtag+ ">loading '"+knowl_id+"' …</div>");
     }
