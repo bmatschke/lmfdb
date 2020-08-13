@@ -124,6 +124,7 @@ function knowl_click_handler($el) {
   // slightly different behaviour if we are inside a table, but
   // not in a knowl inside a table.
   var table_mode = $el.parent().is("td") || $el.parent().is("th");
+  var search_mode = $el.parent().hasClass("form-label")
 
   // if we already have the content, toggle visibility
   if ($output_id.length > 0) {
@@ -186,8 +187,13 @@ function knowl_click_handler($el) {
         tr_tag = tr_tag.next();
       tr_tag.after(
         "<tr><td colspan='"+cols+"'><div class='knowl-output'" +idtag+ style_wrapwidth + ">loading '"+knowl_id+"' …</div></td></tr>");
-      // For alternatinvg color tables
-      tr_tag.after("<tr class='hidden'></tr>")
+    } else if(search_mode) {
+      // assume we are in a td or th tag, go 2 levels up
+      var td_tag = $el.parent();
+      var tr_tag = td_tag.parent();
+
+      tr_tag.after(
+        "<div class='knowl-output col-all'" +idtag+ style_wrapwidth + ">loading '"+knowl_id+"' …</div>");
     } else {
       $el.parent().after("<div class='knowl-output'" +idtag+ ">loading '"+knowl_id+"' …</div>");
     }
