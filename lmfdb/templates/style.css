@@ -47,10 +47,10 @@
 :root {
   --main-font-family: Georgia, 'Bitstream Charter', serif; 
   /*--main-font-family: Arial, serif;*/
-  --control-font-family: Arial, serif;
+  --control-font-family: Arial, sans-serif;
 }
 
-{% set max_width = '64rem' %}
+{% set max_width = '64rem' %} {# unfortunately media queries don't like css variables #}
 
 /* Respect user's setting for font-size until it gets too cramped: */
 @media only screen and (max-width: 25rem) {
