@@ -45,8 +45,8 @@
 /*--main-font-family: 'Times New Roman', 'Times', serif; */
 
 :root {
-  --main-font-family: Georgia, 'Bitstream Charter', serif; 
-  /*--main-font-family: Arial, serif;*/
+  /*--main-font-family: Georgia, 'Bitstream Charter', serif;*/ 
+  --main-font-family: Arial, sans-serif;
   --control-font-family: Arial, sans-serif;
 }
 
